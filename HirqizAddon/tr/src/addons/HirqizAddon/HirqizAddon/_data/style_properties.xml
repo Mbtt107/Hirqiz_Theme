@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style_properties>
+  <style_property property_name="headerproxy_background" group_name="Hirqiz_styling" title="Header Proxy Main" description="HirqizPosts ve header elementlerini barındıran kısım için özelleştirme sağlar." property_type="css" display_order="10" css_components="background,extra">
+    <value>
+	{
+		"background-color": "#88c451",
+		"background-image": "url(styles/hirqiztema/images/pattern.png)",
+		"extra": "background-repeat: no-repeat;\nbackground-position: center;"
+	}
+	</value>
+  </style_property>
+  <style_property property_name="headerproxy_overlay" group_name="Hirqiz_styling" title="Header Proxy Overlay" description="Hirqiz Proxy üzerine çekilen filtre ve animasyonların kontrolünü sağlar." property_type="css" display_order="20" css_components="background,extra">
+    <value>
+	{
+		"background-color": "#88c451",
+		"extra": "position: absolute;\ntop: 0;\nleft: 0;\nwidth: 100%;\nheight: 100%;\nopacity: 0.95;"
+	}
+	</value>
+  </style_property>
+  <style_property property_name="hirqiz_guest_message_background" group_name="Hirqiz_styling" title="Hirqiz Message Main" description="Hirqiz Tema ziyaretçi davet mesajı bloğunun arkaplan kontrolünü sağlar." property_type="css" display_order="30" css_components="background,extra">
+    <value>
+	{
+		"background-color": "#fefefe",
+		"background-image": "",
+		"extra": ""
+	}
+	</value>
+  </style_property>
+  <style_property property_name="hirqiz_guest_message_title" group_name="Hirqiz_styling" title="Hirqiz Message Title" description="Hirqiz Tema ziyaretçi davet mesajı bloğu başlığının kontrolünü sağlar." property_type="css" display_order="40" css_components="text,extra">
+    <value>
+	{
+		"color": "",
+		"extra": ""
+	}
+	</value>
+  </style_property>
+  <style_property property_name="hirqiz_guest_message_main" group_name="Hirqiz_styling" title="Hirqiz Message Main Text" description="Hirqiz Tema ziyaretçi davet mesajı bloğunda bulunan davet mesajı yazısının kontrolünü sağlar." property_type="css" display_order="50" css_components="text,extra">
+    <value>
+	{
+		"color": "",
+		"extra": ""
+	}
+	</value>
+  </style_property>
+  <style_property property_name="hirqizPostscontainer" group_name="Hirqiz_styling" title="HirqizPosts Container" description="HirqizPosts arkaplanı için özelleştirme sağlar." property_type="css" display_order="60" css_components="background,extra">
+    <value>
+	{
+		"background-color": "#fff",
+		"background-image": ""
+	}
+	</value>
+  </style_property>
+  <style_property property_name="hirqizPostsheader" group_name="Hirqiz_styling" title="HirqizPosts Title" description="HirqizPosts başlığı için özelleştirme sağlar." property_type="css" display_order="70" css_components="text,extra">
+    <value>
+	{
+		"color": "#88c451",
+		"extra": "font-size: 17px;\ntext-align: center;\npadding: 6px 0 10px;"
+	}
+	</value>
+  </style_property>
+  <style_property property_name="hirqizPostsimageoverlay" group_name="Hirqiz_styling" title="HirqizPosts Image Overlay" description="HirqizPosts içerisindeki 3 konu üzerine çekilen filtrenin ve animasyonların kontrolünü sağlar." property_type="css" display_order="80" css_components="extra">
+    <value>
+	{
+		"extra": "background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));"
+	}
+	</value>
+  </style_property>
+  <style_property property_name="hirqizPosts1" group_name="Hirqiz_styling" title="HirqizPosts 1" property_type="css" description="İlk HirqizPosts konusunun kontrolünü sağlar (sol)." display_order="90" css_components="background,extra">
+    <value>
+	{
+		"background-color": "",
+		"background-image": "url(styles/hirqiztema/images/hirqizposts.png)"
+	}
+	</value>
+  </style_property>
+  <style_property property_name="hirqizPosts2" group_name="Hirqiz_styling" title="HirqizPosts 2" property_type="css" description="İkinci HirqizPosts konusunun kontrolünü sağlar (orta)." display_order="100" css_components="background,extra">
+    <value>
+	{
+		"background-color": "",
+		"background-image": "url(styles/hirqiztema/images/hirqizposts.png)"
+	}
+	</value>
+  </style_property>
+  <style_property property_name="hirqizPosts3" group_name="Hirqiz_styling" title="HirqizPosts 3" property_type="css" description="Üçüncü HirqizPosts konusunun kontrolünü sağlar (sağ)." display_order="110" css_components="background,extra">
+    <value>
+	{
+		"background-color": "",
+		"background-image": "url(styles/hirqiztema/images/hirqizposts.png)"
+	}
+	</value>
+  </style_property>
+  <style_property property_name="hirqizFooter" group_name="Hirqiz_styling" title="Hirqiz Footer" property_type="css" description="Hirqiz Footer için özelleştirme sağlar" display_order="120" css_components="background,extra">
+    <value>
+	{
+		"background-color": "",
+		"background-image": "",
+		"extra": "background: linear-gradient(90deg, rgba(245,245,245,0.95) 0%, rgba(245,245,245,0.95) 100%), url(styles/hirqiztema/images/pattern.png);"
+	}
+	</value>
+  </style_property>
+</style_properties>

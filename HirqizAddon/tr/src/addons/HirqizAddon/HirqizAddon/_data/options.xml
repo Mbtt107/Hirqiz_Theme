@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <!-- Hırqız Posts 1. Konu -->
+  <option option_id="HirqizPosts1_thread_link" edit_format="textbox" data_type="string">
+    <default_value>1. Konu Linki</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="20"/>
+  </option>
+  <option option_id="HirqizPosts1_thread_title" edit_format="textbox" data_type="string">
+    <default_value>1. Konu Başlığı</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="30"/>
+  </option>
+  <option option_id="HirqizPosts1_thread_date" edit_format="textbox" data_type="string">
+    <default_value>1. Konu Tarihi</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="40"/>
+  </option>
+  <option option_id="HirqizPosts1_thread_owner" edit_format="textbox" data_type="string">
+    <default_value>1. Konu Sahibi</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="50"/>
+  </option>
+  
+  <!-- Hırqız Posts 2. Konu -->
+  <option option_id="HirqizPosts2_thread_link" edit_format="textbox" data_type="string">
+    <default_value>2. Konu Linki</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="70"/>
+  </option>
+  <option option_id="HirqizPosts2_thread_title" edit_format="textbox" data_type="string">
+    <default_value>2. Konu Başlığı</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="80"/>
+  </option>
+  <option option_id="HirqizPosts2_thread_date" edit_format="textbox" data_type="string">
+    <default_value>2. Konu Tarihi</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="90"/>
+  </option>
+  <option option_id="HirqizPosts2_thread_owner" edit_format="textbox" data_type="string">
+    <default_value>2. Konu Sahibi</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="100"/>
+  </option>
+
+  <!-- Hırqız Posts 3. Konu -->
+  <option option_id="HirqizPosts3_thread_link" edit_format="textbox" data_type="string">
+    <default_value>3. Konu Linki</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="120"/>
+  </option>
+  <option option_id="HirqizPosts3_thread_title" edit_format="textbox" data_type="string">
+    <default_value>3. Konu Başlığı</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="130"/>
+  </option>
+  <option option_id="HirqizPosts3_thread_date" edit_format="textbox" data_type="string">
+    <default_value>3. Konu Tarihi</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="140"/>
+  </option>
+  <option option_id="HirqizPosts3_thread_owner" edit_format="textbox" data_type="string">
+    <default_value>3. Konu Sahibi</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="150"/>
+  </option>
+
+  <!-- Hoşgeldiniz Mesajı -->
+  <option option_id="Hirqiz_questmessage" edit_format="textbox" data_type="string">
+    <default_value>Buraya Foruma Göz Atan Ziyaretçiler İçin Davet Mesajı Ekleyebilirsiniz.</default_value>
+    <edit_format_params>rows=4</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="160"/>
+  </option>
+
+  <!-- Footer Forum Açıklaması -->
+  <option option_id="Hirqiz_footer_widget" edit_format="textbox" data_type="string">
+    <default_value>Buraya Forumunuzla İlgili Bir Açıklama Yazabilirsiniz.</default_value>
+    <edit_format_params>rows=4</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="170"/>
+  </option>
+</options>

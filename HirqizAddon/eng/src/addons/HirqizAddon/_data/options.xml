@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <!-- Hırqız Posts 1. Thread -->
+  <option option_id="HirqizPosts1_thread_link" edit_format="textbox" data_type="string">
+    <default_value>1. Thread Link</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="20"/>
+  </option>
+  <option option_id="HirqizPosts1_thread_title" edit_format="textbox" data_type="string">
+    <default_value>1. Thread Title</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="30"/>
+  </option>
+  <option option_id="HirqizPosts1_thread_date" edit_format="textbox" data_type="string">
+    <default_value>1. Thread Date</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="40"/>
+  </option>
+  <option option_id="HirqizPosts1_thread_owner" edit_format="textbox" data_type="string">
+    <default_value>1. Thread Owner</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="50"/>
+  </option>
+  
+  <!-- Hırqız Posts 2. Thread -->
+  <option option_id="HirqizPosts2_thread_link" edit_format="textbox" data_type="string">
+    <default_value>2. Thread Link</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="70"/>
+  </option>
+  <option option_id="HirqizPosts2_thread_title" edit_format="textbox" data_type="string">
+    <default_value>2. Thread Title</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="80"/>
+  </option>
+  <option option_id="HirqizPosts2_thread_date" edit_format="textbox" data_type="string">
+    <default_value>2. Thread Date</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="90"/>
+  </option>
+  <option option_id="HirqizPosts2_thread_owner" edit_format="textbox" data_type="string">
+    <default_value>2. Thread Owner</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="100"/>
+  </option>
+
+  <!-- Hırqız Posts 3. Thread -->
+  <option option_id="HirqizPosts3_thread_link" edit_format="textbox" data_type="string">
+    <default_value>3. Thread Link</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="120"/>
+  </option>
+  <option option_id="HirqizPosts3_thread_title" edit_format="textbox" data_type="string">
+    <default_value>3. Thread Title</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="130"/>
+  </option>
+  <option option_id="HirqizPosts3_thread_date" edit_format="textbox" data_type="string">
+    <default_value>3. Thread Date</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="140"/>
+  </option>
+  <option option_id="HirqizPosts3_thread_owner" edit_format="textbox" data_type="string">
+    <default_value>3. Thread Owner</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="150"/>
+  </option>
+
+  <!-- Hoşgeldiniz Mesajı -->
+  <option option_id="Hirqiz_questmessage" edit_format="textbox" data_type="string">
+    <default_value>You can put a invitation message here for visitors.</default_value>
+    <edit_format_params>rows=4</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="160"/>
+  </option>
+
+  <!-- Footer Forum Açıklaması -->
+  <option option_id="Hirqiz_footer_widget" edit_format="textbox" data_type="string">
+    <default_value>You can put a forum description here.</default_value>
+    <edit_format_params>rows=4</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="170"/>
+  </option>
+</options>

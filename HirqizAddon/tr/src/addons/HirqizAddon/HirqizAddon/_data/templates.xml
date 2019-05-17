@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="Hirqiz_Addon_option_menu" version_id="1000010" version_string="1.0.0"><![CDATA[<xf:macro name="option_form_block" arg-group="" arg-options="!" arg-containerBeforeHtml="">
+    <xf:if is="$options is not empty">
+        <xf:form action="{{ link('options/update') }}" ajax="true" class="block">
+            {$containerBeforeHtml|raw}
+            <div class="block-container">
+                <h2 class="block-tabHeader tabs" style="display:list-item;list-style:none;" data-xf-init="tabs" role="tablist">
+                    <a class="tabs-tab is-active" role="tab" tabindex="0" aria-controls="HirqizAdminTab1">{{ phrase('Hirqiz_admin_control_hirqizposts1') }}</a>
+					<a class="tabs-tab" role="tab" tabindex="0" aria-controls="HirqizAdminTab2">{{ phrase('Hirqiz_admin_control_hirqizposts2') }}</a>
+					<a class="tabs-tab" role="tab" tabindex="0" aria-controls="HirqizAdminTab3">{{ phrase('Hirqiz_admin_control_hirqizposts3') }}</a>
+					<a class="tabs-tab" role="tab" tabindex="0" aria-controls="HirqizAdminTab4">{{ phrase('Hirqiz_admin_control_guestmessage') }}</a>
+					<a class="tabs-tab" role="tab" tabindex="0" aria-controls="HirqizAdminTab5">{{ phrase('Hirqiz_admin_control_footerwidget') }}</a>
+				</h2>
+                <ul class="tabPanes">
+                    <li class="is-active" role="tabpanel" id="HirqizAdminTab1">
+                        <div class="block-body">
+                            <xf:foreach loop="$options" value="$option">
+                            <xf:if is="$option.Relations.Hirqiz_Addon.display_order < 60">
+                                <xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" />
+                            </xf:if>
+                            </xf:foreach>
+                        </div>
+                    </li>
+                    <li role="tabpanel" id="HirqizAdminTab2">
+                        <div class="block-body">
+                            <xf:foreach loop="$options" value="$option">
+                            <xf:if is="$option.Relations.Hirqiz_Addon.display_order >= 60 AND $option.Relations.Hirqiz_Addon.display_order < 110">
+                                <xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" />
+                            </xf:if>	
+                            </xf:foreach>	
+                        </div>
+                    </li>
+					<li role="tabpanel" id="HirqizAdminTab3">
+                        <div class="block-body">
+                            <xf:foreach loop="$options" value="$option">
+                            <xf:if is="$option.Relations.Hirqiz_Addon.display_order >= 110 AND $option.Relations.Hirqiz_Addon.display_order < 160">
+                                <xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" />
+                            </xf:if>
+                            </xf:foreach>
+                        </div>
+                    </li>
+					<li role="tabpanel" id="HirqizAdminTab4">
+                        <div class="block-body">
+                            <xf:foreach loop="$options" value="$option">
+                            <xf:if is="$option.Relations.Hirqiz_Addon.display_order == 160">
+                                <xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" />
+                            </xf:if>
+                            </xf:foreach>
+                        </div>
+                    </li>
+					<li role="tabpanel" id="HirqizAdminTab5">
+                        <div class="block-body">
+                            <xf:foreach loop="$options" value="$option">
+                            <xf:if is="$option.Relations.Hirqiz_Addon.display_order == 170">
+                                <xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" />
+                            </xf:if>
+                            </xf:foreach>
+                        </div>
+                    </li>
+                </ul>
+                <xf:submitrow sticky="true" icon="save" />
+            </div>
+        </xf:form>
+	</xf:if>
+</xf:macro>]]></template>
+  <template type="admin" title="widget_def_options_XGT_EnCokBegenKonu_widget" version_id="100000" version_string="1.0.0 Alpha"><![CDATA[]]></template>
+  <template type="admin" title="widget_def_options_XGT_EnCokCevapKonu_widget" version_id="100000" version_string="1.0.0 Alpha"><![CDATA[]]></template>
+  <template type="admin" title="widget_def_options_XGT_EnCokGrtKonu_widget" version_id="100000" version_string="1.0.0 Alpha"><![CDATA[]]></template>
+  <template type="admin" title="widget_def_options_XGT_YeniKonular_widget" version_id="100000" version_string="1.0.0 Alpha"><![CDATA[]]></template>
+  <template type="admin" title="widget_def_options_XGT_YeniMesajlar_widget" version_id="100000" version_string="1.0.0 Alpha"><![CDATA[]]></template>
+  <template type="admin" title="widget_def_options_XGT_encokmesaj_kullanici" version_id="100000" version_string="1.0.0 Alpha"><![CDATA[<hr class="formRowSep" />
+<xf:selectrow name="options[member_stat_key]" 
+			  value="{$options.member_stat_key}"
+	          label="{{ phrase('member_stat_to_display') }}">
+	<xf:options source="{$memberStats}" />
+</xf:selectrow>]]></template>
+</templates>
