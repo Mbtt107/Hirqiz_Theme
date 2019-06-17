@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="Hirqiz_admin_control_hirqizposts1" version_id="100010" version_string="1.0.0"><![CDATA[HirqizPosts 1]]></phrase>
+  <phrase title="Hirqiz_admin_control_hirqizposts2" version_id="100010" version_string="1.0.0"><![CDATA[HirqizPosts 2]]></phrase>
+  <phrase title="Hirqiz_admin_control_hirqizposts3" version_id="100010" version_string="1.0.0"><![CDATA[HirqizPosts 3]]></phrase>
+  <phrase title="Hirqiz_admin_control_generalsettings" version_id="100010" version_string="1.0.0"><![CDATA[Hirqiz Theme General Settings]]></phrase>
+  <phrase title="Hirqiz_admin_control_guestmessage" version_id="100010" version_string="1.0.0"><![CDATA[Guest Message]]></phrase>
+  <phrase title="Hirqiz_admin_control_footerwidget" version_id="100010" version_string="1.0.0"><![CDATA[Footer Widget Description]]></phrase>
+  <phrase title="option.HirqizPosts1_thread_link" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Link]]></phrase>
+  <phrase title="option.HirqizPosts1_thread_title" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Title]]></phrase>
+  <phrase title="option.HirqizPosts1_thread_date" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Date]]></phrase>
+  <phrase title="option.HirqizPosts1_thread_owner" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Owner]]></phrase>
+  <phrase title="option_explain.HirqizPosts1_thread_link" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Link]]></phrase>
+  <phrase title="option_explain.HirqizPosts1_thread_title" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Title]]></phrase>
+  <phrase title="option_explain.HirqizPosts1_thread_date" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Date]]></phrase>
+  <phrase title="option_explain.HirqizPosts1_thread_owner" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Owner]]></phrase>
+  <phrase title="option.HirqizPosts2_thread_link" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Link]]></phrase>
+  <phrase title="option.HirqizPosts2_thread_title" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Title]]></phrase>
+  <phrase title="option.HirqizPosts2_thread_date" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Date]]></phrase>
+  <phrase title="option.HirqizPosts2_thread_owner" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Owner]]></phrase>
+  <phrase title="option_explain.HirqizPosts2_thread_link" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Link]]></phrase>
+  <phrase title="option_explain.HirqizPosts2_thread_title" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Title]]></phrase>
+  <phrase title="option_explain.HirqizPosts2_thread_date" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Date]]></phrase>
+  <phrase title="option_explain.HirqizPosts2_thread_owner" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Owner]]></phrase>
+  <phrase title="option.HirqizPosts3_thread_link" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Link]]></phrase>
+  <phrase title="option.HirqizPosts3_thread_title" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Title]]></phrase>
+  <phrase title="option.HirqizPosts3_thread_date" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Date]]></phrase>
+  <phrase title="option.HirqizPosts3_thread_owner" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Owner]]></phrase>
+  <phrase title="option_explain.HirqizPosts3_thread_link" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Link]]></phrase>
+  <phrase title="option_explain.HirqizPosts3_thread_title" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Title]]></phrase>
+  <phrase title="option_explain.HirqizPosts3_thread_date" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Date]]></phrase>
+  <phrase title="option_explain.HirqizPosts3_thread_owner" version_id="1000010" version_string="1.0.0"><![CDATA[Thread Owner]]></phrase>
+  <phrase title="option.Hirqiz_sidebar_onoff" version_id="1000010" version_string="1.0.0"><![CDATA[On/Off]]></phrase>
+  <phrase title="option_explain.Hirqiz_sidebar_onoff" version_id="1000010" version_string="1.0.0"><![CDATA[Sidebar Collapse On/Off Option]]></phrase>
+  <phrase title="option.Hirqiz_resize_onoff" version_id="1000010" version_string="1.0.0"><![CDATA[On/Off]]></phrase>
+  <phrase title="option_explain.Hirqiz_resize_onoff" version_id="1000010" version_string="1.0.0"><![CDATA[Resize Button On/Off Option]]></phrase>
+  <phrase title="option.Hirqiz_night_theme_onoff" version_id="1000010" version_string="1.0.0"><![CDATA[On/Off]]></phrase>
+  <phrase title="option_explain.Hirqiz_night_theme_onoff" version_id="1000010" version_string="1.0.0"><![CDATA[Night Mode Button On/Off Option]]></phrase>
+  <phrase title="option.Hirqiz_questmessage_onoff" version_id="1000010" version_string="1.0.0"><![CDATA[On/Off]]></phrase>
+  <phrase title="option_explain.Hirqiz_questmessage_onoff" version_id="1000010" version_string="1.0.0"><![CDATA[Guest Message On/Off Option]]></phrase>
+  <phrase title="option.Hirqiz_footer_onoff" version_id="1000010" version_string="1.0.0"><![CDATA[On/Off]]></phrase>
+  <phrase title="option_explain.Hirqiz_footer_onoff" version_id="1000010" version_string="1.0.0"><![CDATA[Footer Widget Block On/Off Option]]></phrase>
+  <phrase title="option.Hirqiz_questmessage" version_id="1000010" version_string="1.0.0"><![CDATA[Guest Message]]></phrase>
+  <phrase title="option.Hirqiz_footer_widget" version_id="1000010" version_string="1.0.0"><![CDATA[Footer Forum Description Message]]></phrase>
+  <phrase title="option_explain.Hirqiz_questmessage" version_id="1000010" version_string="1.0.0"><![CDATA[Guest Message]]></phrase>
+  <phrase title="option_explain.Hirqiz_footer_widget" version_id="1000010" version_string="1.0.0"><![CDATA[Footer Forum Description Message]]></phrase>
+  <phrase title="option_group.Hirqiz_Addon" version_id="1000010" version_string="1.0.0"><![CDATA[Hirqiz Addon]]></phrase>
+  <phrase title="option_group_description.Hirqiz_Addon" version_id="1000010" version_string="1.0.0"><![CDATA[Hirqiz Addon Options]]></phrase>
+  <phrase title="style_prop_group.Hirqiz_styling" version_id="1000010" version_string="1.0.0"><![CDATA[Hirqiz Theme Options]]></phrase>
+  <phrase title="style_prop_group_desc.Hirqiz_styling" version_id="1000010" version_string="1.0.0"><![CDATA[Hirqiz Theme Style Options]]></phrase>
+  <phrase title="Hirqiz_Posts_title" version_id="1000010" version_string="1.0.0"><![CDATA[Featured Posts]]></phrase>
+  <phrase title="Hirqiz_questmessage_title" version_id="1000010" version_string="1.0.0"><![CDATA[Welcome <3]]></phrase>
+  <phrase title="Hirqiz_questmessage_button" version_id="1000010" version_string="1.0.0"><![CDATA[Register in 1 minute, now!]]></phrase>
+  <phrase title="Hirqiz_footer_widget_title" version_id="1000010" version_string="1.0.0"><![CDATA[Forum Description]]></phrase>
+  <phrase title="Hirqiz_theme_switch_day" version_id="1000010" version_string="1.0.0"><![CDATA[Day]]></phrase>
+  <phrase title="Hirqiz_theme_switch_night" version_id="1000010" version_string="1.0.0"><![CDATA[Night]]></phrase>
+  <phrase title="admin_navigation.Hirqiz_Addon" version_id="1000010" version_string="1.0.0"><![CDATA[Hirqiz Options]]></phrase>
+  <phrase title="admin_navigation.Hirqiz_Addon_options" version_id="1000010" version_string="1.0.0"><![CDATA[Options]]></phrase>
+</phrases>
