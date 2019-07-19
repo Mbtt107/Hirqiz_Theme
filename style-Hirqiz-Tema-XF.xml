@@ -1,0 +1,5208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style title="Hırqız Tema" description="" user_selectable="1" addon_id="XF" export_version="2">
+  <templates>
+    <template title="PAGE_CONTAINER" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[<!DOCTYPE html>
+<html id="XF" lang="{$xf.language.language_code}" dir="{$xf.language.text_direction}"
+	data-app="public"
+	data-template="{$template}"
+	data-container-key="{$containerKey}"
+	data-content-key="{$contentKey}"
+	data-logged-in="{{ $xf.visitor.user_id ? 'true' : 'false' }}"
+	data-cookie-prefix="{$xf.cookie.prefix}"
+	class="has-no-js{{ $template ? ' template-' . $template : '' }}"
+	{{ $xf.runJobs ? ' data-run-jobs=""' : '' }}>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<xf:set var="$siteName" value="{$xf.options.boardTitle}" />
+	<xf:set var="$h1"><xf:h1 fallback="{$siteName}" /></xf:set>
+	<xf:set var="$description"><xf:description /></xf:set>
+
+	<title><xf:title formatter="%s | %s" fallback="{$xf.options.boardTitle}" page="{$pageNumber}" /></title>
+
+	<xf:foreach loop="$head" value="$headTag">
+		{$headTag}
+	</xf:foreach>
+
+	<xf:if is="!$head.meta_site_name && $siteName is not empty">
+		<xf:macro template="metadata_macros" name="site_name" arg-siteName="{$siteName}" arg-output="{{ true }}" />
+	</xf:if>
+	<xf:if is="!$head.meta_type">
+		<xf:macro template="metadata_macros" name="type" arg-type="website" arg-output="{{ true }}" />
+	</xf:if>
+	<xf:if is="!$head.meta_title">
+		<xf:macro template="metadata_macros" name="title" arg-title="{{ page_title() ?: $siteName }}" arg-output="{{ true }}" />
+	</xf:if>
+	<xf:if is="!$head.meta_description && $description is not empty && $pageDescriptionMeta">
+		<xf:macro template="metadata_macros" name="description" arg-description="{$description}" arg-output="{{ true }}" />
+	</xf:if>
+	<xf:if is="!$head.meta_share_url">
+		<xf:macro template="metadata_macros" name="share_url" arg-shareUrl="{$xf.fullUri}" arg-output="{{ true }}" />
+	</xf:if>
+	<xf:if is="!$head.meta_image_url && property('publicMetadataLogoUrl')">
+		<xf:macro template="metadata_macros" name="image_url"
+			arg-imageUrl="{{ base_url(property('publicMetadataLogoUrl'), true) }}"
+			arg-output="{{ true }}" />
+	</xf:if>
+
+	<xf:if is="property('metaThemeColor')">
+		<meta name="theme-color" content="{{ parse_less_color(property('metaThemeColor')) }}" />
+	</xf:if>
+
+	<xf:macro template="helper_js_global" name="head" arg-app="public" />
+
+	<xf:if is="property('publicFaviconUrl')">
+		<link rel="icon" type="image/png" href="{{ base_url(property('publicFaviconUrl'), true) }}" sizes="32x32" />
+	</xf:if>
+	<xf:if is="property('publicMetadataLogoUrl')">
+		<link rel="apple-touch-icon" href="{{ base_url(property('publicMetadataLogoUrl'), true) }}" />
+	</xf:if>
+	<xf:include template="google_analytics" />
+	<link rel="stylesheet" href="styles/fonts/fasg/css/font-awesome.css">
+	<script>JavaScript:
+$(document).ready(function () {
+
+  'use strict';
+
+   var c, currentScrollTop = 0,
+       navbar = $('#ZenXheader');
+
+   $(window).scroll(function () {
+      var a = $(window).scrollTop();
+      var b = navbar.height();
+   
+      currentScrollTop = a;
+   
+      if (c < currentScrollTop && a > b + b) {
+        navbar.addClass("scrollUp");
+      } else if (c > currentScrollTop && !(a <= b)) {
+        navbar.removeClass("scrollUp");
+      }
+      c = currentScrollTop;
+  });
+
+});</script>
+</head>
+<body data-template="{$template}">
+
+<div class="p-pageWrapper" id="top">
+
+<xf:if contentcheck="true">
+	<div class="p-staffBar">
+		<div class="p-staffBar-inner hScroller" data-xf-init="h-scroller">
+			<div class="hScroller-scroll">
+			<xf:contentcheck>
+				<xf:if is="$xf.visitor.is_moderator && $xf.session.unapprovedCounts.total">
+					<a href="{{ link('approval-queue') }}" class="p-staffBar-link badgeContainer badgeContainer--highlighted" data-badge="{$xf.session.unapprovedCounts.total|number}">
+						{{ phrase('approval_queue') }}
+					</a>
+				</xf:if>
+
+				<xf:if is="$xf.visitor.is_moderator && !$xf.options.reportIntoForumId && $xf.session.reportCounts.total">
+					<a href="{{ link('reports') }}"
+						class="p-staffBar-link badgeContainer badgeContainer--visible {{ ($xf.session.reportCounts.total && ($xf.session.reportCounts.lastBuilt > $xf.session.reportLastRead) OR $xf.session.reportCounts.assigned) ? ' badgeContainer--highlighted' : '' }}"
+						data-badge="{{ $xf.session.reportCounts.assigned ? $xf.session.reportCounts.assigned|number . ' / ' . $xf.session.reportCounts.total|number : $xf.session.reportCounts.total|number }}"
+						title="{{ $xf.session.reportCounts.lastBuilt ? phrase('last_report_update:') . ' ' . date_time($xf.session.reportCounts.lastBuilt) : '' }}">
+						{{ phrase('reports') }}
+					</a>
+				</xf:if>
+
+				<xf:if contentcheck="true">
+					<a class="p-staffBar-link menuTrigger" data-xf-click="menu" data-xf-key="alt+m" role="button" tabindex="0" aria-expanded="false" aria-haspopup="true">{{ phrase('moderator') }}</a>
+					<div class="menu" data-menu="menu" aria-hidden="true">
+						<div class="menu-content">
+							<h4 class="menu-header">{{ phrase('moderator_tools') }}</h4>
+							<xf:contentcheck>
+							<!--[XF:mod_tools_menu:top]-->
+							<xf:if is="$xf.visitor.is_moderator">
+								<a href="{{ link('approval-queue') }}" class="menu-linkRow">{{ phrase('approval_queue') }}</a>
+							</xf:if>
+							<xf:if is="$xf.visitor.is_moderator && !$xf.options.reportIntoForumId">
+								<a href="{{ link('reports') }}" class="menu-linkRow" title="{{ $xf.session.reportCounts.lastBuilt ? phrase('last_report_update:') . ' ' . date_time($xf.session.reportCounts.lastBuilt) : '' }}">{{ phrase('reports') }}</a>
+							</xf:if>
+							<!--[XF:mod_tools_menu:bottom]-->
+							</xf:contentcheck>
+						</div>
+					</div>
+				</xf:if>
+
+				<xf:if is="$xf.visitor.is_admin">
+					<a href="{{ base_url('admin.php') }}" class="p-staffBar-link" target="_blank">{{ phrase('admin') }}</a>
+				</xf:if>
+			</xf:contentcheck>
+			</div>
+		</div>
+	</div>
+</xf:if>
+	
+<header class="p-header p-navSticky p-navSticky--primary" data-xf-init="sticky-header" id="ZenXheader">
+	<div class="p-header-inner">
+		<div class="p-header-content">
+
+			<div class="p-header-logo p-header-logo--image">
+				<a href="{{ ($xf.options.logoLink && $xf.homePageUrl) ? $xf.homePageUrl : link('index') }}">
+					<img src="{{ base_url(property('publicLogoUrl')) }}"
+						alt="{$xf.options.boardTitle}"
+						{{ property('publicLogoUrl2x') ? 'srcset="' . base_url(property('publicLogoUrl2x')) . ' 2x"' : '' }} />
+				</a>
+			</div>
+			
+			<nav class="p-nav">
+		<div class="p-nav-inner">
+			<a class="p-nav-menuTrigger" data-xf-click="off-canvas" data-menu=".js-headerOffCanvasMenu" role="button" tabindex="0">
+				<i aria-hidden="true"></i>
+				<span class="p-nav-menuText">{{ phrase('menu') }}</span>
+			</a>
+
+			<div class="p-nav-smallLogo">
+				<a href="{{ ($xf.options.logoLink && $xf.homePageUrl) ? $xf.homePageUrl : link('index') }}">
+					<img src="{{ base_url(property('publicLogoUrl')) }}"
+						alt="{$xf.options.boardTitle}"
+					{{ property('publicLogoUrl2x') ? 'srcset="' . base_url(property('publicLogoUrl2x')) . ' 2x"' : '' }} />
+				</a>
+			</div>
+
+			<div class="p-nav-scroller hScroller" data-xf-init="h-scroller" data-auto-scroll=".p-navEl.is-selected">
+				<div class="hScroller-scroll">
+					<ul class="p-nav-list js-offCanvasNavSource">
+					<xf:foreach loop="$navTree" key="$navSection" value="$navEntry" i="$i" if="{{ $navSection != $xf.app.defaultNavigationId }}">
+						<li>
+							<xf:macro name="nav_entry"
+								arg-navId="{$navSection}"
+								arg-nav="{$navEntry}"
+								arg-selected="{{ $navSection == $pageSection }}"
+								arg-shortcut="{$i}" />
+						</li>
+					</xf:foreach>
+					</ul>
+				</div>
+			</div>
+
+			<div class="p-nav-opposite">
+				<div class="p-navgroup p-account {{ $xf.visitor.user_id ? 'p-navgroup--member' : 'p-navgroup--guest' }}">
+					<xf:if is="$xf.visitor.user_id">
+						<xf:if is="$xf.visitor.user_state == 'rejected' OR $xf.visitor.user_state == 'disabled'">
+							<a href="{{ link('account') }}"
+								class="p-navgroup-link p-navgroup-link--iconic p-navgroup-link--user">
+								<xf:avatar user="$xf.visitor" size="xxs" href="" />
+								<span class="p-navgroup-linkText">{$xf.visitor.username}</span>
+							</a>
+
+							<a href="{{ link('logout', null, {'t': csrf_token()}) }}" class="p-navgroup-link">
+								<span class="p-navgroup-linkText">{{ phrase('log_out') }}</span>
+							</a>
+						<xf:else />
+							<a href="{{ link('account') }}"
+								class="p-navgroup-link p-navgroup-link--iconic p-navgroup-link--user"
+								data-xf-click="menu"
+								data-xf-key="{{ phrase('shortcut.visitor_menu')|for_attr }}"
+								data-menu-pos-ref="< .p-navgroup"
+								aria-expanded="false"
+								aria-haspopup="true">
+								<xf:avatar user="$xf.visitor" size="xxs" href="" />
+								<span class="p-navgroup-linkText">{$xf.visitor.username}</span>
+							</a>
+							<div class="menu menu--structural menu--wide menu--account" data-menu="menu" aria-hidden="true"
+								data-href="{{ link('account/visitor-menu') }}"
+								data-load-target=".js-visitorMenuBody">
+								<div class="menu-content js-visitorMenuBody">
+									<div class="menu-row">
+										{{ phrase('loading...') }}
+									</div>
+								</div>
+							</div>
+
+							<a href="{{ link('conversations') }}"
+								class="p-navgroup-link p-navgroup-link--iconic p-navgroup-link--conversations js-badge--conversations badgeContainer{{ $xf.visitor.conversations_unread ? ' badgeContainer--highlighted' : '' }}"
+								data-badge="{$xf.visitor.conversations_unread|number}"
+								data-xf-click="menu"
+								data-xf-key="{{ phrase('shortcut.conversations_menu')|for_attr }}"
+								data-menu-pos-ref="< .p-navgroup"
+								aria-expanded="false"
+								aria-haspopup="true">
+								<i aria-hidden="true"></i>
+								<!--<span class="p-navgroup-linkText">{{ phrase('inbox') }}</span>-->
+							</a>
+							<div class="menu menu--structural menu--medium" data-menu="menu" aria-hidden="true"
+								data-href="{{ link('conversations/popup') }}"
+								data-nocache="true"
+								data-load-target=".js-convMenuBody">
+								<div class="menu-content">
+									<h3 class="menu-header">{{ phrase('conversations') }}</h3>
+									<div class="js-convMenuBody">
+										<div class="menu-row">{{ phrase('loading...') }}</div>
+									</div>
+									<div class="menu-footer menu-footer--split">
+										<span class="menu-footer-main">
+											<a href="{{ link('conversations') }}">{{ phrase('show_all...') }}</a>
+										</span>
+										<span class="menu-footer-opposite">
+											<a href="{{ link('conversations/add') }}">{{ phrase('start_new_conversation') }}</a>
+										</span>
+									</div>
+								</div>
+							</div>
+
+							<a href="{{ link('account/alerts') }}"
+								class="p-navgroup-link p-navgroup-link--iconic p-navgroup-link--alerts js-badge--alerts badgeContainer{{ $xf.visitor.alerts_unread ? ' badgeContainer--highlighted' : '' }}"
+								data-badge="{$xf.visitor.alerts_unread|number}"
+								data-xf-click="menu"
+								data-xf-key="{{ phrase('shortcut.alerts_menu')|for_attr }}"
+								data-menu-pos-ref="< .p-navgroup"
+								aria-expanded="false"
+								aria-haspopup="true">
+								<i aria-hidden="true"></i>
+								<!--<span class="p-navgroup-linkText">{{ phrase('alerts') }}</span>-->
+							</a>
+							<div class="menu menu--structural menu--medium" data-menu="menu" aria-hidden="true"
+								data-href="{{ link('account/alerts-popup') }}"
+								data-nocache="true"
+								data-load-target=".js-alertsMenuBody">
+								<div class="menu-content">
+									<h3 class="menu-header">{{ phrase('alerts') }}</h3>
+									<div class="js-alertsMenuBody">
+										<div class="menu-row">{{ phrase('loading...') }}</div>
+									</div>
+									<div class="menu-footer menu-footer--split">
+										<span class="menu-footer-main">
+											<a href="{{ link('account/alerts') }}">{{ phrase('show_all...') }}</a>
+										</span>
+										<span class="menu-footer-opposite">
+											<a href="{{ link('account/preferences') }}">{{ phrase('preferences') }}</a>
+										</span>
+									</div>
+								</div>
+							</div>
+						</xf:if>
+					<xf:else />
+						<a href="{{ link('login') }}" class="p-navgroup-link p-navgroup-link--textual p-navgroup-link--logIn"
+							data-xf-click="overlay" data-follow-redirects="on">
+							<span class="p-navgroup-linkText">{{ phrase('log_in') }}</span>
+						</a>
+						<xf:if is="$xf.options.registrationSetup.enabled">
+							<a href="{{ link('register') }}" class="p-navgroup-link p-navgroup-link--textual p-navgroup-link--register"
+								data-xf-click="overlay" data-follow-redirects="on">
+								<span class="p-navgroup-linkText">{{ phrase('register') }}</span>
+							</a>
+						</xf:if>
+					</xf:if>
+				</div>
+
+				<div class="p-navgroup p-discovery{{ !$xf.visitor.canSearch() ? ' p-discovery--noSearch' : '' }}">
+					<a href="{{ link('whats-new') }}"
+						class="p-navgroup-link p-navgroup-link--iconic p-navgroup-link--whatsnew"
+						title="{{ phrase('whats_new')|for_attr }}">
+						<i aria-hidden="true"></i>
+						<span class="p-navgroup-linkText">{{ phrase('whats_new') }}</span>
+					</a>
+
+					<xf:if is="$xf.visitor.canSearch()">
+						<a href="{{ link('search') }}"
+							class="p-navgroup-link p-navgroup-link--iconic p-navgroup-link--search"
+							data-xf-click="menu"
+							data-xf-key="{{ phrase('shortcut.search_menu')|for_attr }}"
+							aria-label="{{ phrase('search')|for_attr }}"
+							aria-expanded="false"
+							aria-haspopup="true"
+							title="{{ phrase('search')|for_attr }}">
+							<i aria-hidden="true"></i>
+							<!--<span class="p-navgroup-linkText">{{ phrase('search') }}</span>-->
+						</a>
+						<div class="menu menu--structural menu--wide" data-menu="menu" aria-hidden="true">
+							<form action="{{ link('search/search') }}" method="post"
+								class="menu-content"
+								data-xf-init="quick-search">
+
+								<h3 class="menu-header">{{ phrase('search') }}</h3>
+								<!--[XF:search_menu:above_input]-->
+								<div class="menu-row">
+									<xf:if is="$searchConstraints">
+										<div class="inputGroup inputGroup--joined">
+											<xf:textbox name="keywords"
+												placeholder="{{ phrase('search...') }}"
+												aria-label="{{ phrase('search') }}"
+												data-menu-autofocus="true" />
+											<xf:select name="constraints"
+												class="js-quickSearch-constraint"
+												aria-label="{{ phrase('search_within') }}">
+
+												<xf:option value="">{{ phrase('everywhere') }}</xf:option>
+												<xf:foreach loop="$searchConstraints" key="$constraintName" value="$constraint">
+													<xf:option value="{$constraint|json}">{$constraintName}</xf:option>
+												</xf:foreach>
+											</xf:select>
+										</div>
+									<xf:else />
+										<xf:textbox name="keywords"
+											placeholder="{{ phrase('search...') }}"
+											aria-label="{{ phrase('search') }}"
+											data-menu-autofocus="true" />
+									</xf:if>
+								</div>
+
+								<!--[XF:search_menu:above_title_only]-->
+								<div class="menu-row">
+									<xf:checkbox standalone="true"><xf:option name="c[title_only]" label="{{ phrase('search_titles_only') }}" /></xf:checkbox>
+								</div>
+								<!--[XF:search_menu:above_member]-->
+								<div class="menu-row">
+									<div class="inputGroup">
+										<span class="inputGroup-text" id="ctrl_search_menu_by_member">{{ phrase('by:') }}</span>
+										<input class="input" name="c[users]" data-xf-init="auto-complete" placeholder="{{ phrase('member')|for_attr }}" aria-labelledby="ctrl_search_menu_by_member" />
+									</div>
+								</div>
+								<div class="menu-footer">
+									<span class="menu-footer-controls">
+										<xf:button type="submit" class="button--primary" icon="search" />
+										<xf:button href="{{ link('search') }}">{{ phrase('advanced_search...') }}</xf:button>
+									</span>
+								</div>
+
+								<xf:csrf />
+							</form>
+						</div>
+					</xf:if>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+			<xf:ad position="container_header" />
+		</div>
+	</div>
+</header>
+
+
+<div class="headerProxy">
+	<span class="headerProxy-overlay"></span>
+</div>
+	
+<xf:if is="property('publicNavSticky') == 'primary'">
+	<div class="p-navSticky p-navSticky--primary" data-xf-init="sticky-header">
+		{$navHtml|raw}
+	</div>
+	{$subNavHtml|raw}
+<xf:elseif is="property('publicNavSticky') == 'all'" />
+	<div class="p-navSticky p-navSticky--all" data-xf-init="sticky-header">
+		{$navHtml|raw}
+		{$subNavHtml|raw}
+	</div>
+<xf:else />
+	{$navHtml|raw}
+	{$subNavHtml|raw}
+</xf:if>
+
+<div class="offCanvasMenu offCanvasMenu--nav js-headerOffCanvasMenu" data-menu="menu" aria-hidden="true" data-ocm-builder="navigation">
+	<div class="offCanvasMenu-backdrop" data-menu-close="true"></div>
+	<div class="offCanvasMenu-content">
+		<div class="offCanvasMenu-header">
+			{{ phrase('menu') }}
+			<a class="offCanvasMenu-closer" data-menu-close="true" role="button" tabindex="0" aria-label="{{ phrase('close')|for_attr }}"></a>
+		</div>
+		<xf:if is="$xf.visitor.user_id">
+			<div class="p-offCanvasAccountLink">
+				<div class="offCanvasMenu-linkHolder">
+					<a href="{{ link('account') }}" class="offCanvasMenu-link">
+						<xf:avatar user="$xf.visitor" size="xxs" href="" />
+						{$xf.visitor.username}
+					</a>
+				</div>
+				<hr class="offCanvasMenu-separator" />
+			</div>
+		<xf:else />
+			<div class="p-offCanvasRegisterLink">
+				<div class="offCanvasMenu-linkHolder">
+					<a href="{{ link('login') }}" class="offCanvasMenu-link" data-xf-click="overlay" data-menu-close="true">
+						{{ phrase('log_in') }}
+					</a>
+				</div>
+				<hr class="offCanvasMenu-separator" />
+				<xf:if is="$xf.options.registrationSetup.enabled">
+					<div class="offCanvasMenu-linkHolder">
+						<a href="{{ link('register') }}" class="offCanvasMenu-link" data-xf-click="overlay" data-menu-close="true">
+							{{ phrase('register') }}
+						</a>
+					</div>
+					<hr class="offCanvasMenu-separator" />
+				</xf:if>
+			</div>
+		</xf:if>
+		<div class="js-offCanvasNavTarget"></div>
+	</div>
+</div>
+
+<div class="p-body">
+	<div class="p-body-inner">
+		<!--XF:EXTRA_OUTPUT-->
+		
+		<xf:if is="$template == 'forum_list'">
+			<div class="featPosts">
+				<div class="featPosts__head">Öne Çıkanlar</div>
+					<div class="featPosts__container">
+						<div class="featPosts__item">
+							<div class="featPosts__item-img">
+								<img src="styles/hirqiztema/images/hirqizposts.png" alt="Konu Aciklamasi">
+							</div>
+							<h3><a href="konu-linki">Konu Açıklaması</a></h3>
+								<ul class="listInline listInline--bullet">
+									<li><time class="u-dt">Konu Tarihi</time></li>
+									<li>Konu Sahibi</li>
+								</ul>
+						</div>
+						<div class="featPosts__item">
+							<div class="featPosts__item-img">
+								<img src="styles/hirqiztema/images/hirqizposts.png" alt="Konu Aciklamasi">
+							</div>
+							<h3><a href="konu-linki">Konu Açıklaması</a></h3>
+							<ul class="listInline listInline--bullet">
+								<li><time class="u-dt">Konu Tarihi</time></li>
+								<li>Konu Sahibi</li>
+							</ul>
+						</div>
+						<div class="featPosts__item">
+							<div class="featPosts__item-img">
+								<img src="styles/hirqiztema/images/hirqizposts.png" alt="Konu Aciklamasi">
+							</div>
+							<h3><a href="konu-linki">Konu Açıklaması</a></h3>
+							<ul class="listInline listInline--bullet">
+								<li><time class="u-dt">Konu Tarihi</time></li>
+								<li>Konu Sahibi</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</xf:if>
+		
+		<xf:if is="$notices.block">
+			<xf:macro template="notice_macros" name="notice_list" arg-type="block" arg-notices="{$notices.block}" />
+		</xf:if>
+
+		<xf:if is="$notices.scrolling">
+			<xf:macro template="notice_macros" name="notice_list" arg-type="scrolling" arg-notices="{$notices.scrolling}" />
+		</xf:if>
+		
+		<xf:if is="{$xf.options.XGT_istatistik_Konum} == 'kendikonumum' ">
+     			<xf:include template="XGT_istatistik" /> 
+ 		 </xf:if>
+		
+		<xf:ad position="container_breadcrumb_top_above" />
+		<xf:macro name="breadcrumbs"
+			arg-breadcrumbs="{$breadcrumbs}"
+			arg-navTree="{$navTree}"
+			arg-selectedNavEntry="{$selectedNavEntry}" />
+		<xf:ad position="container_breadcrumb_top_below" />
+
+		<xf:macro template="browser_warning_macros" name="javascript" />
+		<xf:macro template="browser_warning_macros" name="browser" />
+
+		<xf:if is="$headerHtml is not empty">
+			<div class="p-body-header">
+				{$headerHtml|raw}
+			</div>
+		<xf:elseif contentcheck="true" />
+			<div class="p-body-header">
+			<xf:contentcheck>
+				<xf:if contentcheck="true">
+					<div class="p-title {{ $noH1 ? 'p-title--noH1' : '' }}">
+					<xf:contentcheck>
+						<xf:if is="!$noH1">
+							<h1 class="p-title-value">{$h1}</h1>
+						</xf:if>
+						<xf:if contentcheck="true">
+							<div class="p-title-pageAction"><xf:contentcheck><xf:pageaction /></xf:contentcheck></div>
+						</xf:if>
+					</xf:contentcheck>
+					</div>
+				</xf:if>
+
+				<xf:if is="$description is not empty">
+					<div class="p-description">{$description}</div>
+				</xf:if>
+			</xf:contentcheck>
+			</div>
+		</xf:if>
+		
+		<xf:if is="!$xf.visitor.user_id">
+			<div class="p-guest--message">
+				<h1>Hoşgeldiniz &lt;3</h1>
+				<p>Buraya foruma göz atan ziyaretçileri davet etmek için istediğiniz yazıyı ekleyebilirsiniz.</p>
+				<a href="index.php?register" class="button--cta button button--icon button--icon--write">
+					<span class="button-text">Şimdi 1 Dakikada Kayıt Ol!</span>
+				</a>
+			</div>
+		</xf:if>
+
+		<div class="p-body-main {{ $sidebar ? 'p-body-main--withSidebar' : '' }} {{ $sideNav ? 'p-body-main--withSideNav' : '' }}">
+			<xf:if is="$sideNav">
+				<div class="p-body-sideNav">
+					<div class="p-body-sideNavTrigger">
+						<xf:button class="button--link" data-xf-click="off-canvas" data-menu="#js-SideNavOcm">
+							{{ $sideNavTitle ?: phrase('navigation') }}
+						</xf:button>
+					</div>
+					<div class="p-body-sideNavInner" data-ocm-class="offCanvasMenu offCanvasMenu--blocks" id="js-SideNavOcm" data-ocm-builder="sideNav">
+						<div data-ocm-class="offCanvasMenu-backdrop" data-menu-close="true"></div>
+						<div data-ocm-class="offCanvasMenu-content">
+							<div class="p-body-sideNavContent">
+								<xf:ad position="container_sidenav_above" />
+								<xf:foreach loop="$sideNav" value="$sideNavHtml">
+									{$sideNavHtml}
+								</xf:foreach>
+								<xf:ad position="container_sidenav_below" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</xf:if>
+
+			<div class="p-body-content">
+				<xf:ad position="container_content_above" />
+				<div class="p-body-pageContent">{$content|raw}</div>
+				<xf:ad position="container_content_below" />
+			</div>
+
+			<xf:if is="$sidebar">
+				<div class="p-body-sidebar">
+					<xf:ad position="container_sidebar_above" />
+					<xf:foreach loop="$sidebar" value="$sidebarHtml">
+						{$sidebarHtml}
+					</xf:foreach>
+					<xf:ad position="container_sidebar_below" />
+				</div>
+			</xf:if>
+		</div>
+
+		<xf:ad position="container_breadcrumb_bottom_above" />
+		<xf:macro name="breadcrumbs"
+			arg-breadcrumbs="{$breadcrumbs}"
+			arg-navTree="{$navTree}"
+			arg-selectedNavEntry="{$selectedNavEntry}"
+			arg-variant="bottom" />
+		<xf:ad position="container_breadcrumb_bottom_below" />
+	</div>
+</div>
+	
+<footer class="p-footer" id="footer">
+	<div class="p-footer-inner">
+		<div class="p-footer-row">
+			<xf:if contentcheck="true">
+				<div class="p-footer-row-main">
+					<ul class="p-footer-linkList">
+					<xf:contentcheck>
+						<xf:if is="$xf.visitor.canChangeStyle()">
+							<li><a href="{{ link('misc/style') }}" data-xf-click="overlay"
+								data-xf-init="tooltip" style="color: white; font-weight:500;" title="{{ phrase('style_chooser')|for_attr }}" rel="nofollow">
+								<i class="fa fa-paint-brush" aria-hidden="true"></i> {$xf.style.title}
+							</a></li>
+						</xf:if>
+						<xf:if is="$xf.visitor.canChangeLanguage()">
+							<li><a href="{{ link('misc/language') }}" data-xf-click="overlay"
+								data-xf-init="tooltip" style="color: white; font-weight:500;" title="{{ phrase('language_chooser')|for_attr }}" rel="nofollow">
+								<i class="fa fa-globe" aria-hidden="true"></i> {$xf.language.title}</a></li>
+						</xf:if>
+					</xf:contentcheck>
+					</ul>
+				</div>
+			</xf:if>
+			<div class="p-footer-row-opposite">
+				<ul class="p-footer-linkList">
+					<xf:if is="$xf.visitor.canUseContactForm()">
+						<xf:if is="$xf.contactUrl">
+							<li><a href="{$xf.contactUrl}" data-xf-click="{{ ($xf.options.contactUrl.overlay OR $xf.options.contactUrl.type == 'default') ? 'overlay' : '' }}">{{ phrase('contact_us') }}</a></li>
+						</xf:if>
+					</xf:if>
+
+					<xf:if is="$xf.tosUrl">
+						<li><a href="{$xf.tosUrl}">{{ phrase('terms_and_rules') }}</a></li>
+					</xf:if>
+
+					<xf:if is="$xf.privacyPolicyUrl">
+						<li><a href="{$xf.privacyPolicyUrl}">{{ phrase('privacy_policy') }}</a></li>
+					</xf:if>
+
+					<xf:if is="$xf.helpPageCount">
+						<li><a href="{{ link('help') }}">{{ phrase('help') }}</a></li>
+					</xf:if>
+
+					<xf:if is="$xf.homePageUrl">
+						<li><a href="{$xf.homePageUrl}">{{ phrase('home') }}</a></li>
+					</xf:if>
+
+					<li><a href="{{ link('forums/index.rss', '-') }}" target="_blank" class="p-footer-rssLink" title="{{ phrase('rss')|for_attr }}"><span aria-hidden="true"><i class="fa fa-rss"></i><span class="u-srOnly">{{ phrase('rss') }}</span></span></a></li>
+				</ul>
+			</div>
+		</div>
+
+		<xf:if contentcheck="true">
+			<div class="p-footer-debug">
+			<xf:contentcheck>
+				<xf:macro template="debug_macros" name="debug"
+					arg-controller="{$controller}"
+					arg-action="{$actionMethod}"
+					arg-template="{$template}" />
+			</xf:contentcheck>
+			</div>
+		</xf:if>
+	</div>
+</footer>
+
+<div class="pre-footer">
+	<div class="p-footer-inner">
+	<div class="grid-main">
+    	<div class="grid">
+			<div class="block-container">
+				<h3 class="block-minorHeader">Forum Açıklamanız</h3>
+				<div class="block-body">
+					<div class="block-row block-row--minor">
+						<p>
+							Buraya forumunuzla ilgili açıklama yazabilirsiniz.
+						</p>
+					</div>
+				</div>
+			</div>
+    	</div>
+    	<div class="grid">
+        	<xf:widget key="online_list_online_statistics" />
+    	</div>
+		<div class="grid">
+        	<xf:widget key="member_wrapper_newest_members" />
+    	</div>
+    	<div class="grid">
+        	<xf:widget key="forum_overview_share_page" />
+    	</div>
+	</div>
+	
+	<xf:if contentcheck="true">
+		<div class="p-footer-copyright">
+			<xf:contentcheck>
+				<xf:copyright />
+				{{ phrase('extra_copyright') }}
+				<br>
+				Hırqız Tema By Mbtt
+			</xf:contentcheck>
+		</div>
+	</xf:if>
+	</div>
+</div>
+	
+</div> <!-- closing p-pageWrapper -->
+
+<div class="u-bottomFixer js-bottomFixTarget">
+	<xf:if is="$notices.floating">
+		<xf:macro template="notice_macros" name="notice_list" arg-type="floating" arg-notices="{$notices.floating}" />
+	</xf:if>
+	<xf:if is="$notices.bottom_fixer">
+		<xf:macro template="notice_macros" name="notice_list" arg-type="bottom_fixer" arg-notices="{$notices.bottom_fixer}" />
+	</xf:if>
+</div>
+
+<xf:if is="property('scrollJumpButtons')">
+	<div class="u-scrollButtons js-scrollButtons" data-trigger-type="{{ property('scrollJumpButtons') }}">
+		<xf:button href="#top" class="button--scroll" data-xf-click="scroll-to"><i class="fa fa-arrow-up"></i><span class="u-srOnly">{{ phrase('top') }}</span></xf:button>
+		<xf:if is="property('scrollJumpButtons') != 'up'">
+			<xf:button href="#footer" class="button--scroll" data-xf-click="scroll-to"><i class="fa fa-arrow-down"></i><span class="u-srOnly">{{ phrase('bottom') }}</span></xf:button>
+		</xf:if>
+	</div>
+</xf:if>
+
+<xf:macro template="helper_js_global" name="body" arg-app="public" arg-jsState="{$jsState}" />
+
+{$ldJsonHtml|raw}
+
+</body>
+</html>
+
+<xf:macro name="nav_entry" arg-navId="!" arg-nav="!" arg-selected="{{ false }}" arg-shortcut="">
+	<div class="p-navEl {{ $selected ? 'is-selected' : '' }}" {{ $nav.children ? 'data-has-children="true"' : '' }}>
+		<xf:if is="$nav.href">
+
+			<xf:macro name="nav_link"
+				arg-navId="{$navId}"
+				arg-nav="{$nav}"
+				arg-class="p-navEl-link {{ $nav.children ? 'p-navEl-link--splitMenu' : '' }}"
+				arg-shortcut="{{ $nav.children ? false : $shortcut }}" />
+
+			<xf:if is="$nav.children"><a data-xf-key="{$shortcut}"
+				data-xf-click="menu"
+				data-menu-pos-ref="< .p-navEl"
+				data-arrow-pos-ref="< .p-navEl"
+				class="p-navEl-splitTrigger"
+				role="button"
+				tabindex="0"
+				aria-label="{{ phrase('toggle_expanded') }}"
+				aria-expanded="false"
+				aria-haspopup="true"></a></xf:if>
+
+		<xf:elseif is="$nav.children" /><a data-xf-key="{$shortcut}"
+			data-xf-click="menu"
+			data-menu-pos-ref="< .p-navEl"
+			data-arrow-pos-ref="< .p-navEl"
+			class="p-navEl-linkHolder"
+			role="button"
+			tabindex="0"
+			aria-expanded="false"
+			aria-haspopup="true">
+			<xf:macro name="nav_link"
+				arg-navId="{$navId}"
+				arg-nav="{$nav}"
+				arg-class="p-navEl-link p-navEl-link--menuTrigger" />
+		</a>
+
+		<xf:else />
+
+			<xf:macro name="nav_link"
+				arg-navId="{$navId}"
+				arg-nav="{$nav}"
+				arg-class="p-navEl-link"
+				arg-shortcut="{$shortcut}" />
+
+		</xf:if>
+		<xf:if is="$nav.children">
+			<div class="menu menu--structural" data-menu="menu" aria-hidden="true">
+				<div class="menu-content">
+					<!--<h4 class="menu-header">{$nav.title}</h4>-->
+					<xf:foreach loop="$nav.children" key="$childNavId" value="$child">
+						<xf:macro name="nav_menu_entry"
+							arg-navId="{$childNavId}"
+							arg-nav="{$child}" />
+					</xf:foreach>
+				</div>
+			</div>
+		</xf:if>
+	</div>
+</xf:macro>
+
+<xf:macro name="nav_link" arg-navId="!" arg-nav="!" arg-class="" arg-titleHtml="" arg-shortcut="{{ false }}">
+	<xf:set var="$tag" value="{{ $nav.href ? 'a' : 'span' }}" />
+	<{$tag} {{ $nav.href ? 'href="' . $nav.href . '"' : '' }}
+		class="{{ trim($class) }} {$nav.attributes.class}"
+		{{ attributes($nav.attributes, ['class']) }}
+		{{ $shortcut !== false ? 'data-xf-key="' . $shortcut . '"' : '' }}
+		data-nav-id="{$navId}"><xf:if is="$nav.icon"><i class="fa {$nav.icon}" aria-hidden="true"></i> </xf:if>{{ $titleHtml ? $titleHtml|raw : $nav.title }}<xf:if is="$nav.counter"> <span class="badge badge--highlighted">{$nav.counter|number}</span></xf:if></{$tag}>
+</xf:macro>
+
+<xf:macro name="nav_menu_entry" arg-navId="!" arg-nav="!" arg-depth="0">
+	<xf:macro name="nav_link"
+		arg-navId="{$navId}"
+		arg-nav="{$nav}"
+		arg-class="menu-linkRow u-indentDepth{$depth} js-offCanvasCopy" />
+	<xf:if is="$nav.children">
+		<xf:foreach loop="$nav.children" key="$childNavId" value="$child">
+			<xf:macro name="nav_menu_entry"
+				arg-navId="{$childNavId}"
+				arg-nav="{$child}"
+				arg-depth="{{ $depth + 1 }}" />
+		</xf:foreach>
+		<xf:if is="$depth == 0">
+			<hr class="menu-separator" />
+		</xf:if>
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="breadcrumbs" arg-breadcrumbs="!" arg-navTree="!" arg-selectedNavEntry="{{ null }}" arg-variant="">
+	<xf:if contentcheck="true">
+		<ul class="p-breadcrumbs {{ $variant ? 'p-breadcrumbs--' . $variant : '' }}"
+			itemscope itemtype="https://schema.org/BreadcrumbList">
+		<xf:contentcheck>
+			<xf:set var="$position" value="{{ 0 }}" />
+
+			<xf:set var="$rootBreadcrumb" value="{$navTree.{$xf.options.rootBreadcrumb}}" />
+			<xf:if is="$rootBreadcrumb AND $rootBreadcrumb.href != $xf.uri">
+				<xf:set var="$position" value="{{ $position + 1 }}" />
+				<xf:macro name="crumb"
+					arg-position="{$position}"
+					arg-href="{$rootBreadcrumb.href}"
+					arg-value="{$rootBreadcrumb.title}" />
+			</xf:if>
+
+			<xf:if is="$selectedNavEntry && $selectedNavEntry.href && $selectedNavEntry.href != $xf.uri && $selectedNavEntry.href != $rootBreadcrumb.href">
+				<xf:set var="$position" value="{{ $position + 1 }}" />
+				<xf:macro name="crumb"
+					arg-position="{$position}"
+					arg-href="{$selectedNavEntry.href}"
+					arg-value="{$selectedNavEntry.title}" />
+			</xf:if>
+			<xf:foreach loop="$breadcrumbs" value="$breadcrumb" if="$breadcrumb.href != $xf.uri">
+				<xf:set var="$position" value="{{ $position + 1 }}" />
+				<xf:macro name="crumb"
+					arg-position="{$position}"
+					arg-href="{$breadcrumb.href}"
+					arg-value="{$breadcrumb.value}" />
+			</xf:foreach>
+
+		</xf:contentcheck>
+		</ul>
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="crumb" arg-href="!" arg-value="!" arg-position="{{ 0 }}">
+	<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+		<a href="{$href}" itemprop="item">
+			<span itemprop="name">{$value}</span>
+		</a>
+		<xf:if is="$position"><meta itemprop="position" content="{$position}" /></xf:if>
+	</li>
+</xf:macro>]]></template>
+    <template title="app_breadcrumbs.less" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[.p-breadcrumbs
+{
+	.m-listPlain();
+	.m-clearFix();
+
+	margin-bottom: 5px;
+	line-height: 1.5;
+	background: @xf-contentBg;
+	border-radius: 4px;
+	box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16);
+
+	&.p-breadcrumbs--bottom
+	{
+		margin-top: @xf-elementSpacer;
+		margin-bottom: 0;
+	}
+
+	> li
+	{
+		float: left;
+		margin-right: .5em;
+		font-size: @xf-fontSizeSmall;
+		padding: 10px;
+
+		a
+		{
+			display: inline-block;
+			vertical-align: bottom;
+			max-width: 300px;
+			text-transform: uppercase;
+			color: #6e6e6e;
+			.m-overflowEllipsis();
+		}
+
+		&:after,
+		&:before
+		{
+			.m-faBase();
+			font-size: 90%;
+			color: @xf-textColorMuted;
+		}
+
+		&:after
+		{
+			.m-faContent(@fa-var-angle-right, .36em, ltr);
+			.m-faContent(@fa-var-angle-left, .36em, rtl);
+			margin-left: .5em;
+		}
+		
+		&:first-child:before {
+    		content: "\f015";
+    		font-size: 14px;
+    		margin-right: .5em;
+			color: #a7a7a7;
+		}
+
+		&:last-child
+		{
+			margin-right: 0;
+
+			a
+			{
+				font-weight: 700;
+			}
+		}
+	}
+}
+
+@media (max-width: @xf-responsiveMedium)
+{
+	.p-breadcrumbs > li a
+	{
+		max-width: 200px;
+	}
+}
+
+@media (max-width: @xf-responsiveNarrow)
+{
+	.p-breadcrumbs
+	{
+		> li
+		{
+			display: none;
+			font-size: @xf-fontSizeSmallest;
+
+			&:last-child
+			{
+				display: block;
+			}
+
+			a
+			{
+				max-width: 90vw;
+			}
+
+			&:after
+			{
+				display: none;
+			}
+
+			&:before
+			{
+				.m-faContent(@fa-var-chevron-left, .72em, ltr);
+				.m-faContent(@fa-var-chevron-right, .72em, rtl);
+				margin-right: .5em;
+			}
+		}
+	}
+}]]></template>
+    <template title="app_footer.less" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[.pre-footer {
+	background: linear-gradient(90deg, rgba(245,245,245,0.95) 0%, rgba(245,245,245,0.95) 100%), url(styles/hirqiztema/images/pattern.png);
+}
+
+.p-footer
+{
+	.xf-publicFooter();
+
+	background: rgb(136,196,81);
+
+	a
+	{
+		.xf-publicFooterLink();
+	}
+}
+
+.p-footer-inner
+{
+	.m-pageWidth();
+
+	padding-top: @xf-paddingMedium;
+	padding-bottom: @xf-paddingLarge;
+}
+
+.p-footer-row
+{
+	.m-clearFix();
+
+	margin-bottom: -@xf-paddingLarge;
+}
+
+.p-footer-row-main
+{
+	float: left;
+	margin-bottom: @xf-paddingLarge;
+}
+
+.p-footer-row-opposite
+{
+	float: right;
+	margin-bottom: @xf-paddingLarge;
+}
+
+.p-footer-linkList
+{
+	.m-listPlain();
+	.m-clearFix();
+
+	> li
+	{
+		float: left;
+		margin-right: .5em;
+
+		&:last-child
+		{
+			margin-right: 0;
+		}
+
+		a
+		{
+			padding: 2px 4px;
+			border-radius: @xf-borderRadiusSmall;
+			color: rgba(255,255,255,0.8);
+
+			&:hover
+			{
+				text-decoration: none;
+				background-color: fade(@xf-publicFooterLink--color, 10%);
+			}
+		}
+	}
+}
+
+.p-footer-rssLink
+{
+	> span
+	{
+		position: relative;
+		top: -1px;
+
+		display: inline-block;
+		width: 1.44em;
+		height: 1.44em;
+		line-height: 1.44em;
+		text-align: center;
+		font-size: .8em;
+		background-color: #FFA500;
+		border-radius: 2px;
+	}
+
+	.fa-rss
+	{
+		color: white;
+	}
+}
+
+.p-footer-copyright
+{
+	margin-top: @xf-elementSpacer;
+	text-align: center;
+	font-size: @xf-fontSizeSmallest;
+}
+
+.p-footer-debug
+{
+	margin-top: @xf-paddingLarge;
+	text-align: right;
+	font-size: @xf-fontSizeSmallest;
+
+	.pairs > dt { color: inherit; }
+}
+
+@media (max-width: @xf-responsiveMedium)
+{
+	.p-footer-row-main,
+	.p-footer-row-opposite
+	{
+		float: none;
+	}
+
+	.p-footer-copyright
+	{
+		text-align: left;
+		padding: 0 4px; // aligns with other links
+	}
+}]]></template>
+    <template title="app_header.less" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[// MAIN HEADER ROW
+
+.p-header
+{
+	.xf-publicHeader();
+
+	a
+	{
+		color: inherit;
+	}
+}
+
+.p-header-inner
+{
+	.m-pageWidth();
+}
+
+.p-header-content
+{
+	padding: @xf-paddingMedium 0;
+
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	max-width: 100%;
+
+	.has-no-flexbox &
+	{
+		display: table;
+		width: 100%;
+	}
+}
+
+.p-header-logo
+{
+	.has-no-flexbox &
+	{
+		display: table-cell;
+	}
+
+	vertical-align: middle;
+	margin-right: auto;
+
+	a
+	{
+		color: inherit;
+		text-decoration: none;
+	}
+
+	&.p-header-logo--text
+	{
+		font-size: @xf-fontSizeLargest;
+	}
+
+	&.p-header-logo--image
+	{
+		img
+		{
+			vertical-align: bottom;
+			max-width: 100%;
+			max-height: 61px;
+		}
+	}
+}
+
+@media (max-width: @xf-publicNavCollapseWidth)
+{
+	.has-js .p-header
+	{
+		display: none;
+	}
+}
+
+@media (max-width: @xf-responsiveNarrow)
+{
+	.p-header-logo
+	{
+		max-width: 100px;
+
+		&.p-header-logo--text
+		{
+			font-size: @xf-fontSizeLarge;
+			font-weight: @xf-fontWeightNormal;
+			.m-overflowEllipsis();
+		}
+	}
+}]]></template>
+    <template title="app_nav.less" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[// navEl / Navigation Elements for header navigation
+
+.m-navElHPadding(@padding)
+{
+	.p-navEl-link
+	{
+		padding: 0 @padding;
+
+		&.p-navEl-link--splitMenu
+		{
+			padding-right: ((@padding) / 4);
+		}
+
+		&.p-navEl-link--menuTrigger
+		{
+			padding-right: ((@padding) / 3); // equal to splitTrigger padding-right
+
+			&:after
+			{
+				padding-left: ((@padding) / 4 + (@padding) / 3); // equal to splitMenu padding-right + splitTrigger padding-left
+			}
+		}
+	}
+
+	.p-navEl-splitTrigger
+	{
+		padding: 0 ((@padding) / 3);
+	}
+}
+
+.p-navEl
+{
+	.m-clearFix();
+}
+
+.p-navEl-linkHolder
+{
+	float: left;
+}
+
+.p-navEl-link
+{
+	float: left;
+	.m-transition(all, @_nav-elTransitionSpeed);
+	.m-transitionProperty(opacity, background;);
+
+	&.p-navEl-link--menuTrigger
+	{
+		cursor: pointer;
+
+		&:after
+		{
+			.m-faBase();
+			.m-faContent(@fa-var-caret-down, .58em);
+			opacity: .5;
+			.m-transition(opacity, @_nav-elTransitionSpeed);
+			unicode-bidi: isolate; // try to keep this in the right position in RTL with LTR text
+		}
+
+		&:hover:after
+		{
+			opacity: 1;
+		}
+	}
+}
+
+.p-nav-list .p-navEl-link, .p-nav-list .p-navEl-splitTrigger {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+}
+
+.p-navSticky--primary.is-sticky .p-nav-list .p-navEl.is-selected .p-navEl-splitTrigger:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 5px;
+    bottom: 5px;
+    width: 0;
+    border-left: none !important;
+}
+
+.p-navEl-splitTrigger
+{
+	float: left;
+	opacity: .5;
+	cursor: pointer;
+	text-decoration: none;
+	.m-transition(all, @_nav-elTransitionSpeed);
+
+	&:after
+	{
+		.m-faBase();
+		.m-faContent(@fa-var-caret-down, .58em);
+	}
+
+	&:hover
+	{
+		opacity: 1;
+		text-decoration: none;
+	}
+}
+
+// HEADER NAV ROW
+
+.p-nav
+{
+	.xf-publicNav();
+
+	a
+	{
+		color: inherit;
+	}
+
+	.p-navSticky.is-sticky &
+	{
+		.p-nav-list .p-navEl.is-selected,
+		.p-account
+		{
+			border-radius: 0;
+		}
+	}
+}
+
+.p-nav-inner
+{
+	.m-pageWidth();
+
+	.m-clearFix();
+	display: flex;
+	align-items: flex-end;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.p-nav .p-nav-menuTrigger
+{
+	display: none;
+	vertical-align: middle;
+	align-self: center;
+	margin-left: max(0px, @xf-pageEdgeSpacer - 6px);
+	margin-right: 5px;
+	padding: @xf-publicNavPaddingV 8px;
+
+	&:hover
+	{
+		text-decoration: none;
+	}
+
+	i:after
+	{
+		.m-faBase();
+		font-size: @xf-fontSizeLargest;
+		.m-faContent(@fa-var-navicon, .86em);
+		vertical-align: bottom;
+	}
+
+	.p-nav-menuText
+	{
+		display: none;
+	}
+}
+
+.p-nav-smallLogo
+{
+	display: none;
+	max-width: 100px;
+	align-self: center;
+
+	img
+	{
+		display: block;
+		max-height: @header-navHeight;
+	}
+}
+
+.p-nav-scroller
+{
+	margin-right: auto;
+	max-width: 100%;
+
+	.has-no-flexbox &
+	{
+		float: left;
+	}
+
+	.hScroller-scroll:not(.is-calculated)
+	{
+		// IE11 seems to want to flash a vertical scrollbar without this here
+		overflow: hidden;
+	}
+
+	.hScroller-action
+	{
+		.m-hScrollerActionColorVariation(
+			xf-default(@xf-publicNav--background-color, transparent),
+			@xf-publicNav--color,
+			xf-intensify(@xf-publicNav--color, 10%)
+		);
+	}
+}
+
+.p-nav-list
+{
+	.m-listPlain();
+	.m-clearFix();
+
+	font-size: 0;
+	text-transform: uppercase;
+
+	// this applies padding that will be contained within the scroller.
+	// it needs font-size 0 to not create extra space though
+	&:before,
+	&:after
+	{
+		display: inline-block;
+		width: @xf-pageEdgeSpacer;
+		content: '';
+	}
+
+	> li
+	{
+		display: inline-block;
+		vertical-align: bottom;
+		font-size: @xf-fontSizeNormal;
+
+		&:first-child
+		{
+			margin-left: 0;
+		}
+	}
+
+	.m-navElHPadding(@xf-publicNavPaddingH);
+
+	.p-navEl
+	{
+		.xf-publicNavTab();
+		.m-transition(all, @_nav-elTransitionSpeed);
+
+		&.is-selected
+		{
+			.xf-publicNavSelected();
+
+			.p-navEl-link
+			{
+				padding-right: @xf-publicNavPaddingH; // since the split trigger is hidden
+
+				&:hover
+				{
+					background: none;
+					text-decoration: none;
+				}
+			}
+
+			.p-navEl-splitTrigger
+			{
+				display: none;
+			}
+		}
+
+		&:not(.is-selected):not(.is-menuOpen)
+		{
+			&:hover,
+			.p-navEl-link:hover,
+			.p-navEl-splitTrigger:hover
+			{
+				.xf-publicNavTabHover();
+			}
+		}
+
+		&.is-menuOpen
+		{
+			.xf-publicNavTabMenuOpen();
+
+			border-top-left-radius: xf-default(@xf-publicNavSelected--border-top-left-radius, 0);
+			border-top-right-radius: xf-default(@xf-publicNavSelected--border-top-right-radius, 0);
+
+			.m-dropShadow(0, 5px, 10px, 0, .35);
+
+			a
+			{
+				text-decoration: none;
+				opacity: 1;
+			}
+		}
+	}
+
+	.p-navEl-link,
+	.p-navEl-splitTrigger
+	{
+		padding-top: @xf-publicNavPaddingV;
+		padding-bottom: @xf-publicNavPaddingV;
+	}
+}
+
+.p-navSticky--primary.is-sticky
+{
+	.p-nav-list
+	{
+
+		.p-navEl-link.p-navEl-link--splitMenu
+		{
+			padding-right: ((@xf-publicNavPaddingH) / 4);
+		}
+
+		.p-navEl.is-selected .p-navEl-splitTrigger
+		{
+			display: inline;
+			position: relative;
+
+			&:before
+			{
+				content: '';
+				position: absolute;
+				left: 0;
+				top: 5px;
+				bottom: 5px;
+				width: 0;
+				border-left: @xf-borderSize solid fade(xf-default(@xf-publicNavSelected--color, transparent), 35%);
+			}
+		}
+	}
+}
+
+@media (max-width: @xf-publicNavCollapseWidth)
+{
+	.has-js
+	{
+		.p-nav-inner
+		{
+			min-height: 45px;
+		}
+
+		.p-nav .p-nav-menuTrigger
+		{
+			display: inline-block;
+		}
+
+		.p-nav-smallLogo
+		{
+			display: inline-block;
+		}
+
+		.p-nav-scroller
+		{
+			display: none;
+		}
+	}
+}
+
+// ACCOUNT/VISITOR/SEARCH SECTION
+
+.p-nav-opposite
+{
+	margin-left: auto;
+	margin-right: @xf-pageEdgeSpacer;
+	text-align: right;
+	flex-shrink: 0;
+
+	.has-no-flexbox &
+	{
+		float: right;
+	}
+}
+
+.p-navgroup
+{
+	float: left;
+	.m-clearFix();
+	/*background: @xf-publicHeaderAdjustColor;
+	border-top-left-radius: @xf-borderRadiusMedium;
+	border-top-right-radius: @xf-borderRadiusMedium;*/
+
+	&.p-discovery
+	{
+		margin-left: .5em;
+
+		&.p-discovery--noSearch
+		{
+			margin-left: 0;
+		}
+	}
+}
+
+.p-navgroup-link
+{
+	float: left;
+	padding: @xf-publicNavPaddingV @_navAccount-hPadding;
+	/*border-left: 1px solid @xf-publicHeaderAdjustColor;*/
+
+	&:first-of-type
+	{
+		border-top-left-radius: @xf-borderRadiusMedium;
+		border-left: none;
+	}
+
+	&:last-of-type
+	{
+		border-top-right-radius: @xf-borderRadiusMedium;
+	}
+
+	&:hover
+	{
+		text-decoration: none;
+		background: xf-intensify(@xf-publicHeaderAdjustColor, 5%);
+	}
+
+	&.p-navgroup-link--user
+	{
+		.m-overflowEllipsis();
+		display: flex;
+    	align-items: center;
+    	max-width: 150px;
+    	padding: 12px 15px;
+
+		.avatar
+		{
+			height: 35px;
+			width: 35px;
+			font-size: 21px;
+    		border-radius: 50%;
+    		margin-right: 6px;
+			opacity: .6;
+			
+			&:hover
+			{
+				opacity: 1;
+			}
+		}
+	}
+
+	&.badgeContainer
+	{
+		opacity: .6;
+		position: relative;
+
+		&:after
+		{
+			position: absolute;
+			left: (@_navAccount-hPadding - 6px);
+			top: (@xf-publicNavPaddingV - 2px);
+			padding: 1px 3px;
+			margin: 0;
+			font-size: 10px;
+			line-height: 11px;
+		}
+
+		&:hover,
+		&.badgeContainer--highlighted
+		{
+			opacity: 1;
+		}
+	}
+
+	&.is-menuOpen
+	{
+		.xf-publicNavTabMenuOpen();
+		.m-dropShadow(0, 5px, 10px, 0, .35);
+		opacity: 1;
+	}
+
+	&.p-navgroup-link--iconic
+	{
+		i:after
+		{
+			.m-faBase();
+			display: inline-block;
+			min-width: 1em;
+			font-size: 17px;
+			padding: 12px 0px;
+		}
+	}
+
+	&.p-navgroup-link--conversations i:after
+	{
+		.m-faContent(@fa-var-envelope, 1em);
+	}
+
+	&.p-navgroup-link--alerts i:after
+	{
+		.m-faContent(@fa-var-bell, 1em);
+	}
+
+	&.p-navgroup-link--whatsnew i:after
+	{
+		.m-faContent(@fa-var-bolt, .5em);
+	}
+
+	&.p-navgroup-link--search i:after
+	{
+		.m-faContent(@fa-var-search, .93em);
+	}
+}
+
+.p-navgroup-link--whatsnew
+{
+	display: none;
+
+	.p-navgroup-link:first-of-type& + .p-navgroup-link
+	{
+		border-top-left-radius: @xf-borderRadiusMedium;
+		border-left: none;
+	}
+}
+
+@media (max-width: @xf-responsiveWide)
+{
+	.p-navgroup-link
+	{
+		&.p-navgroup-link--iconic .p-navgroup-linkText,
+		&.p-navgroup-link--textual i
+		{
+			display: none;
+		}
+
+		&.p-navgroup-link--textual
+		{
+			.m-overflowEllipsis();
+			max-width: 110px;
+		}
+
+		&.p-navgroup-link--iconic i:after
+		{
+			text-align: center;
+		}
+	}
+}
+
+@media (max-width: @xf-publicNavCollapseWidth)
+{
+	.p-navgroup-link--whatsnew
+	{
+		display: block;
+	}
+
+	.has-js
+	{
+		.p-nav-opposite
+		{
+			align-self: center;
+			//margin-right: max(0px, @xf-pageEdgeSpacer - @_navAccount-hPadding);
+
+			.p-navgroup
+			{
+				background: none;
+				margin-left: 0;
+			}
+
+			.p-navgroup-link
+			{
+				border: none;
+				border-radius: @xf-borderRadiusMedium;
+
+				&.is-menuOpen
+				{
+					.m-borderBottomRadius(0);
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: @xf-responsiveNarrow)
+{
+	.p-navgroup-link
+	{
+		.p-navgroup--member &
+		{
+			margin-left: 5px;
+
+			&:first-of-type
+			{
+				margin-left: 0;
+			}
+		}
+	}
+}
+
+@media (max-width: 359px)
+{
+	.p-navgroup-link&.p-navgroup-link--user
+	{
+		display: none;
+	}
+}
+
+@media (max-width: 374px)
+{
+	.p-navgroup-link.p-navgroup-link--register
+	{
+		display: none;
+	}
+}]]></template>
+    <template title="app_staffbar.less" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[// ######################################### STAFF BAR #################################
+
+.p-staffBar
+{
+	.xf-publicStaffBar();
+	z-index: 400;
+
+	a { color: inherit;	}
+
+	.hScroller-action
+	{
+		.m-hScrollerActionColorVariation(
+			xf-default(@xf-publicStaffBar--background-color, transparent),
+			@xf-publicStaffBar--color,
+			xf-intensify(@xf-publicStaffBar--color, 10%)
+		);
+	}
+}
+
+.p-staffBar-inner
+{
+	.m-pageWidth();
+	.m-clearFix();
+
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+.p-staffBar-link
+{
+	display: inline-block;
+	vertical-align: top;
+	color: inherit;
+	padding: 4px @xf-paddingMedium;
+	margin-right: .35em;
+
+	&:last-child
+	{
+		margin-right: 0;
+	}
+
+	&:hover
+	{
+		text-decoration: none;
+		background: xf-diminish(@xf-publicStaffBar--background-color, 6%);
+		border-radius: @xf-borderRadiusSmall;
+	}
+}]]></template>
+    <template title="core_block.less" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[// ################################# BLOCKS ##################
+
+.blocks
+{
+	margin-bottom: @xf-elementSpacer;
+
+	&:last-child
+	{
+		margin-bottom: 0;
+	}
+
+	.block
+	{
+		margin-bottom: (@xf-elementSpacer / 2);
+
+		&:last-child
+		{
+			margin-bottom: 0;
+		}
+	}
+}
+
+.blocks-header
+{
+	font-size: @xf-fontSizeLarger;
+	font-weight: @xf-fontWeightNormal;
+	color: @xf-textColorMuted;
+
+	margin-bottom: 5px;
+}
+
+.blocks-textJoiner
+{
+	display: table;
+	width: 100%;
+	margin-bottom: (@xf-elementSpacer / 2);
+	padding: 0 @xf-paddingMedium;
+
+	> span
+	{
+		display: table-cell;
+		position: relative;
+
+		&:before
+		{
+			content: '';
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 50%;
+			border-top: @xf-borderSize solid @xf-borderColor;
+		}
+	}
+
+	> em
+	{
+		display: table-cell;
+		padding: 0 @xf-paddingLarge;
+		width: 1%;
+		white-space: nowrap;
+		font-size: @xf-fontSizeLargest;
+		line-height: 1;
+		font-style: normal;
+		text-align: center;
+	}
+}
+
+.block
+{
+	margin-bottom: @xf-elementSpacer;
+
+	&.block--close
+	{
+		margin-bottom: 5px;
+	}
+
+	&.block--treeEntryChooser
+	{
+		.block-header
+		{
+			font-size: @xf-fontSizeLarge;
+
+			.block-desc
+			{
+				font-size: @xf-fontSizeSmallest;
+			}
+		}
+
+		.block-row
+		{
+			padding-top: 6px;
+			padding-bottom: 6px;
+		}
+
+		.contentRow
+		{
+			&.is-disabled
+			{
+				opacity: 0.5;
+			}
+		}
+
+		.contentRow-title
+		{
+			font-size: @xf-fontSizeNormal;
+		}
+
+		.contentRow-minor
+		{
+			font-size: @xf-fontSizeSmaller;
+		}
+
+		.contentRow-suffix
+		{
+			font-size: @xf-fontSizeSmall;
+		}
+	}
+}
+
+.block-outer
+{
+	padding-bottom: @xf-blockPaddingV;
+	.m-clearFix();
+
+	&:empty
+	{
+		display: none;
+	}
+
+	&.block-outer--after
+	{
+		padding-top: @xf-blockPaddingV;
+		padding-bottom: 0;
+	}
+
+	.block-outer-hint
+	{
+		font-size: @xf-fontSizeSmall;
+		color: @xf-textColorMuted;
+	}
+}
+.block-outer-main { float: left; }
+.block-outer-opposite { float: right; }
+.block-outer-middle { text-align: center; }
+
+.block-container
+{
+	.xf-contentBase();
+	.xf-blockBorder();
+	border-radius: @xf-blockBorderRadius;
+
+	.m-transition(); .m-transitionProperty(border margin); // edgeSpacerRemoval
+}
+
+@media (min-width: @xf-responsiveEdgeSpacerRemoval)
+{
+	@{block-noStripSel} > :first-child,
+	.block-topRadiusContent,
+	@{block-noStripSel} > .block-body:first-child > .blockLink:first-child
+	{
+		border-top-left-radius: @block-borderRadius-inner;
+		border-top-right-radius: @block-borderRadius-inner;
+	}
+
+	@{block-noStripSel} > :last-child,
+	.block-bottomRadiusContent,
+	@{block-noStripSel} > .block-body:last-child > .blockLink:last-child
+	{
+		border-bottom-left-radius: @block-borderRadius-inner;
+		border-bottom-right-radius: @block-borderRadius-inner;
+	}
+
+	@{block-noStripSel} > .block-body:first-child > .dataList:first-child,
+	.block-topRadiusContent.dataList,
+	.block-topRadiusContent > .dataList:first-child
+	{
+		tbody:first-child .dataList-row:first-child,
+		thead:first-child .dataList-row:first-child
+		{
+			> .dataList-cell:first-child { border-top-left-radius: @block-borderRadius-inner; }
+			> .dataList-cell:last-child { border-top-right-radius: @block-borderRadius-inner; }
+		}
+	}
+
+	@{block-noStripSel} > .block-body:first-child > .formRow:first-child,
+	.block-topRadiusContent.formRow,
+	.block-topRadiusContent > .formRow:first-child
+	{
+		> dt { border-top-left-radius: @block-borderRadius-inner; }
+		> dd { border-top-right-radius: @block-borderRadius-inner; }
+	}
+
+	@{block-noStripSel} > .block-body:last-child > .dataList:last-child,
+	.block-bottomRadiusContent.dataList,
+	.block-bottomRadiusContent > .dataList:last-child
+	{
+		tbody:last-child .dataList-row:last-child
+		{
+			> .dataList-cell:first-child { border-bottom-left-radius: @block-borderRadius-inner; }
+			> .dataList-cell:last-child { border-bottom-right-radius: @block-borderRadius-inner; }
+		}
+	}
+
+	@{block-noStripSel} > .block-body:last-child > .formRow:last-child,
+	.block-bottomRadiusContent.formRow,
+	.block-bottomRadiusContent > .formRow:last-child
+	{
+		> dt { border-bottom-left-radius: @block-borderRadius-inner; }
+		> dd { border-bottom-right-radius: @block-borderRadius-inner; }
+	}
+
+	@{block-noStripSel} > .block-body:last-child .formSubmitRow:not(.is-sticky),
+	@{block-noStripSel} > .formSubmitRow:not(.is-sticky):last-child,
+	.block-bottomRadiusContent > .formSubmitRow:not(.is-sticky)
+	{
+		> dt { border-bottom-left-radius: @block-borderRadius-inner; }
+		> dd { border-bottom-right-radius: @block-borderRadius-inner; }
+
+		.formSubmitRow-bar
+		{
+			border-bottom-left-radius: @block-borderRadius-inner;
+			border-bottom-right-radius: @block-borderRadius-inner;
+		}
+	}
+}
+
+.block-header
+{
+	padding: @xf-blockPaddingV @xf-blockPaddingH;
+	margin: 10px 0 10px 0;
+	font-weight: @xf-fontWeightNormal;
+	text-decoration: none;
+	.xf-blockHeader();
+
+	.m-clearFix();
+	.m-hiddenLinks();
+
+	&.block-header--separated
+	{
+		border-top: @xf-borderSize solid @xf-borderColorLight;
+	}
+
+	.block-desc
+	{
+		color: fade(@xf-blockHeader--color, 70);
+		.m-textColoredLinks();
+	}
+}
+
+.block-minorHeader
+{
+	padding: @xf-blockPaddingV @xf-blockPaddingH;
+	margin: 0;
+	font-weight: @xf-fontWeightNormal;
+	text-decoration: none;
+	.xf-blockMinorHeader();
+
+	.m-clearFix();
+	.m-hiddenLinks();
+
+	.block-body + &
+	{
+		border-top: @xf-borderSize solid @xf-borderColorLight;
+	}
+
+	.block-desc
+	{
+		.m-textColoredLinks();
+	}
+
+	&--small
+	{
+		font-size: @xf-fontSizeSmall;
+	}
+}
+
+.block-tabHeader
+{
+	padding: 0;
+	margin: 0;
+	font-weight: @xf-fontWeightNormal;
+	.xf-blockTabHeader();
+	.m-tabsTogether(xf-default(@xf-blockTabHeader--font-size, @xf-fontSizeNormal));
+
+	.tabs-tab
+	{
+		padding: @xf-blockPaddingV @xf-blockPaddingH max(0px, @xf-blockPaddingV - @xf-borderSizeFeature);
+		border-bottom: @xf-borderSizeFeature solid transparent;
+
+		&:hover
+		{
+			color: @xf-blockTabHeaderSelected--color;
+			background: fade(@xf-blockTabHeaderSelected--color, 10%);
+		}
+
+		&.is-active
+		{
+			background: none;
+			.xf-blockTabHeaderSelected();
+		}
+	}
+
+	.block-tabHeader-extra
+	{
+		float: right;
+		color: inherit;
+		font-size: @xf-blockTabHeader--font-size;
+		padding: @xf-blockPaddingV @xf-blockPaddingH;
+	}
+
+	.hScroller-action
+	{
+		.m-hScrollerActionColorVariation(
+			xf-default(@xf-blockTabHeader--background-color, transparent),
+			@xf-blockTabHeader--color,
+			@xf-blockTabHeaderSelected--color
+		);
+	}
+}
+
+.block-minorTabHeader
+{
+	padding: 0;
+	margin: 0;
+	font-weight: @xf-fontWeightNormal;
+	.xf-blockMinorTabHeader();
+	.m-tabsTogether(xf-default(@xf-blockMinorTabHeader--font-size, @xf-fontSizeNormal));
+
+	.tabs-tab
+	{
+		padding: @xf-blockPaddingV @xf-blockPaddingH max(0px, @xf-blockPaddingV - @xf-borderSizeFeature);
+		border-bottom: @xf-borderSizeFeature solid transparent;
+
+		&:hover
+		{
+			color: @xf-blockMinorTabHeaderSelected--color;
+		}
+
+		&.is-active
+		{
+			background: none;
+			.xf-blockMinorTabHeaderSelected();
+		}
+	}
+
+	.hScroller-action
+	{
+		.m-hScrollerActionColorVariation(
+			xf-default(@xf-blockMinorTabHeader--background-color, transparent),
+			@xf-blockMinorTabHeader--color,
+			@xf-blockMinorTabHeaderSelected--color
+		);
+	}
+}
+
+.block-filterBar
+{
+	padding: @xf-blockPaddingV @xf-blockPaddingH;
+	.xf-blockFilterBar();
+
+	.filterBar-filterToggle
+	{
+		background: mix(
+			xf-default(@xf-blockFilterBar--color, @xf-linkColor),
+			xf-default(@xf-blockFilterBar--background-color, transparent),
+			8%
+		);
+	}
+
+	.filterBar-filterToggle,
+	.filterBar-menuTrigger
+	{
+		&:hover
+		{
+			text-decoration: none;
+			background: mix(
+				xf-default(@xf-blockFilterBar--color, @xf-linkColor),
+				xf-default(@xf-blockFilterBar--background-color, transparent),
+				16%
+			);
+		}
+	}
+
+	.filterBar-menuTrigger
+	{
+		margin-right: -5px;
+	}
+}
+
+.block-textHeader
+{
+	margin: @xf-blockPaddingV/2 0;
+	padding: 0;
+	font-weight: @xf-fontWeightNormal;
+	.xf-blockTextHeader();
+
+	.m-clearFix();
+	.m-hiddenLinks();
+
+	&.block-textHeader--scaled
+	{
+		font-size: inherit;
+	}
+
+	.block-textHeader-highlight
+	{
+		color: @xf-textColor;
+	}
+
+	.block-desc
+	{
+		.m-textColoredLinks();
+	}
+
+	&:first-child
+	{
+		margin-top: 0;
+	}
+}
+
+.block-formSectionHeader
+{
+	padding: @xf-blockPaddingV @xf-blockPaddingH;
+	margin: 0;
+	font-weight: @xf-fontWeightNormal;
+	text-decoration: none;
+	.xf-formSectionHeader();
+
+	.m-clearFix();
+	.m-hiddenLinks();
+
+	.block-desc
+	{
+		.m-textColoredLinks();
+	}
+
+	.block-container > &:first-child
+	{
+		border-top: none;
+	}
+
+	.block-formSectionHeader-aligner
+	{
+		@_blockPaddingShift: (unit(@xf-formLabelWidth) / 100) * (@xf-blockPaddingH);
+
+		display: inline-block;
+		text-align: right;
+		min-width: @xf-formLabelWidth;
+		min-width: ~"calc((@{xf-formLabelWidth}) - (@{_blockPaddingShift}) - (@{xf-formRowPaddingHInner}) - (@{xf-borderSize}))";
+		max-width: 100%;
+
+		@media (max-width: @xf-formResponsive)
+		{
+			display: inline;
+			text-align: left;
+			min-width: 0;
+			padding-left: 0;
+		}
+	}
+
+	@media (max-width: @xf-formResponsive)
+	{
+		padding-left: @xf-formRowPaddingHOuter;
+	}
+
+	.block-formSectionHeader-multiChecker
+	{
+		float: right;
+	}
+}
+
+.block-desc
+{
+	display: block;
+	font-size: @xf-fontSizeSmaller;
+	font-weight: @xf-fontWeightNormal;
+}
+
+.block-body
+{
+	.m-listPlain();
+
+	&.block-body--collapsible
+	{
+		.has-no-js & { display: block; }
+
+		.m-transitionFadeDown();
+	}
+
+	&.block-body--contained
+	{
+		overflow: auto;
+		max-height: 300px;
+		max-height: 70vh;
+	}
+}
+
+.block-row
+{
+	margin: 0;
+	padding: @xf-blockPaddingV @xf-blockPaddingH;
+	.m-clearFix();
+
+	&.block-row--alt
+	{
+		.xf-contentAltBase();
+	}
+
+	&.block-row--minor
+	{
+		font-size: @xf-fontSizeSmall;
+	}
+
+	&.block-row--separated
+	{
+		padding-top: (@xf-blockPaddingV) * 2;
+		padding-bottom: (@xf-blockPaddingV) * 2;
+
+		+ .block-row
+		{
+			border-top: @xf-borderSize solid @xf-borderColorLight;
+		}
+	}
+
+	&.block-row--connectAbove
+	{
+		padding-bottom: (@xf-blockPaddingV) * 2;
+
+		.block-body > &:last-child
+		{
+			padding-bottom: @xf-blockPaddingV;
+		}
+	}
+
+	&.block-row--highlighted
+	{
+		.xf-contentHighlightBase();
+	}
+
+	&.block-row--clickable:hover
+	{
+		.xf-contentHighlightBase();
+	}
+
+	&.is-mod-selected
+	{
+		background: @xf-inlineModHighlightColor;
+	}
+
+	> pre
+	{
+		&:first-child { margin-top: 0; }
+		&:last-child { margin-bottom: 0; }
+	}
+}
+
+.block-separator
+{
+	margin: 0;
+	padding: 0;
+	border: none;
+	border-top: @xf-borderSize solid @xf-borderColorLight;
+}
+
+.block-footer
+{
+	padding: @xf-blockPaddingV @xf-blockPaddingH;
+	.xf-blockFooter();
+	.m-clearFix();
+
+	&:first-child
+	{
+		border: none;
+	}
+
+	[data-app=admin] &
+	{
+		.block-footer-counter,
+		.block-footer-select
+		{
+			line-height: 30px;
+		}
+	}
+
+	&:not(.block-footer--split)
+	{
+		.block-footer-counter
+		{
+			float: left;
+		}
+
+		.block-footer-controls
+		{
+			float: right;
+		}
+	}
+
+	&.block-footer--split
+	{
+		display: flex;
+		align-items: center;
+
+		.block-footer-main,
+		.block-footer-counter
+		{
+			flex-grow: 1;
+
+			.has-no-flexbox &
+			{
+				float: left;
+			}
+		}
+
+		.block-footer-select:not(:last-child)
+		{
+			margin: 0 1em;
+		}
+
+		.block-footer-opposite,
+		.block-footer-controls
+		{
+			margin-left: auto;
+
+			.has-no-flexbox &
+			{
+				float: right;
+			}
+		}
+	}
+}
+
+@media (max-width: @xf-responsiveNarrow)
+{
+	.block-outer
+	{
+		text-align: center;
+	}
+
+	.block-outer-main,
+	.block-outer-opposite
+	{
+		float: none;
+		text-align: center;
+	}
+
+	.block-outer-main + .block-outer-opposite
+	{
+		margin-top: @xf-paddingMedium;
+	}
+}]]></template>
+    <template title="core_menu.less" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[// ###################################### MENUS ######################
+
+@_menu-arrowSize: 8px;
+@_menu-edgePadding: @xf-pageEdgeSpacer;
+@_menu-paddingV: @xf-paddingMedium;
+@_menu-paddingH: @xf-paddingLargest;
+
+.menuTrigger
+{
+	cursor: pointer;
+
+	&:after
+	{
+		.m-faBase();
+		.m-faContent(" @{fa-var-caret-down}");
+		unicode-bidi: isolate; // this is needed to ensure correct positioning in RTL with LTR text
+	}
+}
+
+.menuOutsideClicker
+{
+	position: fixed;
+	display: none;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 2; // above non set stuff but below anything intentionally set
+
+	&.is-active
+	{
+		display: block;
+		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	}
+}
+
+.menu
+{
+	.m-transitionFade();
+
+	position: absolute;
+	z-index: @zIndex-2;
+	margin: @_menu-arrowSize 0 0;
+	min-width: 240px;
+	max-width: 320px;
+	border-radius: @xf-menuBorderRadius;
+
+	.m-dropShadow(0, 5px, 10px, 0, .35);
+
+	&.menu--structural
+	{
+		margin-top: 0;
+
+		// when menus nudge up against structure, the joined corner should not be radiused
+		&.menu--left
+		{
+			border-top-left-radius: 0;
+		}
+		&.menu--right
+		{
+			border-top-right-radius: 0;
+		}
+	}
+
+	&.menu--veryWide
+	{
+		width: 500px;
+		max-width: 100%;
+	}
+
+	&.menu--wide
+	{
+		width: 350px;
+		max-width: 100%;
+	}
+
+	&.menu--medium
+	{
+		width: 300px;
+		max-width: 100%;
+	}
+
+	&.menu--potentialFixed
+	{
+		z-index: @zIndex-4;
+	}
+}
+
+.menu-arrow
+{
+	position: absolute;
+	width: 0;
+	height: 0;
+	border: 0 solid transparent;
+
+	top: -@_menu-arrowSize;
+	-ltr-rtl-left: 50%;
+	-ltr-rtl-margin-left: -@_menu-arrowSize;
+	.m-triangleUp(rgb(136,196,81), @_menu-arrowSize);
+
+	.menu--structural &
+	{
+		top: -@_menu-arrowSize;
+	}
+
+	.menu--up &
+	{
+		display: none;
+	}
+}
+
+.menu-content
+{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	text-align: left;
+	.xf-menu();
+	border-radius: @xf-menuBorderRadius;
+	border-top: @xf-borderSizeFeature solid rgb(136,196,81);
+
+	// when menus nudge up against structure, the joined corner should not be radiused
+	.menu--structural.menu--left &
+	{
+		border-top-left-radius: 0;
+	}
+	.menu--structural.menu--right &
+	{
+		border-top-right-radius: 0;
+	}
+
+	// potentially fixed menus
+	.menu--potentialFixed &
+	{
+		overflow: auto;
+		max-height: 450px;
+		max-height: 80vh;
+	}
+
+	> :last-child
+	{
+		border-bottom-left-radius: @xf-menuBorderRadius;
+		border-bottom-right-radius: @xf-menuBorderRadius;
+	}
+}
+
+.menu--pageJump
+{
+	width: auto;
+	min-width: 0;
+}
+
+.menu-header
+{
+	padding: @xf-blockPaddingV @_menu-paddingH;
+	margin: 0;
+	font-weight: @xf-fontWeightNormal;
+	text-decoration: none;
+	.xf-menuHeader();
+
+	.m-clearFix();
+	.m-hiddenLinks();
+}
+
+.menu-tabHeader
+{
+	padding: 0;
+	margin: 0;
+	font-weight: @xf-fontWeightNormal;
+	text-decoration: none;
+	.xf-menuTabHeader();
+	.m-tabsTogether(xf-default(@xf-menuTabHeader--font-size, @xf-fontSizeNormal));
+
+	.tabs-tab
+	{
+		padding: @xf-blockPaddingV @_menu-paddingH max(0px, @xf-blockPaddingV - @xf-borderSizeFeature);
+		border-bottom: @xf-borderSizeFeature solid transparent;
+
+		&:hover
+		{
+			color: @xf-blockMinorTabHeaderSelected--color;
+		}
+
+		&.is-active
+		{
+			.xf-menuTabHeaderSelected();
+		}
+	}
+
+	.hScroller-action
+	{
+		.m-hScrollerActionColorVariation(
+			xf-default(@xf-menuTabHeader--background-color, transparent),
+			@xf-menuTabHeader--color,
+			@xf-blockMinorTabHeaderSelected--color
+		);
+	}
+}
+
+.menu-scroller
+{
+	overflow: auto;
+	max-height: 300px;
+	max-height: 60vh;
+}
+
+.menu-row
+{
+	margin: 0;
+	padding: @_menu-paddingV @_menu-paddingH;
+	.m-clearFix();
+
+	&.menu-row--alt
+	{
+		.xf-contentAltBase();
+	}
+
+	&.menu-row--highlighted
+	{
+		color: #6e6e6e;
+    	background: #f5f5f5;
+	}
+
+	&.menu-row--separated
+	{
+		+ .menu-row
+		{
+			border-top: @xf-borderSize solid @xf-borderColorLight;
+		}
+	}
+
+	&.menu-row--clickable:hover
+	{
+		background: @xf-contentHighlightBg;
+	}
+
+	&:empty
+	{
+		padding: 0;
+	}
+}
+
+.menu-linkRow
+{
+	display: block;
+	padding: @_menu-paddingV @_menu-paddingH @_menu-paddingV (@_menu-paddingH) - (@xf-borderSizeFeature);
+	border-left: @xf-borderSizeFeature solid transparent;
+	.xf-menuLinkRow();
+
+	&.menu-linkRow--alt
+	{
+		.xf-contentAltBase();
+	}
+
+	&.is-selected,
+	&:hover,
+	&:focus
+	{
+		.xf-menuLinkRowSelected();
+
+		border-left-color: fade(@xf-borderColorFeature, 50%);
+
+		&:focus
+		{
+			outline: 0;
+		}
+
+		&.is-selected
+		{
+			border-left-color: @xf-borderColorFeature;
+		}
+	}
+
+	i[aria-hidden=true]
+	{
+		font-size: @xf-fontSizeSmall;
+		display: inline-block;
+		width: 23px; // about 1.75em at this font size
+
+		&:after
+		{
+			.m-faBase();
+			color: @xf-textColorMuted;
+			left: @xf-blockPaddingH;
+		}
+
+		& ~ .menu-linkRow-hint
+		{
+			padding-left: 23px;
+		}
+	}
+
+	&:hover i[aria-hidden=true]:after
+	{
+		color: @xf-linkHoverColor;
+	}
+}
+
+.menu-linkRow-hint
+{
+	font-style: inherit;
+	font-size: @xf-fontSizeSmallest;
+	color: @xf-textColorMuted;
+	display: block;
+}
+
+.menu-separator
+{
+	margin: 0 (@_menu-paddingH) / 2;
+	padding: 0;
+	border: none;
+	border-top: @xf-borderSize solid @xf-borderColorLight;
+
+	&.menu-separator--hard
+	{
+		margin: 0;
+	}
+
+	& + .menu-separator,
+	&:last-child
+	{
+		display: none;
+	}
+}
+
+.menu-footer
+{
+	padding: @xf-blockPaddingV @_menu-paddingH;
+	.xf-menuFooter();
+	.m-clearFix();
+
+	&:not(.menu-footer--split)
+	{
+		.menu-footer-counter
+		{
+			float: left;
+		}
+
+		.menu-footer-controls
+		{
+			float: right;
+		}
+	}
+
+	&.menu-footer--split
+	{
+		display: flex;
+		align-items: center;
+
+		.menu-footer-main,
+		.menu-footer-counter
+		{
+			flex-grow: 1;
+
+			.has-no-flexbox &
+			{
+				float: left;
+			}
+		}
+
+		.menu-footer-select:not(:last-child)
+		{
+			margin: 0 1em;
+		}
+
+		.menu-footer-opposite,
+		.menu-footer-controls
+		{
+			margin-left: auto;
+
+			.has-no-flexbox &
+			{
+				float: right;
+			}
+		}
+	}
+}]]></template>
+    <template title="extra.less" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[.p-guest--message {
+    background: #fff;
+    border: 1px solid #fafafa;
+    border-radius: 4px;
+    padding: 20px;
+    width: 100%;
+    margin: 15px auto 30px;
+	box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16);
+}
+
+.p-guest--message h1 {
+    margin-top: 0;
+}
+
+.p-navgroup.p-navgroup--member {
+    color: rgba(0,0,0,0.4);
+	font-size: 15px;
+}
+
+.p-navgroup.p-discovery {
+    color: rgba(255,255,255,0.75);
+}
+
+.avatar, .avatar.avatar--default.avatar--default--dynamic, .avatar.avatar--default.avatar--default--text {
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.2);
+}
+
+/* Icons for Login and Register buttons */
+.p-navgroup-link.p-navgroup-link--textual.p-navgroup-link--logIn {
+	padding: 20px 10px;
+	color: rgba(255,255,255,1);
+}
+
+.p-navgroup-link.p-navgroup-link--textual.p-navgroup-link--register {
+	padding: 20px 10px;
+	color: rgba(255,255,255,1);
+}
+
+.p-navgroup-link.p-navgroup-link--textual.p-navgroup-link--logIn:before {
+    font-family: FontAwesome;
+    content: "\f090";
+    color: rgba(255,255,255,1);
+    padding-right: 2px;
+}
+
+.p-navgroup-link.p-navgroup-link--textual.p-navgroup-link--register:before {
+    font-family: FontAwesome;
+    content: "\f234";
+    color: rgba(255,255,255,1);
+	padding-right: 2px;
+}
+
+.grid-main {
+	background: none;
+	/*margin: 10px @xf-elementSpacer 30px @xf-elementSpacer;*/
+	margin-top: 10px;
+	margin-bottom: 30px;
+    display: flex;
+}
+
+.grid {
+    display: block;
+    flex-direction: column;
+    flex: 1 1 150px;
+    margin-left: 2%;
+	background: @xf-contentBg;
+	box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16);
+}
+
+.grid:first-of-type {
+    margin-left: 0;
+}
+
+/*.grid .block .block-container .block-minorHeader {
+    background: xf-diminish(@xf-chromeBg, 10%);
+}*/
+
+.grid .block, .grid .block-container {
+    height: 100%;
+}
+
+@media (max-width: @xf-responsiveMedium)
+{
+    .grid-main {
+        display: inherit;
+    }
+    .grid {
+        margin-left: inherit;
+    }
+}
+
+.grid h3 {
+    color: #141414;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    font-weight: 500;
+	text-align: center;
+    margin: 0;
+}
+
+.grid .desc-container {
+	padding-top: 0;
+    padding-right: 10px;
+    padding-bottom: 6px;
+    padding-left: 10px;
+    margin: 0;
+}
+
+.grid .desc-container p {
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.p-navSticky.is-sticky {
+    z-index: 400;
+    background: #88c451;
+    box-shadow: 0 0 8px 3px rgba(0,0,0,0.12);
+}
+
+.template-forum_list .headerProxy {
+    height: 480px;
+    margin-top: -137px;
+}
+
+.headerProxy {
+    position: relative;
+    height: 115px;
+    background: #88c451 url(styles/hirqiztema/images/pattern.png) no-repeat center;
+    margin-top: -115px;
+    z-index: 1;
+}
+
+.headerProxy-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #88c451;
+    opacity: 0.95;
+}
+
+.featPosts {
+    position: relative;
+    background: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+    margin-top: -310px;
+    margin-bottom: 24px;
+    z-index: 2;
+}
+
+@media (max-width:900px) {
+	.featPosts__item{
+		flex:0 0 50%;max-width:50%
+	}
+}
+
+@media (max-width:650px) {
+	.featPosts__item {
+		flex:0 0 100%;max-width:100%
+	}
+	.has-js .p-header {
+    	display: block !important;
+	}
+}
+
+@media (max-width: 480px) {
+	.template-forum_list .headerProxy {
+		height:110px;
+		margin-top:-110px
+	}
+	.featPosts {
+		display:none
+	}
+	.p-header-logo {
+    	max-width: 100px;
+    	display: none !important;
+	}
+}
+
+.featPosts__head {
+    color: #88c451;
+    font-size: 17px;
+    text-align: center;
+    padding: 6px 0 10px;
+}
+
+.featPosts__container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    padding: 5px;
+}
+
+.featPosts__item {
+    position: relative;
+    flex: 0 0 33.333%;
+    max-width: 33.333%;
+    padding: 15px;
+    overflow: hidden;
+}
+
+.featPosts__item-img {
+    position: relative;
+    height: 220px;
+    border-radius: 4px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+    overflow: hidden;
+}
+
+.featPosts__item-img img {
+    width: 100%;
+    height: 100%;
+}
+
+.featPosts__item-img::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+}
+
+.featPosts__item h3 {
+    position: absolute;
+    top: 35px;
+    left: 35px;
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.featPosts__item .listInline {
+    position: absolute;
+    bottom: 35px;
+    left: 35px;
+    color: #fff;
+}
+
+.featPosts__item h3 a {
+    color: #fff;
+}
+
+/* Node Collapse */
+.block--category
+{
+    .collapseTrigger
+    {
+        opacity: 0.5;
+        transition: opacity 0.3s;
+        margin-right: 10px;
+		margin-top: auto;
+    	margin-bottom: auto;
+		color: #a7a7a7;
+        &.is-active:before
+        {
+            content: "\f077";
+            /*transform: scale(-1, 1);
+            margin-right: -8px;*/
+        }
+        &:before
+        {
+            content: "\f053";
+    		width: 100%;
+    		font-size: 80%;
+    		margin: 0;
+        }
+    }
+    .block-container:hover .collapseTrigger
+    {
+        opacity: 1;
+    }
+}
+
+.collapsible-nodes
+{
+        .block-header
+        {
+            display: flex;
+        }
+        .block-header--left
+        {
+            margin-right: auto;
+            max-width: 100%;
+        }
+}
+
+/* User Extras Collapse */
+.message-userExtras-body
+{
+    .m-listPlain();
+
+    &.message-userExtras--collapsible
+    {
+        .has-no-js & { display: block; }
+
+        .m-transitionFadeDown();
+    }
+}
+
+.message-cell
+{
+    .collapseTrigger
+    {
+        text-align: center;
+ 
+        &.is-active:before
+        {
+            transform: rotate(-180deg);
+        }
+        &:before
+        {
+            content: "\f13a";
+            color: @xf-linkColor;
+            transition: ease-in transform .3s;
+            width: auto;
+        }
+        &.collapseTrigger--block:before
+        {
+            float: none;
+        }
+    }
+}
+@media (max-width: @xf-responsiveNarrow)
+{
+    .message-cell
+    {
+        .collapseTrigger
+        {
+            display: none;
+        }
+    }
+}
+
+.block-tabHeader.block-tabHeader--memberTabs .tabs-tab::before {
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding-right: 4px;
+}
+
+.block-tabHeader.block-tabHeader--memberTabs .tabs-tab[aria-controls="profile-posts"]::before {
+    content: "\f0e6";
+    display: inline-block;
+    width: 1em;
+}
+
+.block-tabHeader.block-tabHeader--memberTabs .tabs-tab[id="latest-activity"]::before {
+    content: "\f017";
+    display: inline-block;
+    width: 1em;
+}
+
+.block-tabHeader.block-tabHeader--memberTabs .tabs-tab[id="recent-content"]::before {
+    content: "\f044";
+    display: inline-block;
+    width: 1em;
+}
+
+.block-tabHeader.block-tabHeader--memberTabs .tabs-tab[id="about"]::before {
+    content: "\f05a";
+    display: inline-block;
+    width: 1em;
+}]]></template>
+    <template title="forum_list" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[<xf:h1>{$xf.options.boardTitle}</xf:h1>
+<xf:if is="{$xf.options.forumsDefaultPage} != 'forums'">
+	<xf:title>{{ phrase('forum_list') }}</xf:title>
+</xf:if>
+
+<xf:macro template="metadata_macros" name="metadata"
+	arg-description="{$xf.options.boardDescription}"
+	arg-canonicalUrl="{{ link('canonical:' . $selfRoute) }}" />
+
+
+<xf:wrap template="forum_overview_wrapper">
+	<xf:set var="$pageSelected">forums</xf:set>
+</xf:wrap>
+
+<xf:widgetpos id="forum_list_sidebar" position="sidebar" />
+
+<xf:widgetpos id="forum_list_above_nodes" />
+<xf:macro name="node_list" arg-children="{$nodeTree}" arg-extras="{$nodeExtras}" />
+<xf:widgetpos id="forum_list_below_nodes" />
+
+<xf:head option="rss_forum"><link rel="alternate" type="application/rss+xml" title="{{ phrase('rss_feed_for_x', {'title': $xf.options.boardTitle})|for_attr }}" href="{{ link('forums/index.rss', '-') }}" /></xf:head>
+
+<xf:macro name="node_list_entry" arg-node="!" arg-extras="!" arg-children="!" arg-childExtras="!" arg-depth="1">
+	<xf:css src="node_list.less" />
+	<xf:set var="$nodeTemplate" value="{{ $node.getNodeTemplateRenderer($depth) }}" />
+	<xf:if is="$nodeTemplate.macro">
+		<xf:macro template="{$nodeTemplate.template}" name="{$nodeTemplate.macro}"
+			arg-node="{$node}"
+			arg-extras="{$extras}"
+			arg-children="{$children}"
+			arg-childExtras="{$childExtras}"
+			arg-depth="{$depth}" />
+	<xf:elseif is="{$nodeTemplate.template}" />
+		<xf:include template="{$nodeTemplate.template}" />
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="node_list" arg-children="!" arg-extras="!" arg-depth="1">
+	<xf:css src="node_list.less" />
+	<xf:foreach loop="$children" key="$id" value="$child">
+		<xf:macro name="node_list_entry"
+			arg-node="{$child.record}"
+			arg-extras="{$extras.{$id}}"
+			arg-children="{$child.children}"
+			arg-childExtras="{$extras}"
+			arg-depth="{$depth}" />
+	</xf:foreach>
+</xf:macro>
+
+<xf:macro name="sub_node_list" arg-children="!" arg-childExtras="!" arg-depth="3">
+	<xf:if contentcheck="true">
+		<ol>
+		<xf:contentcheck>
+			<xf:macro template="forum_list" name="node_list"
+				arg-children="{$children}"
+				arg-extras="{$childExtras}"
+				arg-depth="{{ $depth + 1 }}" />
+		</xf:contentcheck>
+		</ol>
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="sub_nodes_flat" arg-children="!" arg-childExtras="!" arg-depth="3">
+	<xf:css src="node_list.less" />
+	<xf:if contentcheck="true">
+		<div class="node-subNodesFlat">
+			<span class="node-subNodesLabel">{{ phrase('sub_forums:') }}</span>
+			<ol class="node-subNodeFlatList">
+			<xf:contentcheck>
+				<xf:macro template="forum_list" name="node_list"
+					arg-children="{$children}"
+					arg-extras="{$childExtras}"
+					arg-depth="{{ $depth + 1 }}" />
+			</xf:contentcheck>
+			</ol>
+		</div>
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="sub_nodes_menu" arg-children="!" arg-childExtras="!" arg-depth="3">
+	<xf:css src="node_list.less" />
+	<xf:if contentcheck="true">
+		<div class="node-subNodeMenu">
+			<a class="menuTrigger" data-xf-click="menu" role="button" tabindex="0" aria-expanded="false" aria-haspopup="true">{{ phrase('sub_forums') }}</a>
+			<div class="menu" data-menu="menu" aria-hidden="true">
+				<div class="menu-content">
+					<h4 class="menu-header">{{ phrase('sub_forums') }}</h4>
+					<ol class="subNodeMenu">
+					<xf:contentcheck>
+						<xf:macro template="forum_list" name="node_list"
+							arg-children="{$children}"
+							arg-extras="{$childExtras}"
+							arg-depth="{{ $depth + 1 }}" />
+					</xf:contentcheck>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</xf:if>
+</xf:macro>]]></template>
+    <template title="message.less" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[@_message-actionColumnWidth: 40px;
+@_messageSimple-userColumnWidth: 70px;
+
+.message
+{
+	+ .message,
+	&.message--bordered
+	{
+		border-top: @xf-borderSize solid @xf-borderColor;
+	}
+}
+
+.message,
+.block--messages .message
+{
+	&.is-mod-selected
+	{
+		background: @xf-inlineModHighlightColor;
+
+		.message-userArrow:after
+		{
+			border-right-color: @xf-inlineModHighlightColor;
+		}
+	}
+}
+
+.message-inner
+{
+	display: flex;
+
+	.has-no-flexbox &
+	{
+		display: table;
+		table-layout: fixed;
+		width: 100%;
+	}
+}
+
+.message-cell
+{
+	display: block;
+	vertical-align: top;
+	padding: @xf-messagePadding;
+
+	.has-no-flexbox &
+	{
+		display: table-cell;
+	}
+
+	.message--quickReply &
+	{
+		//padding-bottom: 35px; // for the submit row
+
+		> .formRow:last-child
+		{
+			> dd
+			{
+				padding-bottom: 0;
+			}
+		}
+	}
+
+	&.message-cell--closer
+	{
+		padding: @xf-messagePaddingSmall;
+
+		&.message-cell--main
+		{
+			padding-left: ((@xf-messagePaddingSmall) * 1.5);
+		}
+
+		&.message-cell--user
+		{
+			.m-fixedWidthFlex((@xf-messageUserBlockWidth) + 2 * (@xf-messagePaddingSmall));
+
+			.message--simple &
+			{
+				.m-fixedWidthFlex(@_messageSimple-userColumnWidth + 2 * (@xf-messagePaddingSmall));
+
+			}
+		}
+
+		&.message-cell--action
+		{
+			.m-fixedWidthFlex((@_message-actionColumnWidth) + 2 * (@xf-messagePaddingSmall));
+		}
+	}
+
+	&.message-cell--user,
+	&.message-cell--action
+	{
+		position: relative;
+		.xf-messageUserBlock(no-border);
+		border-right: @xf-messageUserBlock--border-width solid @xf-messageUserBlock--border-color;
+		min-width: 0;
+	}
+
+	&.message-cell--user
+	{
+		.m-fixedWidthFlex((@xf-messageUserBlockWidth) + 2 * (@xf-messagePadding));
+
+		.message--simple &
+		{
+			.m-fixedWidthFlex(@_messageSimple-userColumnWidth + 2 * @xf-messagePaddingSmall);
+		}
+	}
+
+	&.message-cell--action
+	{
+		.m-fixedWidthFlex((@_message-actionColumnWidth) + 2 * (@xf-messagePadding));
+	}
+
+	&.message-cell--main
+	{
+		padding-left: (@xf-messagePadding * 1.5);
+		flex: 1 1 auto;
+		width: 100%;
+		min-width: 0;
+
+		&.is-editing
+		{
+			padding: 0;
+		}
+
+		// should really only happen when editing
+		.block
+		{
+			margin: 0;
+		}
+
+		.block-container
+		{
+			margin: 0;
+			border: none;
+		}
+	}
+
+	&.message-cell--alert
+	{
+		font-size: @xf-fontSizeSmall;
+		flex: 1 1 auto;
+		width: 100%;
+		min-width: 0;
+		.xf-contentAccentBase();
+
+		a
+		{
+			.xf-contentAccentLink();
+		}
+	}
+}
+
+.message-main
+{
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.message-content
+{
+	flex: 1 1 auto;
+
+	// IE11 flex bug
+	min-height: 1px;
+}
+
+.message-footer
+{
+	margin-top: auto;
+}
+
+@media (max-width: @xf-messageSingleColumnWidth)
+{
+	.message:not(.message--forceColumns)
+	{
+		.message-inner
+		{
+			display: block;
+		}
+
+		.message-cell
+		{
+			display: block;
+			.m-clearFix();
+
+			&.message-cell--user
+			{
+				width: auto;
+				border-right: none;
+				border-bottom: @xf-messageUserBlock--border-width solid @xf-messageUserBlock--border-color;
+			}
+
+			&.message-cell--main
+			{
+				padding-left: @xf-messagePadding;
+			}
+		}
+	}
+
+	.message--simple:not(.message--forceColumns),
+	.message--quickReply:not(.message--forceColumns)
+	{
+		.message-cell.message-cell--user
+		{
+			display: none;
+		}
+	}
+}
+
+// ######################## USER COLUMN #########################
+
+.message-userArrow
+{
+	position: absolute;
+	top: (@xf-messagePadding) * 2;
+	right: -1px;
+
+	.m-triangleLeft(xf-default(@xf-messageUserBlock--border-color, transparent), @xf-messagePadding);
+
+	&:after
+	{
+		position: absolute;
+		top: -(@xf-messagePadding - 1px);
+		right: -@xf-messagePadding;
+		content: "";
+
+		.m-triangleLeft(@xf-contentBg, @xf-messagePadding - 1px);
+	}
+}
+
+.message-avatar
+{
+	text-align: center;
+	margin-bottom: 3px;
+
+	.avatar
+	{
+		vertical-align: bottom;
+	}
+}
+
+.message-avatar-wrapper
+{
+	position: relative;
+	display: inline-block;
+	vertical-align: bottom;
+
+	.message-avatar-online
+	{
+		position: absolute;
+		top: -1px;
+		left: -1px;
+
+		border: 7px solid transparent;
+		border-left-color: rgb(127, 185, 0);
+		border-top-color: rgb(127, 185, 0);
+		border-radius: (@xf-avatarBorderRadius + 1) max(0px, @xf-avatarBorderRadius - 1px) 0 max(0px, @xf-avatarBorderRadius - 1);
+	}
+}
+
+.message-name
+{
+	font-weight: @xf-fontWeightHeavy;
+	font-size: inherit;
+	text-align: center;
+	margin: 0;
+}
+
+.message-userTitle
+{
+	font-size: @xf-fontSizeSmaller;
+	font-weight: normal;
+	text-align: center;
+	margin: 0;
+}
+
+.message-userBanner.userBanner
+{
+	display: block;
+	margin-top: 3px;
+}
+
+.message-userExtras
+{
+	margin-top: 3px;
+	font-size: @xf-fontSizeSmaller;
+}
+
+.message--deleted
+{
+	.message-userDetails
+	{
+		display: none;
+	}
+
+	.message-avatar .avatar
+	{
+		.m-avatarSize(@avatar-s);
+	}
+}
+
+.message-cell--user
+{
+	.message-date,
+	.message-permalink
+	{
+		display: none;
+	}
+}
+
+@media (max-width: @xf-messageSingleColumnWidth)
+{
+	.message:not(.message--forceColumns)
+	{
+		.message-userArrow
+		{
+			top: auto;
+			right: auto;
+			bottom: -1px;
+			left: ((@avatar-s) / 2);
+
+			border: none;
+			.m-triangleUp(xf-default(@xf-messageUserBlock--border-color, transparent), @xf-messagePadding);
+
+			&:after
+			{
+				top: auto;
+				right: auto;
+				left: -(@xf-messagePadding - 1px);
+				bottom: -@xf-messagePadding;
+
+				border: none;
+				.m-triangleUp(@xf-contentBg, @xf-messagePadding - 1px);
+			}
+		}
+
+		&.is-mod-selected
+		{
+			.message-userArrow:after
+			{
+				border-color: transparent;
+				border-bottom-color: @xf-inlineModHighlightColor;
+			}
+		}
+
+		.message-user
+		{
+			display: flex;
+
+			.has-no-flexbox &
+			{
+				display: table;
+				width: 100%;
+			}
+		}
+
+		.message-avatar
+		{
+			margin-bottom: 0;
+
+			.has-no-flexbox &
+			{
+				display: table-cell;
+				width: 1%;
+			}
+
+			.avatar
+			{
+				.m-avatarSize(@avatar-s);
+			}
+		}
+
+		.message-userDetails
+		{
+			flex: 1;
+			min-width: 0;
+			padding-left: @xf-messagePadding;
+
+			.has-no-flexbox &
+			{
+				display: table-cell;
+			}
+		}
+
+		.message-name
+		{
+			text-align: left;
+		}
+
+		.message-userTitle,
+		.message-userBanner.userBanner
+		{
+			display: inline-block;
+			text-align: left;
+			margin: 0;
+		}
+
+		.message-userExtras
+		{
+			display: none;
+		}
+
+		.message--deleted
+		{
+			.message-userDetails
+			{
+				display: block;
+			}
+		}
+	}
+}
+
+// ####################### MAIN COLUMN ####################
+
+.message-content
+{
+	position: relative;
+
+	.js-selectToQuoteEnd
+	{
+		height: 0;
+		font-size: 0;
+		overflow: hidden;
+	}
+
+	.message--multiQuoteList &
+	{
+		min-height: 80px;
+		max-height: 120px;
+		overflow: hidden;
+
+		.message-body
+		{
+			pointer-events: none;
+		}
+	}
+}
+
+.message-attribution
+{
+	color: @xf-textColorMuted;
+	font-size: @xf-fontSizeSmaller;
+	padding-bottom: 3px;
+	border-bottom: @xf-borderSize solid @xf-borderColorFaint;
+	.m-clearFix();
+
+	&.message-attribution--plain
+	{
+		border-bottom: none;
+		font-size: inherit;
+		padding-bottom: 0;
+	}
+}
+
+.message-attribution-main { float: left; }
+.message-attribution-opposite { float: right; }
+
+.message-attribution-source
+{
+	font-size: @xf-fontSizeSmaller;
+	margin-bottom: @xf-paddingSmall;
+}
+
+.message-attribution-user
+{
+	font-weight: @xf-fontWeightHeavy;
+
+	.avatar
+	{
+		display: none;
+	}
+
+	.attribution
+	{
+		display: inline;
+		font-size: inherit;
+		font-weight: inherit;
+		margin: 0;
+	}
+}
+
+.message-newIndicator
+{
+	.xf-messageNewIndicator();
+}
+
+.message-minorHighlight
+{
+	font-size: @xf-fontSizeSmall;
+	color: @xf-textColorFeature;
+}
+
+.message-fields
+{
+	margin: @xf-messagePadding 0;
+}
+
+.message-body
+{
+	margin: @xf-messagePadding 0;
+	font-family: @xf-fontFamilyBody;
+
+	.message--simple &
+	{
+		margin-top: @xf-messagePaddingSmall;
+		margin-bottom: @xf-messagePaddingSmall;
+	}
+
+	&:last-child
+	{
+		margin-bottom: 0;
+	}
+}
+
+.message-attachments
+{
+	margin: .5em 0;
+}
+
+	.message-attachments-list
+	{
+		.m-listPlain();
+	}
+
+.message-lastEdit
+{
+	margin-top: .5em;
+	color: @xf-textColorMuted;
+	font-size: @xf-fontSizeSmallest;
+	text-align: right;
+}
+
+.message-signature
+{
+	margin-top: @xf-messagePadding;
+	.xf-messageSignature();
+}
+
+.message-actionBar .actionBar-set
+{
+	margin-top: @xf-messagePadding;
+	font-size: @xf-fontSizeSmall;
+
+	.message--simple &
+	{
+		margin-top: @xf-messagePaddingSmall;
+	}
+}
+
+.message .likesBar
+{
+	margin-top: @xf-messagePadding;
+	padding: @xf-messagePaddingSmall;
+}
+
+.message-historyTarget
+{
+	margin-top: @xf-messagePadding;
+}
+
+.message-gradient
+{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 60px;
+
+	.m-gradient(fade(@xf-contentBg, 0%), @xf-contentBg, @xf-contentBg, 0%, 90%);
+}
+
+.message-responses
+{
+	margin-top: @xf-messagePaddingSmall;
+	font-size: @xf-fontSizeSmall;
+}
+
+.message-responseRow
+{
+	margin-top: -@xf-minorBlockContent--border-width;
+	.xf-minorBlockContent();
+	padding: @xf-messagePaddingSmall;
+
+	// note that border radiuses are very difficult to do here due to a lot of dynamic showing/hiding
+
+	&.message-responseRow--likes
+	{
+		.m-transitionFadeDown();
+	}
+}
+
+@media (max-width: @xf-messageSingleColumnWidth)
+{
+	.message:not(.message--forceColumns)
+	{
+		.message-attribution-user .avatar
+		{
+			display: inline-block;
+			.m-avatarSize((@xf-fontSizeNormal) * (@xf-lineHeightDefault));
+		}
+
+		.message-content
+		{
+			// this is 1px to workaround an IE11 issue - see #139187
+			min-height: 1px;
+		}
+	}
+}
+
+@media (max-width: @xf-responsiveNarrow)
+{
+	.message-signature
+	{
+		display: none;
+	}
+}
+
+// MESSAGE MENU
+
+.message-menuGroup
+{
+	display: inline-block;
+}
+
+.message-menuTrigger
+{
+	display: inline-block;
+
+	&:after
+	{
+		.m-faBase();
+		.m-faContent(@fa-var-caret-down, 1em);
+		//font-size: 120%;
+		text-align: right;
+	}
+
+	&:hover:after
+	{
+		color: black;
+	}
+}
+
+.message-menu-section
+{
+	&--editDelete
+	{
+		.menu-linkRow
+		{
+			font-weight: @xf-fontWeightHeavy;
+			font-size: @xf-fontSizeNormal;
+		}
+	}
+}
+
+.message-menu-link
+{
+	&--delete i:after
+	{
+		.m-faContent(@fa-var-trash-o);
+	}
+	&--edit i:after
+	{
+		.m-faContent(@fa-var-edit);
+	}
+	&--report i:after
+	{
+		.m-faContent(@fa-var-frown-o);
+	}
+	&--warn i:after
+	{
+		.m-faContent(@fa-var-warning);
+	}
+	&--spam i:after
+	{
+		.m-faContent(@fa-var-ban);
+	}
+	&--ip i:after
+	{
+		.m-faContent(@fa-var-sitemap);
+	}
+	&--history i:after
+	{
+		.m-faContent(@fa-var-history);
+	}
+	&--follow i:after
+	{
+		.m-faContent(@fa-var-user-plus);
+	}
+	&--ignore i:after
+	{
+		.m-faContent(@fa-var-user-times);
+	}
+	&--share i:after
+	{
+		.m-faContent(@fa-var-share-alt);
+	}
+}
+
+// ############################# COMMENTS ###############
+
+.comment
+{
+}
+
+.comment-inner
+{
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+}
+
+.comment-avatar
+{
+	display: table-cell;
+	width: 24px;
+	vertical-align: top;
+
+	.avatar,
+	img
+	{
+		vertical-align: bottom;
+	}
+}
+
+.comment-main
+{
+	display: table-cell;
+	padding-left: @xf-messagePadding;
+	vertical-align: top;
+}
+
+.comment-contentWrapper
+{
+	margin-bottom: @xf-messagePaddingSmall;
+}
+
+.comment-user
+{
+	font-weight: @xf-fontWeightHeavy;
+}
+
+.comment-body
+{
+	display: inline;
+}
+
+.comment-input
+{
+	display: block;
+	height: 2.34em;
+	margin-bottom: @xf-messagePaddingSmall;
+}
+
+.comment-actionBar .actionBar-set
+{
+	margin-top: @xf-messagePaddingSmall;
+	color: @xf-textColorMuted;
+}
+
+.comment-likes
+{
+	.m-transitionFadeDown();
+
+	margin-top: @xf-messagePaddingSmall;
+	font-size: @xf-fontSizeSmaller;
+}
+
+// ################################## MESSAGE QUICK REPLY ADDITIONS #############
+
+.formSubmitRow.formSubmitRow--messageQr
+{
+	.formSubmitRow-controls
+	{
+		text-align: center;
+		padding-left: 0;
+		padding-right: 0;
+		margin-left: @xf-messagePadding;
+		margin-right: @xf-messagePadding;
+
+		@media (max-width: @xf-formResponsive)
+		{
+			text-align: right;
+		}
+	}
+}
+
+// ################################## MESSAGE NOTICES #############################
+
+.messageNotice
+{
+	margin: @xf-messagePaddingSmall 0;
+	padding: @xf-messagePaddingSmall @xf-messagePadding;
+	.xf-contentAccentBase();
+	font-size: @xf-fontSizeSmaller;
+	border-left: @xf-borderSizeMinorFeature solid @xf-borderColorAttention;
+
+	a,
+	a:hover
+	{
+		.xf-contentAccentLink();
+	}
+
+	&:first-child
+	{
+		margin-top: 0;
+	}
+
+	&:before
+	{
+		display: inline-block;
+		.m-faBase();
+		padding-right: .2em;
+		font-size: 125%;
+		color: @xf-textColorAttention;
+	}
+
+	&.messageNotice--deleted:before { .m-faContent(@fa-var-trash, .79em); }
+	&.messageNotice--moderated:before { .m-faContent(@fa-var-shield, .72em); }
+	&.messageNotice--warning:before { .m-faContent(@fa-var-warning, 1em); }
+	&.messageNotice--ignored:before { .m-faContent(@fa-var-microphone-slash, .79em); }
+}
+
+// ##################### MESSAGE VARIANTS/RESPONSIVE ##################
+
+@media (min-width: @xf-responsiveEdgeSpacerRemoval)
+{
+	.block:not(.block--messages)
+	{
+		@{block-noStripSel} > .block-body:first-child > .message:first-child,
+		.block-topRadiusContent.message,
+		.block-topRadiusContent > .message:first-child
+		{
+			.message-cell:first-child { border-top-left-radius: @block-borderRadius-inner; }
+			.message-cell:last-child { border-top-right-radius: @block-borderRadius-inner; }
+		}
+
+		@{block-noStripSel} > .block-body:last-child > .message:last-child,
+		.block-bottomRadiusContent.message,
+		.block-bottomRadiusContent > .message:last-child
+		{
+			.message-cell:first-child { border-bottom-left-radius: @block-borderRadius-inner; }
+			.message-cell:last-child { border-bottom-right-radius: @block-borderRadius-inner; }
+		}
+	}
+}
+
+.block--messages
+{
+	.block-container
+	{
+		background: none;
+		border: none;
+	}
+
+	.message,
+	.block-row
+	{
+		.xf-contentBase();
+		.xf-blockBorder();
+		border-radius: @xf-blockBorderRadius;
+
+		+ .message,
+		+ .block-row
+		{
+			margin-top: @xf-blockPaddingV;
+		}
+	}
+
+	.message-cell
+	{
+		&:first-child
+		{
+			border-radius: 0;
+			border-top-left-radius: @block-borderRadius-inner;
+			border-bottom-left-radius: @block-borderRadius-inner;
+		}
+
+		&:last-child
+		{
+			border-radius: 0;
+			border-top-right-radius: @block-borderRadius-inner;
+			border-bottom-right-radius: @block-borderRadius-inner;
+		}
+
+		&:first-child:last-child
+		{
+			border-radius: @block-borderRadius-inner;
+		}
+	}
+
+	@media (max-width: @xf-messageSingleColumnWidth)
+	{
+		.message:not(.message--forceColumns)
+		{
+			.message-cell
+			{
+				&:first-child
+				{
+					border-radius: 0;
+					border-top-left-radius: @block-borderRadius-inner;
+					border-top-right-radius: @block-borderRadius-inner;
+				}
+
+				&:last-child
+				{
+					border-radius: 0;
+					border-bottom-left-radius: @block-borderRadius-inner;
+					border-bottom-right-radius: @block-borderRadius-inner;
+				}
+
+				&:first-child:last-child
+				{
+					border-radius: @block-borderRadius-inner;
+				}
+			}
+		}
+
+		.message--simple:not(.message--forceColumns) .message-cell--user + .message-cell
+		{
+			border-radius: 0;
+			border-top-left-radius: @block-borderRadius-inner;
+			border-top-right-radius: @block-borderRadius-inner;
+		}
+	}
+
+	@media (max-width: @xf-responsiveEdgeSpacerRemoval)
+	{
+		.message,
+		.block-row
+		{
+			border-left: none;
+			border-right: none;
+			border-radius: 0;
+		}
+
+		.message-cell
+		{
+			border-radius: 0;
+
+			&:first-child,
+			&:last-child
+			{
+				border-radius: 0;
+			}
+		}
+
+		.message--simple .message-cell--user + .message-cell
+		{
+			border-radius: 0;
+		}
+	}
+}]]></template>
+    <template title="message_macros" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[<xf:macro name="user_info"
+	arg-user="!"
+	arg-fallbackName=""
+	arg-dateHtml=""
+	arg-linkHtml="">
+
+	<section itemscope itemtype="https://schema.org/Person" class="message-user">
+		<div class="message-avatar {{ ($xf.options.showMessageOnlineStatus && $user && $user.isOnline()) ? 'message-avatar--online' : '' }}">
+			<div class="message-avatar-wrapper">
+				<xf:avatar user="$user" size="m" defaultname="{$fallbackName}" itemprop="image" />
+				<xf:if is="$xf.options.showMessageOnlineStatus && $user && $user.isOnline()">
+					<span class="message-avatar-online" data-xf-init="tooltip" title="{{ phrase('online_now')|for_attr }}"></span>
+				</xf:if>
+			</div>
+		</div>
+		<div class="message-userDetails">
+			<h4 class="message-name"><xf:username user="$user" rich="true" defaultname="{$fallbackName}" itemprop="name" /></h4>
+			<xf:usertitle user="$user" tag="h5" class="message-userTitle" banner="true" itemprop="jobTitle" />
+			<xf:userbanners user="$user" tag="div" class="message-userBanner" itemprop="jobTitle" />
+			<xf:if is="{$dateHtml}"><div class="message-date">{$dateHtml}</div></xf:if>
+		</div>
+		<xf:if is="{$linkHtml}"><div class="message-permalink">{$linkHtml}</div></xf:if>
+		<xf:if is="$user.user_id">
+			<xf:set var="$extras" value="{{ property('messageUserElements') }}" />
+			<xf:if contentcheck="true">
+				<div class="message-userExtras message-userExtras-body message-userExtras--collapsible">
+				<xf:contentcheck>
+					<xf:if is="$extras.register_date">
+						<dl class="pairs pairs--justified">
+							<dt>{{ phrase('joined') }}</dt>
+							<dd>{{ date($user.register_date) }}</dd>
+						</dl>
+					</xf:if>
+					<xf:if is="$extras.message_count">
+						<dl class="pairs pairs--justified">
+							<dt>{{ phrase('messages') }}</dt>
+							<dd>{$user.message_count|number}</dd>
+						</dl>
+					</xf:if>
+					<xf:if is="$extras.like_count">
+						<dl class="pairs pairs--justified">
+							<dt>{{ phrase('likes') }}</dt>
+							<dd>{$user.like_count|number}</dd>
+						</dl>
+					</xf:if>
+					<xf:if is="$extras.trophy_points && $xf.options.enableTrophies">
+						<dl class="pairs pairs--justified">
+							<dt>{{ phrase('points') }}</dt>
+							<dd>{$user.trophy_points|number}</dd>
+						</dl>
+					</xf:if>
+					<xf:if is="$extras.age && $user.Profile.age">
+						<dl class="pairs pairs--justified">
+							<dt>{{ phrase('age') }}</dt>
+							<dd>{$user.Profile.age}</dd>
+						</dl>
+					</xf:if>
+					<xf:if is="$extras.location && $user.Profile.location">
+						<dl class="pairs pairs--justified">
+							<dt>{{ phrase('location') }}</dt>
+							<dd>
+								<xf:if is="$xf.options.geoLocationUrl">
+									<a href="{{ link('misc/location-info', '', {'location': $user.Profile.location}) }}" rel="nofollow noreferrer" target="_blank" class="u-concealed">{$user.Profile.location}</a>
+								<xf:else />
+									{$user.Profile.location}
+								</xf:if>
+							</dd>
+						</dl>
+					</xf:if>
+					<xf:if is="$extras.website && $user.Profile.website">
+						<dl class="pairs pairs--justified">
+							<dt>{{ phrase('website') }}</dt>
+							<dd><a href="{$user.Profile.website}" rel="nofollow" target="_blank">{$user.Profile.website|url('host', phrase('visit_site'))}</a></dd>
+						</dl>
+					</xf:if>
+					<xf:if is="$extras.custom_fields">
+						<xf:macro template="custom_fields_macros" name="custom_fields_values"
+							arg-type="users"
+							arg-group="personal"
+							arg-set="{$user.Profile.custom_fields}"
+							arg-additionalFilters="{{ ['message'] }}"
+							arg-valueClass="pairs pairs--justified" />
+						<xf:if is="$user.canViewIdentities()">
+							<xf:macro template="custom_fields_macros" name="custom_fields_view"
+								arg-type="users"
+								arg-group="contact"
+								arg-set="{$user.Profile.custom_fields}"
+								arg-additionalFilters="{{ ['message'] }}"
+								arg-valueClass="pairs pairs--justified" />
+						</xf:if>
+					</xf:if>
+				</xf:contentcheck>
+				</div>
+			</xf:if>
+		</xf:if>
+		<span class="message-userArrow"></span>
+	</section>
+</xf:macro>
+
+<xf:macro name="user_info_simple" arg-user="!" arg-fallbackName="">
+	<header itemscope itemtype="https://schema.org/Person" class="message-user">
+		<meta itemprop="name" content="{{ $user.username ?: $fallbackName }}">
+		<div class="message-avatar">
+			<div class="message-avatar-wrapper">
+				<xf:avatar user="$user" size="s" defaultname="{$fallbackName}" itemprop="image" />
+			</div>
+		</div>
+		<span class="message-userArrow"></span>
+	</header>
+</xf:macro>
+
+<xf:macro name="attachments" arg-attachments="!" arg-message="!" arg-canView="!">
+	<xf:if contentcheck="true">
+		<xf:css src="attachments.less" />
+		<section class="message-attachments">
+			<h4 class="block-textHeader">{{ phrase('attachments') }}</h4>
+			<ul class="attachmentList">
+				<xf:contentcheck>
+					<xf:foreach loop="$attachments" value="$attachment" if="!$message.isAttachmentEmbedded($attachment)">
+						<xf:macro template="attachment_macros" name="attachment_list_item"
+							arg-attachment="{$attachment}"
+							arg-canView="{$canView}" />
+					</xf:foreach>
+				</xf:contentcheck>
+			</ul>
+		</section>
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="signature" arg-user="!">
+	<xf:if is="$xf.visitor.Option.content_show_signature AND $user.Profile.signature">
+		<xf:if contentcheck="true">
+			<aside class="message-signature">
+			<xf:contentcheck>
+				{{ bb_code($user.Profile.signature, 'user:signature', $user) }}
+			</xf:contentcheck>
+			</aside>
+		</xf:if>
+	</xf:if>
+</xf:macro>]]></template>
+    <template title="node_list_category" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[<xf:macro name="depth1" arg-node="!" arg-extras="!" arg-children="!" arg-childExtras="!" arg-depth="1">
+	<div class="block block--category block--category{$node.node_id} collapsible-nodes">
+		<span class="u-anchorTarget" id="{$node.Data.getCategoryAnchor()}"></span>
+		<h2 class="block-header" style="color: #88c451; background: none;">
+				<div class="block-header--left">
+					<a href="{{ link('categories', $node) }}">{$node.title}</a>
+					<xf:if is="{$node.description}"><span class="block-desc">{$node.description|raw}</span></xf:if>
+				</div>
+				<span id="collapse-{$node.node_id}" class="collapseTrigger collapseTrigger--block is-active" data-xf-click="toggle" data-xf-init="toggle-storage" data-target=".block--category{$node.node_id} .block-body" data-storage-key="_node-{$node.node_id}"></span>
+		</h2>
+		<div class="block-container">
+			<div class="block-body block-body--collapsible is-active">
+				<xf:macro template="forum_list" name="node_list"
+					arg-children="{$children}"
+					arg-extras="{$childExtras}"
+					arg-depth="{{ $depth + 1 }}" />
+			</div>
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="depth2" arg-node="!" arg-extras="!" arg-children="!" arg-childExtras="!" arg-depth="1">
+	<div class="node node--id{$node.node_id} node--depth{$depth} node--category {{ $extras.hasNew ? 'node--unread' : 'node--read' }}">
+		<div class="node-body">
+			<span class="node-icon" aria-hidden="true"><i></i></span>
+			<div class="node-main js-nodeMain">
+				<xf:set var="$descriptionDisplay" value="{{ property('nodeListDescriptionDisplay') }}" />
+				<h3 class="node-title">
+					<a href="{{ link('categories', $node) }}" data-xf-init="{{ $descriptionDisplay == 'tooltip' ? 'element-tooltip' : '' }}" data-shortcut="node-description">{$node.title}</a>
+				</h3>
+				<xf:if is="$descriptionDisplay != 'none' && $node.description">
+					<div class="node-description {{ $descriptionDisplay == 'tooltip' ? 'node-description--tooltip js-nodeDescTooltip' : '' }}">{$node.description|raw}</div>
+				</xf:if>
+
+				<div class="node-meta">
+					<xf:if is="!{$extras.privateInfo}">
+						<div class="node-statsMeta">
+							<dl class="pairs pairs--inline">
+								<dt>{{ phrase('threads') }}</dt>
+								<dd>{$extras.discussion_count|number}</dd>
+							</dl>
+							<dl class="pairs pairs--inline">
+								<dt>{{ phrase('messages') }}</dt>
+								<dd>{$extras.message_count|number}</dd>
+							</dl>
+						</div>
+					</xf:if>
+
+					<xf:if is="$depth == 2 AND property('nodeListSubDisplay') == 'menu'">
+						<xf:macro template="forum_list" name="sub_nodes_menu"
+							arg-children="{$children}"
+							arg-childExtras="{$childExtras}"
+							arg-depth="{{ $depth + 1 }}" />
+					</xf:if>
+				</div>
+
+				<xf:if is="$depth == 2 AND property('nodeListSubDisplay') == 'flat'">
+					<xf:macro template="forum_list" name="sub_nodes_flat"
+						arg-children="{$children}"
+						arg-childExtras="{$childExtras}"
+						arg-depth="{{ $depth + 1 }}" />
+				</xf:if>
+			</div>
+
+			<xf:if is="!{$extras.privateInfo}">
+				<div class="node-stats">
+					<dl class="pairs pairs--rows">
+						<dt>{{ phrase('threads') }}</dt>
+						<dd>{$extras.discussion_count|number}</dd>
+					</dl>
+					<dl class="pairs pairs--rows">
+						<dt>{{ phrase('messages') }}</dt>
+						<dd>{$extras.message_count|number}</dd>
+					</dl>
+				</div>
+			</xf:if>
+
+			<div class="node-extra">
+				<xf:if is="{$extras.privateInfo}">
+					<span class="node-extra-placeholder">{{ phrase('private') }}</span>
+				<xf:elseif is="{$extras.last_post_date}" />
+					<div class="node-extra-row"><a href="{{ link('posts', {'post_id': $extras.last_post_id}) }}" class="node-extra-title" title="{$extras.last_thread_title}">{$extras.last_thread_title}</a></div>
+					<div class="node-extra-row">
+						<ul class="listInline listInline--bullet">
+							<li class="node-extra-date"><xf:date time="{$extras.last_post_date}" /></li>
+							<xf:if is="$xf.visitor.isIgnoring($extras.last_post_user_id)">
+								<li class="node-extra-user">{{ phrase('ignored_member') }}</li>
+							<xf:else />
+								<li class="node-extra-user"><xf:username user="{{ {'user_id': $extras.last_post_user_id, 'username': $extras.last_post_username} }}" /></li>
+							</xf:if>
+						</ul>
+					</div>
+				<xf:else />
+					<span class="node-extra-placeholder">{{ phrase('none') }}</span>
+				</xf:if>
+			</div>
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="depthN" arg-node="!" arg-extras="!" arg-children="!" arg-childExtras="!" arg-depth="1">
+	<li>
+		<a href="{{ link('categories', $node) }}" class="subNodeLink subNodeLink--category {{ $extras.hasNew ? 'subNodeLink--unread' : '' }}">{$node.title}</a>
+		<xf:macro template="forum_list" name="sub_node_list"
+			arg-children="{$children}"
+			arg-childExtras="{$childExtras}"
+			arg-depth="{{ $depth + 1 }}" />
+	</li>
+</xf:macro>]]></template>
+    <template title="post_macros" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[<xf:macro name="post" arg-post="!" arg-thread="!">
+	<xf:css src="message.less" />
+	<xf:set var="$isIgnored" value="{{ $post.isIgnored() }}" />
+	<article class="message message--post js-post js-inlineModContainer {{ $isIgnored ? 'is-ignored' : '' }} {{ $post.isUnread() ? ' is-unread' : '' }}"
+		data-author="{{ $post.User.username ?: $post.username }}"
+		data-content="post-{$post.post_id}"
+		id="js-post-{$post.post_id}">
+
+		<span class="u-anchorTarget" id="post-{$post.post_id}"></span>
+
+		<div class="message-inner">
+			<div class="message-cell message-cell--user">
+				<xf:set var="$dateHtml"><a href="{{ link('threads/post', $thread, {'post_id': $post.post_id}) }}" class="u-concealed" rel="nofollow"><xf:date time="{$post.post_date}" /></a></xf:set>
+				<xf:set var="$linkHtml"><a href="{{ link('threads/post', $thread, {'post_id': $post.post_id}) }}" class="u-concealed" rel="nofollow">#{{ number($post.position + 1) }}</a></xf:set>
+				<xf:macro template="message_macros" name="user_info" arg-user="{$post.User}" arg-fallbackName="{$post.username}" arg-dateHtml="{$dateHtml}" arg-linkHtml="{$linkHtml}" />
+				<span id="collapse-{$post.post_id}" class="collapseTrigger collapseTrigger--block" data-xf-click="toggle" data-target="#js-post-{$post.post_id} .message-userExtras"></span>
+			</div>
+			<div class="message-cell message-cell--main">
+				<div class="message-main js-quickEditTarget">
+
+					<header class="message-attribution">
+						<a href="{{ link('threads/post', $thread, {'post_id': $post.post_id}) }}" class="message-attribution-main u-concealed" rel="nofollow"><xf:date time="{$post.post_date}" /></a>
+						<div class="message-attribution-opposite">
+							<xf:if is="$post.isUnread()">
+								<span class="message-newIndicator">{{ phrase('new') }}</span>
+							</xf:if>
+							<a href="{{ link('threads/post', $thread, {'post_id': $post.post_id}) }}" class="u-concealed" rel="nofollow">#{{ number($post.position + 1) }}</a>
+						</div>
+					</header>
+
+					<div class="message-content js-messageContent">
+
+						<xf:if is="$post.message_state == 'deleted'">
+							<div class="messageNotice messageNotice--deleted">
+								<xf:macro template="deletion_macros" name="notice" arg-log="{$post.DeletionLog}" />
+							</div>
+						<xf:elseif is="$post.message_state == 'moderated'" />
+							<div class="messageNotice messageNotice--moderated">
+								{{ phrase('this_message_is_awaiting_moderator_approval_and_is_invisible_to_normal') }}
+							</div>
+						</xf:if>
+						<xf:if is="$post.warning_message">
+							<div class="messageNotice messageNotice--warning">
+								{$post.warning_message}
+							</div>
+						</xf:if>
+						<xf:if is="$isIgnored">
+							<div class="messageNotice messageNotice--ignored">
+								{{ phrase('you_are_ignoring_content_by_this_member') }}
+								<xf:showignored />
+							</div>
+						</xf:if>
+
+						<div class="message-userContent lbContainer js-lbContainer {{ $isIgnored ? 'is-ignored' : '' }}"
+							data-lb-id="post-{$post.post_id}"
+							data-lb-caption-desc="{{ $post.User ? $post.User.username : $post.username }} &middot; {{ date_time($post.post_date) }}">
+
+							<xf:if is="$post.isFirstPost()">
+								<xf:macro template="custom_fields_macros" name="custom_fields_view"
+									arg-type="threads"
+									arg-group="before"
+									arg-onlyInclude="{$thread.Forum.field_cache}"
+									arg-set="{$thread.custom_fields}"
+									arg-wrapperClass="message-fields message-fields--before" />
+							</xf:if>
+
+							<article class="message-body js-selectToQuote">
+								<xf:ad position="post_above_content" arg-post="{$post}" />
+								{{ bb_code($post.message, 'post', $post) }}
+								<div class="js-selectToQuoteEnd">&nbsp;</div>
+								<xf:ad position="post_below_content" arg-post="{$post}" />
+							</article>
+
+							<xf:if is="$post.isFirstPost()">
+								<xf:macro template="custom_fields_macros" name="custom_fields_view"
+									arg-type="threads"
+									arg-group="after"
+									arg-onlyInclude="{$thread.Forum.field_cache}"
+									arg-set="{$thread.custom_fields}"
+									arg-wrapperClass="message-fields message-fields--after" />
+							</xf:if>
+
+							<xf:if is="$post.attach_count">
+								<xf:macro template="message_macros" name="attachments"
+									arg-attachments="{$post.Attachments}"
+									arg-message="{$post}"
+									arg-canView="{{ $thread.canViewAttachments() }}" />
+							</xf:if>
+						</div>
+
+						<xf:if is="$post.last_edit_date">
+							<div class="message-lastEdit">
+								<xf:if is="$post.user_id == $post.last_edit_user_id">
+									{{ phrase('last_edited:') }} <xf:date time="{$post.last_edit_date}" />
+								<xf:else />
+									{{ phrase('last_edited_by_moderator:') }} <xf:date time="{$post.last_edit_date}" />
+								</xf:if>
+							</div>
+						</xf:if>
+
+						<xf:macro template="message_macros" name="signature" arg-user="{$post.User}" />
+					</div>
+
+					<footer class="message-footer">
+						<xf:if contentcheck="true">
+							<div class="message-actionBar actionBar">
+								<xf:contentcheck>
+									<xf:if contentcheck="true">
+										<div class="actionBar-set actionBar-set--external">
+										<xf:contentcheck>
+											<xf:if is="$post.canLike()">
+												<a href="{{ link('posts/like', $post) }}" class="actionBar-action actionBar-action--like" data-xf-click="like" data-like-list="< .js-post | .js-likeList"><xf:if is="$post.isLiked()">{{ phrase('unlike') }}<xf:else />{{ phrase('like') }}</xf:if></a>
+											</xf:if>
+											<xf:if is="$thread.canReply()">
+												<xf:set var="$quoteLink">{{ link('threads/reply', $thread, {'quote': $post.post_id}) }}</xf:set>
+
+												<xf:if is="$xf.options.multiQuote">
+													<a href="{$quoteLink}"
+														class="actionBar-action actionBar-action--mq u-jsOnly js-multiQuote"
+														title="{{ phrase('toggle_multi_quote_tooltip')|for_attr }}"
+														data-message-id="{$post.post_id}"
+														data-mq-action="add">{{ phrase('quote') }}</a>
+												</xf:if>
+
+												<a href="{$quoteLink}"
+													class="actionBar-action actionBar-action--reply"
+													title="{{ phrase('reply_quoting_this_message')|for_attr }}"
+													data-xf-click="quote"
+													data-quote-href="{{ link('posts/quote', $post) }}">{{ phrase('reply') }}</a>
+											</xf:if>
+										</xf:contentcheck>
+										</div>
+									</xf:if>
+
+									<xf:if contentcheck="true">
+										<div class="actionBar-set actionBar-set--internal">
+										<xf:contentcheck>
+											<xf:if is="$post.canUseInlineModeration()">
+												<span class="actionBar-action actionBar-action--inlineMod">
+													<xf:checkbox standalone="true">
+														<xf:option value="{$post.post_id}" class="js-inlineModToggle"
+															data-xf-init="tooltip"
+															title="{{ phrase('select_for_moderation') }}"
+															label="{{ phrase('select_for_moderation') }}"
+															hiddenlabel="true" />
+													</xf:checkbox>
+												</span>
+											</xf:if>
+
+											<xf:if is="$post.canReport()">
+												<a href="{{ link('posts/report', $post) }}"
+													class="actionBar-action actionBar-action--report"
+													data-xf-click="overlay">{{ phrase('report') }}</a>
+											</xf:if>
+
+											<xf:set var="$hasActionBarMenu" value="{{ false }}" />
+											<xf:if is="$post.canEdit()">
+												<xf:js src="xf/message.js" min="1" />
+												<a href="{{ link('posts/edit', $post) }}"
+													class="actionBar-action actionBar-action--edit actionBar-action--menuItem"
+													data-xf-click="quick-edit"
+													data-editor-target="#js-post-{$post.post_id} .js-quickEditTarget"
+													data-menu-closer="true">{{ phrase('edit') }}</a>
+
+												<xf:set var="$hasActionBarMenu" value="{{ true }}" />
+											</xf:if>
+											<xf:if is="$post.edit_count && $post.canViewHistory()">
+												<a href="{{ link('posts/history', $post) }}"
+													class="actionBar-action actionBar-action--history actionBar-action--menuItem"
+													data-xf-click="toggle"
+													data-target="#js-post-{$post.post_id} .js-historyTarget"
+													data-menu-closer="true">{{ phrase('history') }}</a>
+
+												<xf:set var="$hasActionBarMenu" value="{{ true }}" />
+											</xf:if>
+											<xf:if is="$post.canDelete('soft')">
+												<a href="{{ link('posts/delete', $post) }}"
+													class="actionBar-action actionBar-action--delete actionBar-action--menuItem"
+													data-xf-click="overlay">{{ phrase('delete') }}</a>
+
+												<xf:set var="$hasActionBarMenu" value="{{ true }}" />
+											</xf:if>
+											<xf:if is="$post.canCleanSpam()">
+												<a href="{{ link('spam-cleaner', $post) }}"
+													class="actionBar-action actionBar-action--spam actionBar-action--menuItem"
+													data-xf-click="overlay">{{ phrase('spam') }}</a>
+
+												<xf:set var="$hasActionBarMenu" value="{{ true }}" />
+											</xf:if>
+											<xf:if is="$xf.visitor.canViewIps() && $post.ip_id">
+												<a href="{{ link('posts/ip', $post) }}"
+													class="actionBar-action actionBar-action--ip actionBar-action--menuItem"
+													data-xf-click="overlay">{{ phrase('ip') }}</a>
+
+												<xf:set var="$hasActionBarMenu" value="{{ true }}" />
+											</xf:if>
+											<xf:if is="$post.canWarn()">
+
+												<a href="{{ link('posts/warn', $post) }}"
+													class="actionBar-action actionBar-action--warn actionBar-action--menuItem">{{ phrase('warn') }}</a>
+
+												<xf:set var="$hasActionBarMenu" value="{{ true }}" />
+											<xf:elseif is="$post.warning_id && $xf.visitor.canViewWarnings()" />
+												<a href="{{ link('warnings', {'warning_id': $post.warning_id}) }}"
+													class="actionBar-action actionBar-action--warn actionBar-action--menuItem"
+													data-xf-click="overlay">{{ phrase('view_warning') }}</a>
+												<xf:set var="$hasActionBarMenu" value="{{ true }}" />
+											</xf:if>
+
+											<xf:if is="$hasActionBarMenu">
+												<a class="actionBar-action actionBar-action--menuTrigger"
+													data-xf-click="menu"
+													title="{{ phrase('more_options')|for_attr }}"
+													role="button"
+													tabindex="0"
+													aria-expanded="false"
+													aria-haspopup="true">&#8226;&#8226;&#8226;</a>
+
+												<div class="menu" data-menu="menu" aria-hidden="true" data-menu-builder="actionBar">
+													<div class="menu-content">
+														<h4 class="menu-header">{{ phrase('more_options') }}</h4>
+														<div class="js-menuBuilderTarget"></div>
+													</div>
+												</div>
+											</xf:if>
+										</xf:contentcheck>
+										</div>
+									</xf:if>
+
+								</xf:contentcheck>
+							</div>
+						</xf:if>
+
+						<div class="likesBar js-likeList {{ $post.likes ? 'is-active' : '' }}">
+							<xf:likes content="{$post}" url="{{ link('posts/likes', $post) }}" />
+						</div>
+
+						<div class="js-historyTarget message-historyTarget toggleTarget" data-href="trigger-href"></div>
+					</footer>
+				</div>
+			</div>
+		</div>
+	</article>
+
+	<xf:ad position="post_below_container" arg-post="{$post}" />
+</xf:macro>
+
+<xf:macro name="post_deleted" arg-post="!" arg-thread="!">
+	<xf:css src="message.less" />
+	<div class="message message--deleted message--post{{ $post.isIgnored() ? ' is-ignored' : '' }}{{ $post.isUnread() ? ' is-unread' : '' }} js-post js-inlineModContainer"
+		data-author="{{ $post.User.username ?: $post.username }}"
+		data-content="post-{$post.post_id}">
+
+		<span class="u-anchorTarget" id="post-{$post.post_id}"></span>
+		<div class="message-inner">
+			<div class="message-cell message-cell--user">
+				<xf:macro template="message_macros" name="user_info" arg-user="{$post.User}" arg-fallbackName="{$post.username}" />
+			</div>
+			<div class="message-cell message-cell--main">
+				<div class="message-attribution">
+					<ul class="listInline listInline--bullet message-attribution-main">
+						<li><a href="{{ link('threads/post', $thread, {'post_id': $post.post_id}) }}" class="u-concealed" rel="nofollow"><xf:date time="{$post.post_date}" /></a></li>
+						<li><xf:username user="{$post.User}" defaultname="{$post.username}" class="u-concealed" /></li>
+					</ul>
+				</div>
+
+				<div class="messageNotice messageNotice--deleted">
+					<xf:macro template="deletion_macros" name="notice" arg-log="{$post.DeletionLog}" />
+
+					<a href="{{ link('posts/show', $post) }}" class="u-jsOnly" data-xf-click="inserter" data-replace="[data-content=post-{$post.post_id}]">{{ phrase('show...') }}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<xf:ad position="post_below_container" arg-post="{$post}" />
+</xf:macro>]]></template>
+    <template title="share_controls.less" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[.shareButtons
+{
+	.m-clearFix();
+}
+
+.shareButtons-label
+{
+	float: left;
+	margin-right: 3px;
+	color: @xf-textColorMuted;
+	min-height: 35px;
+	line-height: 35px;
+}
+
+.shareButtons-button
+{
+	float: left;
+	margin-right: 3px;
+	margin-top: 3px;
+	padding: 6px;
+	color: @xf-textColorMuted;
+	font-size: 20px;
+	line-height: 20px;
+	white-space: nowrap;
+	min-width: 35px;
+	border-radius: @xf-borderRadiusSmall;
+	background-color: transparent;
+	.m-transition();
+
+	&:last-of-type
+	{
+		margin-right: 0;
+	}
+
+	&:hover
+	{
+		text-decoration: none;
+		color: white;
+	}
+
+	> i
+	{
+		display: inline-block;
+		vertical-align: middle;
+		.m-faBase();
+	}
+
+	> span
+	{
+		font-weight: @xf-fontWeightNormal;
+		font-size: @xf-fontSizeNormal;
+	}
+
+	.shareButtons--iconic &
+	{
+		text-align: center;
+
+		> i
+		{
+			min-width: 20px;
+		}
+
+		> span
+		{
+			.m-visuallyHidden();
+		}
+	}
+
+	&.shareButtons-button--facebook
+	{
+		color: white;
+		background-color: #3B5998;
+		border-radius: 100px;
+		&:hover { background-color: #3B5998; }
+		> i:before { .m-faContent(@fa-var-facebook, .58em); }
+	}
+
+	&.shareButtons-button--twitter
+	{
+		color: white;
+		background-color: #1DA1F3;
+		border-radius: 100px;
+		&:hover { background-color: #1DA1F3; }
+		> i:before { .m-faContent(@fa-var-twitter, .93em); }
+	}
+
+	&.shareButtons-button--gplus
+	{
+		color: white;
+		background-color: #dd4b39;
+		border-radius: 100px;
+		&:hover { background-color: #dd4b39; }
+		> i:before { .m-faContent(@fa-var-google-plus, 1.29em); }
+	}
+
+	&.shareButtons-button--pinterest
+	{
+		color: white;
+		background-color: #bd081c;
+		border-radius: 100px;
+		&:hover { background-color: #bd081c; }
+		> i:before { .m-faContent(@fa-var-pinterest-p, .72em); }
+	}
+
+	&.shareButtons-button--tumblr
+	{
+		color: white;
+		background-color: #35465c;
+		border-radius: 100px;
+		&:hover { background-color: #35465c; }
+		> i:before { .m-faContent(@fa-var-tumblr, .58em); }
+	}
+
+	&.shareButtons-button--reddit
+	{
+		color: white;
+		background-color: #FF4500;
+		border-radius: 100px;
+		&:hover { background-color: #FF4500; }
+		> i:before { .m-faContent(@fa-var-reddit-alien, 1em); }
+	}
+
+	&.shareButtons-button--whatsApp
+	{
+		color: white;
+		background-color: #25D366;
+		border-radius: 100px;
+		&:hover { background-color: #25D366; }
+		> i:before { .m-faContent(@fa-var-whatsapp, .86em); }
+	}
+
+	&.shareButtons-button--email
+	{
+		color: white;
+		background-color: #1289ff;
+		border-radius: 100px;
+		&:hover { background-color: #1289ff; }
+		> i:before { .m-faContent(@fa-var-envelope-o, 1em); }
+	}
+
+	&.shareButtons-button--link
+	{
+		color: white;
+		background-color: #787878;
+		border-radius: 100px;
+		cursor: pointer;
+		&:hover { background-color: #787878; }
+		> i:before { .m-faContent(@fa-var-link, 1em); }
+	}
+
+	&.is-hidden
+	{
+		display: none;
+	}
+}
+
+.shareInput
+{
+	margin-bottom: 5px;
+
+	&:last-child
+	{
+		margin-bottom: 0;
+	}
+}
+
+.shareInput-label
+{
+	font-size: @xf-fontSizeSmall;
+	.m-appendColon();
+}
+
+.shareInput-button
+{
+	color: @xf-linkColor;
+	cursor: pointer;
+
+	> i
+	{
+		display: inline-block;
+		vertical-align: middle;
+		.m-faBase();
+
+		&:before { .m-faContent(@fa-var-copy); }
+	}
+
+	&.is-hidden
+	{
+		display: none;
+	}
+}
+
+.shareInput-input
+{
+	font-size: @xf-fontSizeSmall;
+
+	.shareInput-button.is-hidden + &
+	{
+		border-radius: @xf-borderRadiusMedium;
+	}
+}]]></template>
+  </templates>
+  <properties>
+    <property property_name="blockBorder" group_name="block" title="Block border framework" description="Virtually all blocks have their borders styled with these settings" property_type="css" value_type="" depends_on="" value_group="" display_order="20000" css_components="border,extra" addon_id="XF">
+      <value>{
+    "extra": "box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16);"
+}</value>
+    </property>
+    <property property_name="blockFilterBar" group_name="block" title="Block filter bar" description="When the content of a block can be filtered, the controls to do so are styled here" property_type="css" value_type="" depends_on="" value_group="" display_order="20800" css_components="text,background,border,extra" addon_id="XF">
+      <value>{
+    "font-size": "@xf-fontSizeSmall",
+    "color": "rgb(20, 20, 20)",
+    "background-color": "#f5f5f5",
+    "border-bottom-width": "1px",
+    "border-bottom-color": "#ebebeb",
+    "extra": "text-transform: uppercase;\ncolor: #141414;"
+}</value>
+    </property>
+    <property property_name="blockFooter" group_name="block" title="Block footer" description="When information needs to be conveyed in a footer element for a block, its style is controlled here" property_type="css" value_type="" depends_on="" value_group="" display_order="21200" css_components="text,background,border,extra" addon_id="XF">
+      <value>{
+    "font-size": "@xf-fontSizeSmaller",
+    "color": "@xf-textColorDimmed",
+    "background-color": "transparent"
+}</value>
+    </property>
+    <property property_name="blockHeader" group_name="block" title="Block header" description="Blocks often have title bars at their tops, which are styled here" property_type="css" value_type="" depends_on="" value_group="" display_order="20100" css_components="text,background,border,extra" addon_id="XF">
+      <value>{
+    "font-size": "@xf-fontSizeLarger",
+    "color": "@xf-contentBg",
+    "background-color": "@xf-linkColor",
+    "extra": "margin-top: 10px !important;"
+}</value>
+    </property>
+    <property property_name="blockMinorHeader" group_name="block" title="Block minor header" description="Sub-headings in blocks use these settings" property_type="css" value_type="" depends_on="" value_group="" display_order="20400" css_components="text,background,border,extra" addon_id="XF">
+      <value>{
+    "font-size": "@xf-fontSizeLarge",
+    "color": "rgb(0,0,0)",
+    "extra": "font-weight: 500;\ntext-align: center;\npadding: 10px;"
+}</value>
+    </property>
+    <property property_name="blockTabHeader" group_name="block" title="Block tab header" description="Occasionally, blocks will have multi-part, tab headers, styled with these settings" property_type="css" value_type="" depends_on="" value_group="" display_order="20200" css_components="text,background,border,extra" addon_id="XF">
+      <value>{
+    "font-size": "@xf-fontSizeNormal",
+    "color": "@xf-textColor",
+    "background-color": "#f5f5f5",
+    "border-bottom-width": "@xf-borderSize",
+    "border-bottom-color": "@xf-borderColor",
+    "extra": "text-transform: uppercase;"
+}</value>
+    </property>
+    <property property_name="blockTabHeaderSelected" group_name="block" title="Block tab header - selected tab" description="The selected tab in multi-part headers takes additional styling from here" property_type="css" value_type="" depends_on="" value_group="" display_order="20300" css_components="text,background,border_color_simple,extra" addon_id="XF">
+      <value>{
+    "color": "@xf-textColorMuted",
+    "border-color": "@xf-linkColor"
+}</value>
+    </property>
+    <property property_name="buttonBase" group_name="button" title="Button base" description="Defines the styling for the basic elements that are common to all text-based buttons" property_type="css" value_type="" depends_on="" value_group="" display_order="20000" css_components="text,border_radius,padding,extra" addon_id="XF">
+      <value>{
+    "font-size": "@xf-fontSizeSmall",
+    "border-radius": "@xf-borderRadiusMedium",
+    "padding-top": "5px",
+    "padding-right": "10px",
+    "padding-bottom": "5px",
+    "padding-left": "10px",
+    "extra": "text-align: center;\ntext-transform: uppercase;"
+}</value>
+    </property>
+    <property property_name="buttonCta" group_name="button" title="Button - call to action" description="Call to action buttons sit alone and invite the user to do something, like post a new thread" property_type="css" value_type="" depends_on="" value_group="" display_order="20300" css_components="text,background,extra" addon_id="XF">
+      <value>{
+    "color": "@xf-contentBg",
+    "background-color": "#23a9f1"
+}</value>
+    </property>
+    <property property_name="buttonDefault" group_name="button" title="Button - default" description="Most buttons use this styling, except for primary form submit buttons" property_type="css" value_type="" depends_on="" value_group="" display_order="20100" css_components="text,background,extra" addon_id="XF">
+      <value>{
+    "color": "@xf-contentBg",
+    "background-color": "@xf-paletteColor4"
+}</value>
+    </property>
+    <property property_name="buttonPrimary" group_name="button" title="Button - primary" description="These rules are used mostly for the main submit button for forms" property_type="css" value_type="" depends_on="" value_group="" display_order="20200" css_components="text,background,extra" addon_id="XF">
+      <value>{
+    "color": "@xf-contentBg",
+    "background-color": "#23a9f1",
+    "extra": "min-width: 80px;"
+}</value>
+    </property>
+    <property property_name="input" group_name="input" title="Form input" description="Controls the style of most text-input boxes" property_type="css" value_type="" depends_on="" value_group="" display_order="20000" css_components="text,background,border,border_radius,padding,extra" addon_id="XF">
+      <value>{
+    "font-size": "@xf-fontSizeNormal",
+    "color": "@xf-textColor",
+    "background-color": "@xf-contentBg",
+    "padding": "@xf-paddingMedium",
+    "extra": "border-bottom: @xf-borderSize solid @xf-borderColorLight;\nborder-top: none;\nborder-right: none;\nborder-left: none;"
+}</value>
+    </property>
+    <property property_name="inputFocus" group_name="input" title="Form input - focused" description="These rules are applied to text boxes when they are selected for input" property_type="css" value_type="" depends_on="" value_group="" display_order="20100" css_components="text,background,extra" addon_id="XF">
+      <value>{
+    "background-color": "@xf-contentBg",
+    "extra": "border-bottom: 2px solid #23a9f1;"
+}</value>
+    </property>
+    <property property_name="memberHeader" group_name="member" title="Member profile header" description="The member profile page's content header is styled with these settings" property_type="css" value_type="" depends_on="" value_group="" display_order="20000" css_components="text,background,border,extra" addon_id="XF">
+      <value>{
+    "background-color": "#f5f5f5",
+    "extra": "border-bottom: 1px solid #ebebeb;"
+}</value>
+    </property>
+    <property property_name="menuHeader" group_name="menu" title="Menu header" description="Most menus identify themselves with a header just underneath their top border" property_type="css" value_type="" depends_on="" value_group="" display_order="20100" css_components="text,background,border,extra" addon_id="XF">
+      <value>{
+    "font-size": "@xf-fontSizeLarge",
+    "color": "@xf-textColor",
+    "background-color": "#f5f5f5",
+    "border-bottom-width": "1px",
+    "border-bottom-color": "#ebebeb"
+}</value>
+    </property>
+    <property property_name="messageUserElements" group_name="message" title="Message user info elements" description="The elements selected here will be displayed in the message user info block. It will not be displayed below the single column width." property_type="value" value_type="template" depends_on="" value_group="user" display_order="600" addon_id="XF">
+      <value_parameters>template=style_property_template_messageUserElements
+type=array</value_parameters>
+      <value>{
+    "message_count": "1",
+    "like_count": "1",
+    "location": "1"
+}</value>
+    </property>
+    <property property_name="overlayHeader" group_name="overlay" title="Overlay header" description="Overlays use a header element to identify their contents, styled here" property_type="css" value_type="" depends_on="" value_group="" display_order="20000" css_components="text,background,border,padding,extra" addon_id="XF">
+      <value>{
+    "font-size": "@xf-fontSizeLargest",
+    "color": "#6e6e6e",
+    "background-color": "#f5f5f5",
+    "border-bottom-width": "@xf-borderSize",
+    "border-bottom-color": "@xf-borderColorLight",
+    "padding-top": "@xf-paddingMedium",
+    "padding-right": "@xf-paddingLarge",
+    "padding-bottom": "@xf-paddingMedium",
+    "padding-left": "@xf-paddingLarge",
+    "extra": "text-transform: uppercase;"
+}</value>
+    </property>
+    <property property_name="pageBackground" group_name="page" title="Page background" description="The page background, behind all block elements, uses the styling rules defined here" property_type="css" value_type="" depends_on="" value_group="" display_order="20200" css_components="background,extra" addon_id="XF">
+      <value>{
+    "background-color": "rgb(248,249,250)"
+}</value>
+    </property>
+    <property property_name="pageEdgeSpacer" group_name="borderSpacing" title="Page edge spacer" description="All elements will be spaced at least this far from the edges of the page" property_type="value" value_type="unit" depends_on="" value_group="spacer" display_order="3100" addon_id="XF">
+      <value>"20px"</value>
+    </property>
+    <property property_name="pageWidthMax" group_name="page" title="Maximum page width" description="As the window is resized, it will continue to grow in width until this value, after which it will remain static" property_type="value" value_type="unit" depends_on="" value_group="page" display_order="100" addon_id="XF">
+      <value>"1366px"</value>
+    </property>
+    <property property_name="paletteAccent2" group_name="palette" title="Accent 2" description="" property_type="value" value_type="color" depends_on="" value_group="accent" display_order="2100" addon_id="XF">
+      <value_parameters>hidePalette=true</value_parameters>
+      <value>"rgb(136, 196, 81)"</value>
+    </property>
+    <property property_name="paletteAccent3" group_name="palette" title="Accent 3" description="" property_type="value" value_type="color" depends_on="" value_group="accent" display_order="2200" addon_id="XF">
+      <value_parameters>hidePalette=true</value_parameters>
+      <value>"rgb(136, 196, 81)"</value>
+    </property>
+    <property property_name="paletteColor4" group_name="palette" title="Color 4" description="" property_type="value" value_type="color" depends_on="" value_group="primary" display_order="1300" addon_id="XF">
+      <value_parameters>hidePalette=true</value_parameters>
+      <value>"rgb(136, 196, 81)"</value>
+    </property>
+    <property property_name="paletteColor5" group_name="palette" title="Color 5" description="" property_type="value" value_type="color" depends_on="" value_group="primary" display_order="1400" addon_id="XF">
+      <value_parameters>hidePalette=true</value_parameters>
+      <value>"rgb(136, 196, 81)"</value>
+    </property>
+    <property property_name="publicFaviconUrl" group_name="basic" title="Favicon URL (32x32)" description="Path to the small logo that is associated with bookmarks pointing to your site" property_type="value" value_type="string" depends_on="" value_group="logo" display_order="400" addon_id="XF">
+      <value>"styles/hirqiztema/images/favicon-hirqiz.ico"</value>
+    </property>
+    <property property_name="publicHeader" group_name="headerNav" title="Header/logo row" description="The header row contains your logo and sits at the top of every public page" property_type="css" value_type="" depends_on="" value_group="" display_order="20000" css_components="text,background,extra" addon_id="XF">
+      <value>{
+    "color": "rgb(255,255,255)",
+    "background-color": "transparent"
+}</value>
+    </property>
+    <property property_name="publicLogoUrl" group_name="basic" title="Logo URL" description="The web path from your site's XenForo installation directory to your logo image." property_type="value" value_type="string" depends_on="" value_group="logo" display_order="100" addon_id="XF">
+      <value>"styles/hirqiztema/images/hirqiz-header-logo.png"</value>
+    </property>
+    <property property_name="publicNav" group_name="headerNav" title="Navigation row" description="The navigation row sits below the header and contains the primary site navigation tabs and menus" property_type="css" value_type="" depends_on="" value_group="" display_order="20100" css_components="text,background,extra" addon_id="XF">
+      <value>{
+    "color": "rgb(255,255,255)",
+    "background-color": "transparent"
+}</value>
+    </property>
+    <property property_name="publicNavSelected" group_name="headerNav" title="Navigation row - selected tab" description="Additional styling to apply to navigation tabs when they are selected" property_type="css" value_type="" depends_on="" value_group="" display_order="20300" css_components="text,background,border,border_radius,extra" addon_id="XF">
+      <value>{
+    "color": "rgb(255,255,255)",
+    "font-weight": "@xf-fontWeightHeavy",
+    "background-color": "transparent",
+    "border-top-left-radius": "@xf-borderRadiusSmall",
+    "border-top-right-radius": "@xf-borderRadiusSmall"
+}</value>
+    </property>
+    <property property_name="publicNavTab" group_name="headerNav" title="Navigation row - tab" description="Controls the styling of individual tab elements within the navigation row" property_type="css" value_type="" depends_on="" value_group="" display_order="20200" css_components="text,background,extra" addon_id="XF">
+      <value>{
+    "color": "rgba(255,255,255,0.8)",
+    "text-decoration": "none"
+}</value>
+    </property>
+    <property property_name="publicNavTabHover" group_name="headerNav" title="Navigation row - hovered tab" description="Additional styling to apply to navigation tabs when the pointer hovers over them" property_type="css" value_type="" depends_on="" value_group="" display_order="20400" css_components="text,background,extra" addon_id="XF">
+      <value>{
+    "color": "rgb(255,255,255)",
+    "text-decoration": "none",
+    "background-color": "transparent"
+}</value>
+    </property>
+    <property property_name="publicStaffBar" group_name="headerNav" title="Staff tools bar" description="Visible only to staff, the staff tools bar sits above the header and contains items such as reported content, the moderation queue..." property_type="css" value_type="" depends_on="" value_group="" display_order="20700" css_components="text,background,border,extra" addon_id="XF">
+      <value>{
+    "font-size": "@xf-fontSizeSmall",
+    "color": "@xf-contentBg",
+    "background-color": "xf-intensify(@xf-paletteColor5, 12%)",
+    "extra": "background: @xf-paletteColor5;"
+}</value>
+    </property>
+    <property property_name="textColorFeature" group_name="color" title="Feature text color" description="" property_type="value" value_type="color" depends_on="" value_group="textOther" display_order="3000" addon_id="XF">
+      <value>"@xf-paletteColor4"</value>
+    </property>
+  </properties>
+</style>
