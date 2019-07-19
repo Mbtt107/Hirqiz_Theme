@@ -1,0 +1,68 @@
+.p-pageWrapper{background:#151515}
+.p-guest--message{color:#DD4B39;background:#202020;border:1px solid #303030}
+.overlay{background:#202020;color:#DD4B39}
+.menu-linkRow:hover{color:rgba(136,196,81,.75);background:#282828}
+.p-navSticky.is-sticky{background:#282828}
+.p-nav a{color:#DD4B39}
+.headerProxy-overlay{background:#202020;background:linear-gradient(0deg,rgba(21,21,21,1) 100%,rgba(32,32,32,1) 100%)}
+.featPosts{background:#282828;border:1px solid #303030}
+.p-breadcrumbs{background:#282828;border:1px solid #303030;border-radius:4px}
+.p-breadcrumbs>li a{color:#DD4B39}
+.block-container{color:rgba(255,255,255,0.75);background:#282828;border:1px solid #303030}
+.block-minorHeader{color:#DD4B39}
+.grid h3{color:#DD4B39}
+.grid .block,.grid .block-container{border-radius:0}
+.node-title>a{color:#DD4B39}
+.node-description{color:#DD4B39}
+.node+.node{border-top:1px solid #48494a}
+.pre-footer{background:linear-gradient(180deg,rgba(21,21,21,1) 0,rgba(32,32,32,0.97) 100%),url(../images/pattern.png)}
+.p-footer{color:#edf6fd;background:#282828}
+.p-footer-copyright{color:#DD4B39!important}
+a.u-concealed{color:#DD4B39)!important}
+.memberHeader-main{background:#202020;border:1px solid #303030}
+.block-tabHeader{color:rgba(255,255,255,.7);background:#202020;border-bottom:1px solid #303030}
+.block-tabHeader .tabs-tab.is-active {border-color: #DD4B39;}
+.block--messages .block-row,.block--messages .message{color:rgba(255,255,255,.75);background:#202020;border-radius:4px}
+.blockLink.is-selected{color:#DD4B39;background:#202020}
+.blockLink:hover{background:#202020}
+.message-cell.message-cell--action,.message-cell.message-cell--user{background:#282828;border-right:1px solid #303030}
+.button.button--link,a.button.button--link{background:#202020;color:#88c451;border-color:#303030 #303030 #303030 #303030}
+.fr-toolbar{color:rgba(255,255,255,1);background:#282828}
+.formRow>dt{border-right:1px solid transparent;background:#202020;border-color:#303030}
+.block-formSectionHeader{color:rgba(255,255,255,.7);font-weight:500}
+.menu-row.menu-row--highlighted{color:rgba(255,255,255,.7);background:#282828}
+.menu-content{color:rgba(255,255,255,.7);background:#202020;border-radius:3px;border-top:3px solid #303030}
+.menu-linkRow{border-left:3px solid transparent;color:rgba(255,255,255,.7)}
+.menu-footer{color:rgba(255,255,255,.7);background:#202020;border-top:1px solid #303030}
+.input{color:rgba(255,255,255,.7);background:0 0;border-bottom:1px solid #303030}
+.p-body-sideNavContent .block .block-container .block-minorHeader{border-top:1px solid #303030;color:rgba(255,255,255,.7)}
+.memberOverviewBlock-seeMore{background:#202020;border:1px solid #303030}
+.tabs--standalone{color:rgba(255,255,255,.7);background:#282828}
+.block-filterBar{background:#202020;border-bottom:1px solid #303030;color:rgba(255,255,255,.7)}
+.block-filterBar .filterBar-filterToggle,.block-filterBar .filterBar-menuTrigger{background:#282828;color:#fff!important}
+.block-filterBar .filterBar-filterToggle:hover,.block-filterBar .filterBar-menuTrigger:hover{background:#282828;color:#fff!important}
+.menu-header{color:rgba(255,255,255,.7);background:#202020;border-bottom:1px solid #303030}
+.offCanvasMenu--nav .offCanvasMenu-content{background:#282828}
+.p-title-value{color:#DD4B39}
+@media (max-width:650px){.has-js .p-header{display:block!important;background:#282828}}
+.overlay-title{color:#DD4B39;background:#202020;border-bottom:1px solid #303030}
+.block--category .collapseTrigger{opacity:1;transition:opacity .3s;color:#DD4B39}
+a.theme-switch.day::before{font:normal normal normal 20px/1 "Material Design Icons";content:"\F599";color:rgba(255,255,255,.7)}
+a.theme-switch.night::before{font:normal normal normal 18px/1 "Material Design Icons";content:"\F594";color:rgba(255,255,255,.7)}
+.dataList-cell.dataList-cell--action,.dataList-cell.dataList-cell--alt{background:#202020}
+.dataList-row.dataList-row--header .dataList-cell{background:#202020;border-bottom:1px solid #303030}
+.blockMessage{color:#DD4B39;background:#202020;border:1px solid #303030}
+.block-header {color: #DD4B39;background: #202020;margin-top:0px !important;}
+a { color: #DD4B39;}
+.button.button--link, a.button.button--link {color: #DD4B39;}
+.memberHeader-name {color: #DD4B39;}
+.userBanner.userBanner--staff, .userBanner.userBanner--primary {color: #DD4B39;}
+.block-header a {color: #DD4B39;}
+.featPosts__head {color: #DD4B39;}
+.menu-arrow {border-bottom-color: #DD4B39;}
+.button.button--primary, a.button.button--primary {background: #DD4B39;border-color: #DD4B39 #DD4B39 #DD4B39 #DD4B39;}
+.button.button--scroll:hover,a.button.button--scroll:hover{background:#DD4B39;opacity:1;border-color: #DD4B39 #DD4B39 #DD4B39 #DD4B39;}
+.menu-linkRow.menu-linkRow--alt {color:rgba(255,255,255,.7); background: #202020;}
+.button.button--scroll,a.button.button--scroll{background:#dd4b39;opacity:.75;border-color: #dd4b39 #dd4b39 #dd4b39 #dd4b39;}
+.node--unread .node-icon i:before {color: #DD4B39;}
+.menu-separator {border-top: 2px solid #303030;}
