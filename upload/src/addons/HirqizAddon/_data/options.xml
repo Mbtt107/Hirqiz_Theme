@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <!-- Hırqız Posts 1. Konu -->
+  <option option_id="HirqizPosts1_thread_link" edit_format="textbox" data_type="string">
+    <default_value>Konu Linki</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="10"/>
+  </option>
+  <option option_id="HirqizPosts1_thread_title" edit_format="textbox" data_type="string">
+    <default_value>Konu Başlığı</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="20"/>
+  </option>
+  <option option_id="HirqizPosts1_thread_date" edit_format="textbox" data_type="string">
+    <default_value>Konu Tarihi</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="30"/>
+  </option>
+  <option option_id="HirqizPosts1_thread_owner" edit_format="textbox" data_type="string">
+    <default_value>Konu Sahibi</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="40"/>
+  </option>
+  
+  <!-- Hırqız Posts 2. Konu -->
+  <option option_id="HirqizPosts2_thread_link" edit_format="textbox" data_type="string">
+    <default_value>Konu Linki</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="50"/>
+  </option>
+  <option option_id="HirqizPosts2_thread_title" edit_format="textbox" data_type="string">
+    <default_value>Konu Başlığı</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="60"/>
+  </option>
+  <option option_id="HirqizPosts2_thread_date" edit_format="textbox" data_type="string">
+    <default_value>Konu Tarihi</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="70"/>
+  </option>
+  <option option_id="HirqizPosts2_thread_owner" edit_format="textbox" data_type="string">
+    <default_value>Konu Sahibi</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="80"/>
+  </option>
+
+  <!-- Hırqız Posts 3. Konu -->
+  <option option_id="HirqizPosts3_thread_link" edit_format="textbox" data_type="string">
+    <default_value>Konu Linki</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="90"/>
+  </option>
+  <option option_id="HirqizPosts3_thread_title" edit_format="textbox" data_type="string">
+    <default_value>Konu Başlığı</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="100"/>
+  </option>
+  <option option_id="HirqizPosts3_thread_date" edit_format="textbox" data_type="string">
+    <default_value>Konu Tarihi</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="110"/>
+  </option>
+  <option option_id="HirqizPosts3_thread_owner" edit_format="textbox" data_type="string">
+    <default_value>Konu Sahibi</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="120"/>
+  </option>
+
+  <!-- Hoşgeldiniz Mesajı -->
+  <option option_id="Hirqiz_questmessage" edit_format="textbox" data_type="string">
+    <default_value>Buraya Foruma Göz Atan Ziyaretçiler İçin Davet Mesajı Ekleyebilirsiniz.</default_value>
+    <edit_format_params>rows=4</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="130"/>
+  </option>
+
+  <!-- Footer Forum Açıklaması -->
+  <option option_id="Hirqiz_footer_widget" edit_format="textbox" data_type="string">
+    <default_value>Buraya Forumunuzla İlgili Bir Açıklama Yazabilirsiniz.</default_value>
+    <edit_format_params>rows=4</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="140"/>
+  </option>
+
+  <!-- Footer Forum Açıklaması -->
+  <option option_id="HirqizSozler_1" edit_format="textbox" data_type="string">
+    <default_value>Bir reng-i nümâyişden ibâretdir edâmız. -Şeyh Galip (Gazel)</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="150"/>
+  </option>
+  <option option_id="HirqizSozler_2" edit_format="textbox" data_type="string">
+    <default_value>İki hanım varsa süpürülmez hâne; İki kethüdâ ile olur ev virâne. -Nizâmülmülk (Siyasetnâme)</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="160"/>
+  </option>
+  <option option_id="HirqizSozler_3" edit_format="textbox" data_type="string">
+    <default_value>Sanma Şâhım Herkesi Sen Sâdıkâne Yâr Olur -Yavuz Sultan Selim Han</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="170"/>
+  </option>
+  <option option_id="HirqizSozler_4" edit_format="textbox" data_type="string">
+    <default_value>Hayvan ölür, semeri kalır; İnsan ölür, eseri kalır. -Şeyh Edebâli</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="180"/>
+  </option>
+  <option option_id="HirqizSozler_5" edit_format="textbox" data_type="string">
+    <default_value>İnsanı elbisesine göre karşılar, bilgisine göre uğurlarlar. -Rus Atasözü</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="190"/>
+  </option>
+  <option option_id="HirqizSozler_6" edit_format="textbox" data_type="string">
+    <default_value>Cihânın nimetinden kendi âb-u dânemiz yeğdir. Elin kaşânesinden kûşe-i virânemiz yeğdir. -Bâki</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="200"/>
+  </option>
+  <option option_id="HirqizSozler_7" edit_format="textbox" data_type="string">
+    <default_value>Çifte kulağa karşın tek ağız verilmiş; İki dinle, bir söyle denilmiş âdeme. -Ömer Hayyam (Bir Islak Ateş)</default_value>
+    <edit_format_params>rows=1</edit_format_params>
+    <relation group_id="Hirqiz_Addon" display_order="210"/>
+  </option>
+</options>

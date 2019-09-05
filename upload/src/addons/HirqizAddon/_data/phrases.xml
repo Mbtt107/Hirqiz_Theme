@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="Hirqiz_admin_control_hirqizposts" version_id="100010" version_string="1.0.0"><![CDATA[HirqizPosts]]></phrase>
+  <phrase title="Hirqiz_admin_control_hirqizposts1" version_id="100010" version_string="1.0.0"><![CDATA[Post 1]]></phrase>
+  <phrase title="Hirqiz_admin_control_hirqizposts2" version_id="100010" version_string="1.0.0"><![CDATA[Post 2]]></phrase>
+  <phrase title="Hirqiz_admin_control_hirqizposts3" version_id="100010" version_string="1.0.0"><![CDATA[Post 3]]></phrase>
+  <phrase title="Hirqiz_admin_control_generalsettings" version_id="100010" version_string="1.0.0"><![CDATA[Hirqiz Tema Genel Seçenekleri]]></phrase>
+  <phrase title="Hirqiz_admin_control_guestmessage" version_id="100010" version_string="1.0.0"><![CDATA[Ziyaretçi Mesajı]]></phrase>
+  <phrase title="Hirqiz_admin_control_footerwidget" version_id="100010" version_string="1.0.0"><![CDATA[Footer Açıklaması]]></phrase>
+  <phrase title="Hirqiz_admin_control_hirqizquotes" version_id="100010" version_string="1.0.0"><![CDATA[Hırqız Sözler]]></phrase>
+  <phrase title="option.HirqizPosts1_thread_link" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Linki]]></phrase>
+  <phrase title="option.HirqizPosts1_thread_title" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Başlığı]]></phrase>
+  <phrase title="option.HirqizPosts1_thread_date" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Tarihi]]></phrase>
+  <phrase title="option.HirqizPosts1_thread_owner" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Sahibi]]></phrase>
+  <phrase title="option_explain.HirqizPosts1_thread_link" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Linki]]></phrase>
+  <phrase title="option_explain.HirqizPosts1_thread_title" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Başlığı]]></phrase>
+  <phrase title="option_explain.HirqizPosts1_thread_date" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Tarihi]]></phrase>
+  <phrase title="option_explain.HirqizPosts1_thread_owner" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Sahibi]]></phrase>
+  <phrase title="option.HirqizPosts2_thread_link" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Linki]]></phrase>
+  <phrase title="option.HirqizPosts2_thread_title" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Başlığı]]></phrase>
+  <phrase title="option.HirqizPosts2_thread_date" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Tarihi]]></phrase>
+  <phrase title="option.HirqizPosts2_thread_owner" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Sahibi]]></phrase>
+  <phrase title="option_explain.HirqizPosts2_thread_link" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Linki]]></phrase>
+  <phrase title="option_explain.HirqizPosts2_thread_title" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Başlığı]]></phrase>
+  <phrase title="option_explain.HirqizPosts2_thread_date" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Tarihi]]></phrase>
+  <phrase title="option_explain.HirqizPosts2_thread_owner" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Sahibi]]></phrase>
+  <phrase title="option.HirqizPosts3_thread_link" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Linki]]></phrase>
+  <phrase title="option.HirqizPosts3_thread_title" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Başlığı]]></phrase>
+  <phrase title="option.HirqizPosts3_thread_date" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Tarihi]]></phrase>
+  <phrase title="option.HirqizPosts3_thread_owner" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Sahibi]]></phrase>
+  <phrase title="option_explain.HirqizPosts3_thread_link" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Linki]]></phrase>
+  <phrase title="option_explain.HirqizPosts3_thread_title" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Başlığı]]></phrase>
+  <phrase title="option_explain.HirqizPosts3_thread_date" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Tarihi]]></phrase>
+  <phrase title="option_explain.HirqizPosts3_thread_owner" version_id="1000010" version_string="1.0.0"><![CDATA[Konu Sahibi]]></phrase>
+  <phrase title="option.Hirqiz_questmessage" version_id="1000010" version_string="1.0.0"><![CDATA[Ziyaretçi Mesajı]]></phrase>
+  <phrase title="option_explain.Hirqiz_questmessage" version_id="1000010" version_string="1.0.0"><![CDATA[Ziyaretçi Mesajı]]></phrase>
+  <phrase title="option.Hirqiz_footer_widget" version_id="1000010" version_string="1.0.0"><![CDATA[Footer Forum Açıklaması Mesajı]]></phrase>
+  <phrase title="option_explain.Hirqiz_footer_widget" version_id="1000010" version_string="1.0.0"><![CDATA[Footer Forum Açıklaması Mesajı]]></phrase>
+  <phrase title="option_group.Hirqiz_Addon" version_id="1000010" version_string="1.0.0"><![CDATA[Hirqiz Addon]]></phrase>
+  <phrase title="option_group_description.Hirqiz_Addon" version_id="1000010" version_string="1.0.0"><![CDATA[Hirqiz Addon Seçenekleri]]></phrase>
+  <phrase title="option.HirqizSozler_1" version_id="1000010" version_string="1.0.0"><![CDATA[Hırqız Sözler 1]]></phrase>
+  <phrase title="option.HirqizSozler_2" version_id="1000010" version_string="1.0.0"><![CDATA[Hırqız Sözler 2]]></phrase>
+  <phrase title="option.HirqizSozler_3" version_id="1000010" version_string="1.0.0"><![CDATA[Hırqız Sözler 3]]></phrase>
+  <phrase title="option.HirqizSozler_4" version_id="1000010" version_string="1.0.0"><![CDATA[Hırqız Sözler 4]]></phrase>
+  <phrase title="option.HirqizSozler_5" version_id="1000010" version_string="1.0.0"><![CDATA[Hırqız Sözler 5]]></phrase>
+  <phrase title="option.HirqizSozler_6" version_id="1000010" version_string="1.0.0"><![CDATA[Hırqız Sözler 6]]></phrase>
+  <phrase title="option.HirqizSozler_7" version_id="1000010" version_string="1.0.0"><![CDATA[Hırqız Sözler 7]]></phrase>
+  <phrase title="option_explain.HirqizSozler_1" version_id="1000010" version_string="1.0.0"><![CDATA[Hırqız Sözler kısmında gösterilen 1. söz.]]></phrase>
+  <phrase title="option_explain.HirqizSozler_2" version_id="1000010" version_string="1.0.0"><![CDATA[Hırqız Sözler kısmında gösterilen 2. söz.]]></phrase>
+  <phrase title="option_explain.HirqizSozler_3" version_id="1000010" version_string="1.0.0"><![CDATA[Hırqız Sözler kısmında gösterilen 3. söz.]]></phrase>
+  <phrase title="option_explain.HirqizSozler_4" version_id="1000010" version_string="1.0.0"><![CDATA[Hırqız Sözler kısmında gösterilen 4. söz.]]></phrase>
+  <phrase title="option_explain.HirqizSozler_5" version_id="1000010" version_string="1.0.0"><![CDATA[Hırqız Sözler kısmında gösterilen 5. söz.]]></phrase>
+  <phrase title="option_explain.HirqizSozler_6" version_id="1000010" version_string="1.0.0"><![CDATA[Hırqız Sözler kısmında gösterilen 6. söz.]]></phrase>
+  <phrase title="option_explain.HirqizSozler_7" version_id="1000010" version_string="1.0.0"><![CDATA[Hırqız Sözler kısmında gösterilen 7. söz.]]></phrase>
+  <phrase title="style_prop_group.Hirqiz_styling" version_id="1000010" version_string="1.0.0"><![CDATA[Hirqiz Tema Ayarları]]></phrase>
+  <phrase title="style_prop_group_desc.Hirqiz_styling" version_id="1000010" version_string="1.0.0"><![CDATA[Hirqiz Tema Stil Ayarları]]></phrase>
+  <phrase title="Hirqiz_Posts_title" version_id="1000010" version_string="1.0.0"><![CDATA[Öne Çıkanlar]]></phrase>
+  <phrase title="Hirqiz_questmessage_title" version_id="1000010" version_string="1.0.0"><![CDATA[Hoşgeldiniz <3]]></phrase>
+  <phrase title="Hirqiz_questmessage_button" version_id="1000010" version_string="1.0.0"><![CDATA[Şimdi, Bir Dakikada Kayıt Olun!]]></phrase>
+  <phrase title="Hirqiz_footer_widget_title" version_id="1000010" version_string="1.0.0"><![CDATA[Forum Açıklaması]]></phrase>
+  <phrase title="Hirqiz_theme_switch_day" version_id="1000010" version_string="1.0.0"><![CDATA[Gündüz]]></phrase>
+  <phrase title="Hirqiz_theme_switch_night" version_id="1000010" version_string="1.0.0"><![CDATA[Gece]]></phrase>
+  <phrase title="admin_navigation.Hirqiz_Addon" version_id="1000010" version_string="1.0.0"><![CDATA[Hırqız Tema]]></phrase>
+  <phrase title="admin_navigation.Hirqiz_Addon_options" version_id="1000010" version_string="1.0.0"><![CDATA[Ayarlar]]></phrase>
+</phrases>
