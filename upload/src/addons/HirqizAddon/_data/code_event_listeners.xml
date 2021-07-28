@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <code_event_listeners>
-  <listener event_id="templater_macro_pre_render" execute_order="10" callback_class="HirqizAddon\EventListener\CreateTemplate" callback_method="preRender" active="1" hint="admin:option_macros:option_form_block"/>
+  <listener event_id="templater_macro_pre_render" execute_order="10" callback_class="HirqizAddon\EventListener\CreateTemplate" callback_method="preRender" active="1" hint="admin:option_macros:option_form_block" description="Addon Ayarlar Eventi"/>
 </code_event_listeners>

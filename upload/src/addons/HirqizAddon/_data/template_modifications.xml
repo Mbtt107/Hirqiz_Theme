@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="admin" template="helper_js_global" modification_key="hirqizoptions_collapsible_js" description="Açılır Kapanır Bloklar İçin JS Altyapısı" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[</xf:macro>]]></find>
+    <replace><![CDATA[<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
+</xf:macro>]]></replace>
+  </modification>
+</template_modifications>

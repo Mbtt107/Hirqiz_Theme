@@ -1684,7 +1684,7 @@ a#halokafanasikacamreport:hover,a#halokafanasikacamapprove:hover {
 .p-body-sideNavContent a[href*="{{ link('account/ignored') }}"]:before{ font-family: "FontAwesome"; padding-right: 5px; content: "\f05e" }
 .p-body-sideNavContent a[href*="{{ link('logout', {'t': csrf_token()}) }}"]:before{ font-family: "FontAwesome"; padding-right: 5px; content: "\f08b" }
 .p-body-sideNavContent a[href*="/account/editor-templates/"]:before{ font-family: "FontAwesome"; padding-right: 5px; content: "\f044" }]]></template>
-    <template title="PAGE_CONTAINER" type="public" addon_id="XF" version_id="2010270" version_string="2.1.2"><![CDATA[<!DOCTYPE html>
+    <template title="PAGE_CONTAINER" type="public" addon_id="XF" version_id="2020671" version_string="2.2.6"><![CDATA[<!DOCTYPE html>
 <html id="XF" lang="{$xf.language.language_code}" dir="{$xf.language.text_direction}"
 	data-app="public"
 	data-template="{$template}"
@@ -2084,7 +2084,7 @@ a#halokafanasikacamreport:hover,a#halokafanasikacamapprove:hover {
 		<div class="hirqiz-mobile-content">
 			<xf:macro name="breadcrumbs" arg-breadcrumbs="{$breadcrumbs}" arg-navTree="{$navTree}" arg-selectedNavEntry="{$selectedNavEntry}"/>	
 		</div>
-		<xf:if is="property('hirqiz_Sidebarcollapse')">
+		<xf:if is="property('hirqiz_Sidebarcollapse') AND {{ $xf.visitor.hasPermission('Genel','HirqizSidebarCollapse') }}">
 			<xf:if is="$template == 'forum_list'">
 				<ul class="p-breadcrumbs hirqiz" itemscope="" itemtype="https://schema.org/BreadcrumbList">
 					<a href="javascript:void(0)" class="hirqiz-sidebar-toggle open" sidebar-state='collapse'><i class="mdi mdi-toggle-switch" aria-hidden="true"></i></a>
@@ -2177,7 +2177,15 @@ a#halokafanasikacamreport:hover,a#halokafanasikacamapprove:hover {
 
 			<xf:if is="$sidebar">
 				<div id="sidebar-collapse" class="p-body-sidebar">
-					<div class="hirqiz-sidebar">
+					<xf:if is="property('hirqiz_Sidebarsticky')">
+						<xf:if is="{{ $xf.visitor.hasPermission('Genel','HirqizSidebarSticky') }}">
+							<div class="hirqiz-sidebar" style="position:sticky;">
+						<xf:else />
+							<div class="hirqiz-sidebar">
+						</xf:if>
+					<xf:else />
+						<div class="hirqiz-sidebar">
+					</xf:if>
 						<xf:ad position="container_sidebar_above" />
 						<xf:foreach loop="$sidebar" value="$sidebarHtml">
 							{$sidebarHtml}
@@ -2201,7 +2209,7 @@ a#halokafanasikacamreport:hover,a#halokafanasikacamapprove:hover {
 				<div class="p-footer-row-main">
 					<ul class="p-footer-linkList">
 					<xf:contentcheck>
-						<xf:if is="property('hirqiz_Sidebarflip')">
+						<xf:if is="property('hirqiz_Sidebarflip') AND {{ $xf.visitor.hasPermission('Genel','HirqizSidebarFlip') }}">
 							<xf:if is="$template == 'forum_list'">
 								<li>
 									<a href="javascript:void(0)" class="hirqiz-flip-toggle flip hirqizfooterbuttons-animation" hirqiz-flip='flip'><i class="mdi mdi-chevron-double-right" aria-hidden="true"></i></a>
@@ -2209,7 +2217,7 @@ a#halokafanasikacamreport:hover,a#halokafanasikacamapprove:hover {
 								</li>
 							</xf:if>
 						</xf:if>
-						<xf:if is="property('hirqiz_Resize')">
+						<xf:if is="property('hirqiz_Resize') AND {{ $xf.visitor.hasPermission('Genel','HirqizResize') }}">
 							<li>
 								<a href="javascript:void(0)" class="hirqiz-resize-toggle close hirqizfooterbuttons-animation" expand-state='expanded'><i class="mdi mdi-arrow-collapse-all" aria-hidden="true"></i></a>
 								<a href="javascript:void(0)" class="hirqiz-resize-toggle open hirqizfooterbuttons-animation" expand-state='expand'><i class="mdi mdi-arrow-expand-all" aria-hidden="true"></i></a>
@@ -2241,7 +2249,7 @@ a#halokafanasikacamreport:hover,a#halokafanasikacamapprove:hover {
 										{{ phrase('reports') }}
 							</a>
 						</xf:if>
-						<xf:if is="property('hirqiz_NightTheme')">
+						<xf:if is="property('hirqiz_NightTheme') AND {{ $xf.visitor.hasPermission('Genel','HirqizDynamicTheme') }}">
 							<xf:if contentcheck="true">
 								<li>
 									<a class="menu-linkRow menuTrigger style-switch" data-xf-click="menu" data-xf-key="alt+m" role="button" tabindex="0" aria-expanded="false" aria-haspopup="true"><i class="fa fa-cog fa-2x"></i></a>
@@ -2492,7 +2500,7 @@ a#halokafanasikacamreport:hover,a#halokafanasikacamapprove:hover {
 		<xf:if is="$position"><meta itemprop="position" content="{$position}" /></xf:if>
 	</li>
 </xf:macro>]]></template>
-    <template title="account_visitor_menu" type="public" addon_id="XF" version_id="2010070" version_string="2.1.0"><![CDATA[<xf:if contentcheck="true">
+    <template title="account_visitor_menu" type="public" addon_id="XF" version_id="2020671" version_string="2.2.6"><![CDATA[<xf:if contentcheck="true">
 	<h4 class="menu-tabHeader tabs" data-xf-init="tabs" role="tablist">
 		<span class="hScroller" data-xf-init="h-scroller">
 			<span class="hScroller-scroll">
@@ -2744,7 +2752,7 @@ a#halokafanasikacamreport:hover,a#halokafanasikacamapprove:hover {
 <xf:breadcrumb href="{{ link('account') }}">{{ phrase('your_account') }}</xf:breadcrumb>
 
 {$innerContent|raw}]]></template>
-    <template title="app_breadcrumbs.less" type="public" addon_id="XF" version_id="2010070" version_string="2.1.0"><![CDATA[.p-breadcrumbs
+    <template title="app_breadcrumbs.less" type="public" addon_id="XF" version_id="2020671" version_string="2.2.6"><![CDATA[.p-breadcrumbs
 {
 	.m-listPlain();
 	.m-clearFix();
@@ -2994,7 +3002,7 @@ a#halokafanasikacamreport:hover,a#halokafanasikacamapprove:hover {
 		padding: 0 4px; // aligns with other links
 	}
 }]]></template>
-    <template title="app_header.less" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[// MAIN HEADER ROW
+    <template title="app_header.less" type="public" addon_id="XF" version_id="2020671" version_string="2.2.6"><![CDATA[// MAIN HEADER ROW
 
 .p-header
 {
@@ -3082,7 +3090,7 @@ a#halokafanasikacamreport:hover,a#halokafanasikacamapprove:hover {
 		}
 	}
 }]]></template>
-    <template title="app_nav.less" type="public" addon_id="XF" version_id="2010070" version_string="2.1.0"><![CDATA[// navEl / Navigation Elements for header navigation
+    <template title="app_nav.less" type="public" addon_id="XF" version_id="2020671" version_string="2.2.6"><![CDATA[// navEl / Navigation Elements for header navigation
 
 .m-navElHPadding(@padding)
 {
@@ -3683,7 +3691,7 @@ a#halokafanasikacamreport:hover,a#halokafanasikacamapprove:hover {
 		display: none;
 	}
 }]]></template>
-    <template title="app_staffbar.less" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[// ######################################### STAFF BAR #################################
+    <template title="app_staffbar.less" type="public" addon_id="XF" version_id="2020671" version_string="2.2.6"><![CDATA[// ######################################### STAFF BAR #################################
 
 .p-staffBar
 {
@@ -3731,7 +3739,7 @@ a#halokafanasikacamreport:hover,a#halokafanasikacamapprove:hover {
 		border-radius: @xf-borderRadiusSmall;
 	}
 }]]></template>
-    <template title="core_block.less" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[// ################################# BLOCKS ##################
+    <template title="core_block.less" type="public" addon_id="XF" version_id="2020671" version_string="2.2.6"><![CDATA[// ################################# BLOCKS ##################
 
 .blocks
 {
@@ -4381,7 +4389,7 @@ a#halokafanasikacamreport:hover,a#halokafanasikacamapprove:hover {
 		margin-top: @xf-paddingMedium;
 	}
 }]]></template>
-    <template title="core_menu.less" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[// ###################################### MENUS ######################
+    <template title="core_menu.less" type="public" addon_id="XF" version_id="2020671" version_string="2.2.6"><![CDATA[// ###################################### MENUS ######################
 
 @_menu-arrowSize: 8px;
 @_menu-edgePadding: @xf-pageEdgeSpacer;
@@ -4982,7 +4990,7 @@ span.p-navgroup-linkText {
 
 /* Place your custom code below. */
 /* Özel kodunuzu aşağı yerleştirin. */]]></template>
-    <template title="forum_list" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[<xf:h1>{$xf.options.boardTitle}</xf:h1>
+    <template title="forum_list" type="public" addon_id="XF" version_id="2020671" version_string="2.2.6"><![CDATA[<xf:h1>{$xf.options.boardTitle}</xf:h1>
 <xf:if is="{$xf.options.forumsDefaultPage} != 'forums'">
 	<xf:title>{{ phrase('forum_list') }}</xf:title>
 </xf:if>
@@ -5082,7 +5090,7 @@ span.p-navgroup-linkText {
 		</div>
 	</xf:if>
 </xf:macro>]]></template>
-    <template title="helper_js_global" type="public" addon_id="XF" version_id="2010070" version_string="2.1.0"><![CDATA[<xf:macro name="head" arg-app="!">
+    <template title="helper_js_global" type="public" addon_id="XF" version_id="2020671" version_string="2.2.6"><![CDATA[<xf:macro name="head" arg-app="!">
 	<xf:set var="$cssUrls" value="{{ ['public:normalize.css', 'public:fa.css', 'public:core.less', $app . ':app.less'] }}" />
 
 	<xf:include template="font_awesome_setup" />
@@ -5392,9 +5400,9 @@ span.p-navgroup-linkText {
 		<div class="dtb fbefore">
 			<div class="first_ucd animated slideInLeft">
 				<div style="background-image:url({$xf.options.HirqizHaber1_thread_image|raw}) !important;" class="imgpos foxcontrol"></div>
-				<div class="positioner_main"> <span class="linkerbig"><a href="{$xf.options.HirqizHaber1_thread_link|raw}" class="linking">{$xf.options.HirqizHaber1_thread_date|raw}</a></span>
-					<br> <span class="describerbig">{$xf.options.HirqizHaber1_thread_owner|raw}</span> </div>
-				<div class="category">{$xf.options.HirqizHaber1_thread_title|raw}</div>
+				<div class="positioner_main"> <span class="linkerbig"><a href="{$xf.options.HirqizHaber1_thread_link|raw}" class="linking">{$xf.options.HirqizHaber1_thread_title|raw}</a></span>
+					<br> <span class="describerbig">{$xf.options.HirqizHaber1_thread_explanation|raw}</span> </div>
+				<div class="category">{$xf.options.HirqizHaber1_thread_tag|raw}</div>
 			</div>
 		</div>
 		<div class="dtb sbefore">
@@ -5402,24 +5410,24 @@ span.p-navgroup-linkText {
 				<div class="sdbefore">
 					<div class="dtb radius second_ucd animated fadeInRight">
 						<div style="background-image:url({$xf.options.HirqizHaber2_thread_image|raw}) !important;" class="imgpos foxcontrol"></div>
-						<div class="positioner_main"> <span class="linker"><a href="{$xf.options.HirqizHaber2_thread_link|raw}" class="linking">{$xf.options.HirqizHaber2_thread_date|raw}</a></span>
-							<br> <span class="describer">{$xf.options.HirqizHaber2_thread_owner|raw}</span> </div>
-						<div class="category">{$xf.options.HirqizHaber2_thread_title|raw}</div>
+						<div class="positioner_main"> <span class="linker"><a href="{$xf.options.HirqizHaber2_thread_link|raw}" class="linking">{$xf.options.HirqizHaber2_thread_title|raw}</a></span>
+							<br> <span class="describer">{$xf.options.HirqizHaber2_thread_explanation|raw}</span> </div>
+						<div class="category">{$xf.options.HirqizHaber2_thread_tag|raw}</div>
 					</div>
 					<div class="dtb widectrl"></div>
 					<div class="dtb radius third_ucd animated fadeInRightBig">
 						<div style="background-image:url({$xf.options.HirqizHaber3_thread_image|raw}) !important;" class="imgpos foxcontrol"></div>
-						<div class="positioner_main"> <span class="linker"><a href="{$xf.options.HirqizHaber3_thread_link|raw}" class="linking">{$xf.options.HirqizHaber3_thread_date|raw}</a></span>
-							<br> <span class="describer">{$xf.options.HirqizHaber3_thread_owner|raw}</span> </div>
-						<div class="category">{$xf.options.HirqizHaber3_thread_title|raw}</div>
+						<div class="positioner_main"> <span class="linker"><a href="{$xf.options.HirqizHaber3_thread_link|raw}" class="linking">{$xf.options.HirqizHaber3_thread_title|raw}</a></span>
+							<br> <span class="describer">{$xf.options.HirqizHaber3_thread_explanation|raw}</span> </div>
+						<div class="category">{$xf.options.HirqizHaber3_thread_tag|raw}</div>
 					</div>
 				</div>
 				<div class="hctrl"></div>
 				<div class="radius fourth_ucd animated bounceInDown">
 					<div style="background-image:url({$xf.options.HirqizHaber4_thread_image|raw}) !important;" class="imgpos foxcontrol"></div>
-					<div class="positioner_main"> <span class="linker"><a href="{$xf.options.HirqizHaber4_thread_link|raw}" class="linking">{$xf.options.HirqizHaber4_thread_date|raw}</a></span>
-						<br> <span class="describer">{$xf.options.HirqizHaber4_thread_owner|raw}</span> </div>
-					<div class="category">{$xf.options.HirqizHaber4_thread_title|raw}</div>
+					<div class="positioner_main"> <span class="linker"><a href="{$xf.options.HirqizHaber4_thread_link|raw}" class="linking">{$xf.options.HirqizHaber4_thread_title|raw}</a></span>
+						<br> <span class="describer">{$xf.options.HirqizHaber4_thread_explanation|raw}</span> </div>
+					<div class="category">{$xf.options.HirqizHaber4_thread_tag|raw}</div>
 				</div>
 			</div>
 		</div>
@@ -5428,23 +5436,23 @@ span.p-navgroup-linkText {
 	<div class="miniview">
 		<div class="firstmini_ucd">
 			<div style="background-image:url({$xf.options.HirqizHaber1_thread_image|raw}) !important;" class="imgpos foxcontrol hirqiz-animation"></div>
-			<div class="positioner_main"> <span class="linkerbig"><a href="{$xf.options.HirqizHaber1_thread_link|raw}" class="linking hirqiz-animation">{$xf.options.HirqizHaber1_thread_date|raw}</a></span>
-				<br> <span class="describerbig hirqiz-animation">{$xf.options.HirqizHaber1_thread_owner|raw}</span> </div>
+			<div class="positioner_main"> <span class="linkerbig"><a href="{$xf.options.HirqizHaber1_thread_link|raw}" class="linking hirqiz-animation">{$xf.options.HirqizHaber1_thread_title|raw}</a></span>
+				<br> <span class="describerbig hirqiz-animation">{$xf.options.HirqizHaber1_thread_explanation|raw}</span> </div>
 		</div>
 		<div class="firstmini_ucd">
 			<div style="background-image:url({$xf.options.HirqizHaber2_thread_image|raw}) !important;" class="imgpos foxcontrol hirqiz-animation"></div>
-			<div class="positioner_main"> <span class="linkerbig"><a href="{$xf.options.HirqizHaber2_thread_link|raw}" class="linking hirqiz-animation">{$xf.options.HirqizHaber2_thread_date|raw}</a></span>
-				<br> <span class="describerbig hirqiz-animation">{$xf.options.HirqizHaber2_thread_owner|raw}</span> </div>
+			<div class="positioner_main"> <span class="linkerbig"><a href="{$xf.options.HirqizHaber2_thread_link|raw}" class="linking hirqiz-animation">{$xf.options.HirqizHaber2_thread_title|raw}</a></span>
+				<br> <span class="describerbig hirqiz-animation">{$xf.options.HirqizHaber2_thread_explanation|raw}</span> </div>
 		</div>
 		<div class="firstmini_ucd">
 			<div style="background-image:url({$xf.options.HirqizHaber3_thread_image|raw}) !important;" class="imgpos foxcontrol hirqiz-animation"></div>
-			<div class="positioner_main"> <span class="linkerbig"><a href="{$xf.options.HirqizHaber3_thread_link|raw}" class="linking hirqiz-animation">{$xf.options.HirqizHaber3_thread_date|raw}</a></span>
-				<br> <span class="describerbig hirqiz-animation">{$xf.options.HirqizHaber3_thread_owner|raw}</span> </div>
+			<div class="positioner_main"> <span class="linkerbig"><a href="{$xf.options.HirqizHaber3_thread_link|raw}" class="linking hirqiz-animation">{$xf.options.HirqizHaber3_thread_title|raw}</a></span>
+				<br> <span class="describerbig hirqiz-animation">{$xf.options.HirqizHaber3_thread_explanation|raw}</span> </div>
 		</div>
 		<div class="firstmini_ucd">
 			<div style="background-image:url({$xf.options.HirqizHaber4_thread_image|raw}) !important;" class="imgpos foxcontrol hirqiz-animation"></div>
-			<div class="positioner_main"> <span class="linkerbig"><a href="{$xf.options.HirqizHaber4_thread_link|raw}" class="linking hirqiz-animation">{$xf.options.HirqizHaber4_thread_date|raw}</a></span>
-				<br> <span class="describerbig hirqiz-animation">{$xf.options.HirqizHaber4_thread_owner|raw}</span> </div>
+			<div class="positioner_main"> <span class="linkerbig"><a href="{$xf.options.HirqizHaber4_thread_link|raw}" class="linking hirqiz-animation">{$xf.options.HirqizHaber4_thread_title|raw}</a></span>
+				<br> <span class="describerbig hirqiz-animation">{$xf.options.HirqizHaber4_thread_explanation|raw}</span> </div>
 		</div>
 	</div>
 	<script>
@@ -6796,7 +6804,7 @@ a#halokafanasikacamreport,a#halokafanasikacamapprove {
 </xf:if>
 
 .xf-night_extra();]]></template>
-    <template title="node_list_category" type="public" addon_id="XF" version_id="2010070" version_string="2.1.0"><![CDATA[<xf:macro name="depth1" arg-node="!" arg-extras="!" arg-children="!" arg-childExtras="!" arg-depth="1">
+    <template title="node_list_category" type="public" addon_id="XF" version_id="2020671" version_string="2.2.6"><![CDATA[<xf:macro name="depth1" arg-node="!" arg-extras="!" arg-children="!" arg-childExtras="!" arg-depth="1">
 	<div class="block block--category block--category{$node.node_id} collapsible-nodes">
 		<span class="u-anchorTarget" id="{$node.Data.getCategoryAnchor()}"></span>
 		<h2 class="block-header" style="background: none; box-shadow: none; color: #88c451;">
@@ -6914,7 +6922,7 @@ a#halokafanasikacamreport,a#halokafanasikacamapprove {
 			arg-depth="{{ $depth + 1 }}" />
 	</li>
 </xf:macro>]]></template>
-    <template title="share_controls.less" type="public" addon_id="XF" version_id="2001070" version_string="2.0.10"><![CDATA[.shareButtons
+    <template title="share_controls.less" type="public" addon_id="XF" version_id="2020671" version_string="2.2.6"><![CDATA[.shareButtons
 {
 	.m-clearFix();
 }
@@ -7398,7 +7406,7 @@ a#halokafanasikacamreport,a#halokafanasikacamapprove {
 		</value_parameters>
       <value>"horizontal"</value>
     </property>
-    <property property_name="hirqiz_quotes" group_name="hirqiz_Styling" title="Hırqız Sözler Aç/Kapa Seçeneği" description="" property_type="value" value_type="boolean" depends_on="" value_group="quotes" display_order="20" addon_id="">
+    <property property_name="hirqiz_quotes" group_name="hirqiz_Styling" title="Hırqız Sözler Aç/Kapa Seçeneği" description="" property_type="value" value_type="boolean" depends_on="" value_group="Hirqiz_Sozler" display_order="20" addon_id="">
       <value>1</value>
     </property>
     <property property_name="hirqiz_stickyheader" group_name="hirqiz_Header" title="Yapışkan Header Aç/Kapa Seçeneği" description="" property_type="value" value_type="boolean" depends_on="" value_group="HirqizStickyHeader" display_order="10" addon_id="">

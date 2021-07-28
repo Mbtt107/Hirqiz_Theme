@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+  <permission permission_group_id="Genel" permission_id="HirqizDynamicTheme" permission_type="flag" interface_group_id="Hirqiz_perm" display_order="1"/>
+  <permission permission_group_id="Genel" permission_id="HirqizResize" permission_type="flag" interface_group_id="Hirqiz_perm" display_order="1"/>
+  <permission permission_group_id="Genel" permission_id="HirqizSidebarCollapse" permission_type="flag" interface_group_id="Hirqiz_perm" display_order="1"/>
+  <permission permission_group_id="Genel" permission_id="HirqizSidebarFlip" permission_type="flag" interface_group_id="Hirqiz_perm" display_order="1"/>
+  <permission permission_group_id="Genel" permission_id="HirqizSidebarSticky" permission_type="flag" interface_group_id="Hirqiz_perm" display_order="1"/>
+</permissions>

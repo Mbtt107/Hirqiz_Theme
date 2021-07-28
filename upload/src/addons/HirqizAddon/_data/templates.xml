@@ -1,102 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
-  <template type="admin" title="Hirqiz_Addon_option_menu" version_id="1000010" version_string="1.0.0"><![CDATA[<xf:macro name="option_form_block" arg-group="" arg-options="!" arg-containerBeforeHtml="">
-    <xf:if is="$options is not empty">
-        <xf:form action="{{ link('options/update') }}" ajax="true" class="block">
-            {$containerBeforeHtml|raw}
-            <div class="block-container">
-                <h2 class="block-tabHeader tabs" style="display:list-item;list-style:none;" data-xf-init="tabs" role="tablist">
+  <template type="admin" title="Hirqiz_Addon_option_menu" version_id="1000010" version_string="1.4.0"><![CDATA[<xf:macro name="option_form_block" arg-group="" arg-options="!" arg-containerBeforeHtml="">
+	<xf:if is="$options is not empty">
+		<xf:form action="{{ link('options/update') }}" ajax="true" class="block"> {$containerBeforeHtml|raw}
+			<div class="block-container">
+				<h2 class="block-tabHeader tabs" style="display:list-item;list-style:none;" data-xf-init="tabs" role="tablist">
                     <a class="tabs-tab is-active" role="tab" tabindex="0" aria-controls="HirqizAdminTab1">{{ phrase('Hirqiz_admin_control_hirqizposts') }}</a>
 					<a class="tabs-tab" role="tab" tabindex="0" aria-controls="HirqizAdminTab2">{{ phrase('Hirqiz_admin_control_guestmessage') }}</a>
 					<a class="tabs-tab" role="tab" tabindex="0" aria-controls="HirqizAdminTab3">{{ phrase('Hirqiz_admin_control_footerwidget') }}</a>
                     <a class="tabs-tab" role="tab" tabindex="0" aria-controls="HirqizAdminTab4">{{ phrase('Hirqiz_admin_control_hirqizquotes') }}</a>
                     <a class="tabs-tab" role="tab" tabindex="0" aria-controls="HirqizAdminTab5">{{ phrase('Hirqiz_admin_control_hirqizhaber') }}</a>
 				</h2>
-                <ul class="tabPanes">
-                    <li class="is-active" role="tabpanel" id="HirqizAdminTab1">
-                        <div class="block-body">
-                            <div class="block-header">{{ phrase('Hirqiz_admin_control_hirqizposts1') }}</div>
-                            <xf:foreach loop="$options" value="$option">
-                                <xf:if is="$option.Relations.Hirqiz_Addon.display_order < 50">
-                                    <xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" />
-                                </xf:if>
-                            </xf:foreach>
-                            <div class="block-header">{{ phrase('Hirqiz_admin_control_hirqizposts2') }}</div>
-                            <xf:foreach loop="$options" value="$option">
-                                <xf:if is="$option.Relations.Hirqiz_Addon.display_order >= 50 AND $option.Relations.Hirqiz_Addon.display_order < 90">
-                                    <xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" />
-                                </xf:if>
-                            </xf:foreach>
-                            <div class="block-header">{{ phrase('Hirqiz_admin_control_hirqizposts3') }}</div>
-                            <xf:foreach loop="$options" value="$option">
-                                <xf:if is="$option.Relations.Hirqiz_Addon.display_order >= 90 AND $option.Relations.Hirqiz_Addon.display_order < 130">
-                                    <xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" />
-                                </xf:if>
-                            </xf:foreach>
-                        </div>
-                    </li>
-                    <li role="tabpanel" id="HirqizAdminTab2">
-                        <div class="block-body">
-                            <xf:foreach loop="$options" value="$option">
-                            <xf:if is="$option.Relations.Hirqiz_Addon.display_order == 130">
-                                <xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" />
-                            </xf:if>
-                            </xf:foreach>
-                        </div>
-                    </li>
+				<ul class="tabPanes">
+					<li class="is-active" role="tabpanel" id="HirqizAdminTab1">
+						<div class="block-body">
+							<div class="block-header collapsible">{{ phrase('Hirqiz_admin_control_hirqizposts1') }} <i class="fas fa-sort-alt block-header-icon"></i></div>
+							<div class="block-collapsible">
+								<xf:foreach loop="$options" value="$option">
+									<xf:if is="$option.Relations.Hirqiz_Addon.display_order < 5">
+										<xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" /> </xf:if>
+								</xf:foreach>
+							</div>
+							<div class="block-header collapsible">{{ phrase('Hirqiz_admin_control_hirqizposts2') }} <i class="fas fa-sort-alt block-header-icon"></i></div>
+							<div class="block-collapsible">
+								<xf:foreach loop="$options" value="$option">
+									<xf:if is="$option.Relations.Hirqiz_Addon.display_order >= 5 AND $option.Relations.Hirqiz_Addon.display_order < 9">
+										<xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" /> </xf:if>
+								</xf:foreach>
+							</div>
+							<div class="block-header collapsible">{{ phrase('Hirqiz_admin_control_hirqizposts3') }} <i class="fas fa-sort-alt block-header-icon"></i></div>
+							<div class="block-collapsible">
+								<xf:foreach loop="$options" value="$option">
+									<xf:if is="$option.Relations.Hirqiz_Addon.display_order >= 9 AND $option.Relations.Hirqiz_Addon.display_order < 13">
+										<xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" /> </xf:if>
+								</xf:foreach>
+							</div>
+						</div>
+					</li>
+					<li role="tabpanel" id="HirqizAdminTab2">
+						<div class="block-body">
+							<xf:foreach loop="$options" value="$option">
+								<xf:if is="$option.Relations.Hirqiz_Addon.display_order == 13">
+									<xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" /> </xf:if>
+							</xf:foreach>
+						</div>
+					</li>
 					<li role="tabpanel" id="HirqizAdminTab3">
-                        <div class="block-body">
-                            <xf:foreach loop="$options" value="$option">
-                            <xf:if is="$option.Relations.Hirqiz_Addon.display_order == 140">
-                                <xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" />
-                            </xf:if>
-                            </xf:foreach>
-                        </div>
-                    </li>
-                    <li role="tabpanel" id="HirqizAdminTab4">
-                        <div class="block-body">
-                            <xf:foreach loop="$options" value="$option">
-                            <xf:if is="$option.Relations.Hirqiz_Addon.display_order > 140 AND $option.Relations.Hirqiz_Addon.display_order < 220">
-                                <xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" />
-                            </xf:if>
-                            </xf:foreach>
-                        </div>
-                    </li>
-                    <li role="tabpanel" id="HirqizAdminTab5">
-                        <div class="block-body">
-                            <div class="block-body">
-                                <div class="block-header">{{ phrase('Hirqiz_admin_control_hirqizhaber1') }}</div>
-                                <xf:foreach loop="$options" value="$option">
-                                    <xf:if is="$option.Relations.Hirqiz_Addon.display_order >= 220 AND $option.Relations.Hirqiz_Addon.display_order <= 260">
-                                        <xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" />
-                                    </xf:if>
-                                </xf:foreach>
-                                <div class="block-header">{{ phrase('Hirqiz_admin_control_hirqizhaber2') }}</div>
-                                <xf:foreach loop="$options" value="$option">
-                                    <xf:if is="$option.Relations.Hirqiz_Addon.display_order > 260 AND $option.Relations.Hirqiz_Addon.display_order <= 310">
-                                        <xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" />
-                                    </xf:if>
-                                </xf:foreach>
-                                <div class="block-header">{{ phrase('Hirqiz_admin_control_hirqizhaber3') }}</div>
-                                <xf:foreach loop="$options" value="$option">
-                                    <xf:if is="$option.Relations.Hirqiz_Addon.display_order > 310 AND $option.Relations.Hirqiz_Addon.display_order <= 360">
-                                        <xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" />
-                                    </xf:if>
-                                </xf:foreach>
-                                <div class="block-header">{{ phrase('Hirqiz_admin_control_hirqizhaber4') }}</div>
-                                <xf:foreach loop="$options" value="$option">
-                                    <xf:if is="$option.Relations.Hirqiz_Addon.display_order > 360 AND $option.Relations.Hirqiz_Addon.display_order <= 410">
-                                        <xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" />
-                                    </xf:if>
-                                </xf:foreach>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <xf:submitrow sticky="true" icon="save" />
-            </div>
-        </xf:form>
+						<div class="block-body">
+							<xf:foreach loop="$options" value="$option">
+								<xf:if is="$option.Relations.Hirqiz_Addon.display_order == 14">
+									<xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" /> </xf:if>
+							</xf:foreach>
+						</div>
+					</li>
+					<li role="tabpanel" id="HirqizAdminTab4">
+						<div class="block-body">
+							<xf:foreach loop="$options" value="$option">
+								<xf:if is="$option.Relations.Hirqiz_Addon.display_order > 14 AND $option.Relations.Hirqiz_Addon.display_order < 22">
+									<xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" /> </xf:if>
+							</xf:foreach>
+						</div>
+					</li>
+					<li role="tabpanel" id="HirqizAdminTab5">
+						<div class="block-body">
+							<div class="block-body">
+								<div class="block-header collapsible">{{ phrase('Hirqiz_admin_control_hirqizhaber1') }} <i class="fas fa-sort-alt block-header-icon"></i></div>
+								<div class="block-collapsible">
+									<xf:foreach loop="$options" value="$option">
+										<xf:if is="$option.Relations.Hirqiz_Addon.display_order >= 22 AND $option.Relations.Hirqiz_Addon.display_order <= 26">
+											<xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" /> </xf:if>
+									</xf:foreach>
+								</div>
+								<div class="block-header collapsible">{{ phrase('Hirqiz_admin_control_hirqizhaber2') }} <i class="fas fa-sort-alt block-header-icon"></i></div>
+								<div class="block-collapsible">
+									<xf:foreach loop="$options" value="$option">
+										<xf:if is="$option.Relations.Hirqiz_Addon.display_order > 26 AND $option.Relations.Hirqiz_Addon.display_order <= 31">
+											<xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" /> </xf:if>
+									</xf:foreach>
+								</div>
+								<div class="block-header collapsible">{{ phrase('Hirqiz_admin_control_hirqizhaber3') }} <i class="fas fa-sort-alt block-header-icon"></i></div>
+								<div class="block-collapsible">
+									<xf:foreach loop="$options" value="$option">
+										<xf:if is="$option.Relations.Hirqiz_Addon.display_order > 31 AND $option.Relations.Hirqiz_Addon.display_order <= 36">
+											<xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" /> </xf:if>
+									</xf:foreach>
+								</div>
+								<div class="block-header collapsible">{{ phrase('Hirqiz_admin_control_hirqizhaber4') }} <i class="fas fa-sort-alt block-header-icon"></i></div>
+								<div class="block-collapsible">
+									<xf:foreach loop="$options" value="$option">
+										<xf:if is="$option.Relations.Hirqiz_Addon.display_order > 36 AND $option.Relations.Hirqiz_Addon.display_order <= 41">
+											<xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" /> </xf:if>
+									</xf:foreach>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+				<xf:css>
+					.block-header.collapsible {
+						background: #2777b1;
+						color: white;
+					}
+					.block-header-icon {
+						float: right;
+						font-size: 13px;
+						padding: 7px;
+					}
+				</xf:css>
+				<xf:submitrow sticky="true" icon="save" /> </div>
+		</xf:form>
 	</xf:if>
-    </xf:macro>]]>
-    </template>
+</xf:macro>]]></template>
 </templates>
