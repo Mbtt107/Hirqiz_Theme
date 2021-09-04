@@ -1263,6 +1263,28 @@ button.theme-switch {
 	}
 }
 
+.hirqiz-amoled {
+    text-align: center;
+    margin: auto;
+    width: 40%;
+    background: rgba(0,0,0,.6);
+    padding: 3px;
+    margin-top: 5px;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+html[hirqiz-dark-adjust='normal']{
+	.hirqiz-dark-adjust.amoled{display:inline-block}
+    .hirqiz-dark-adjust.normal{display:none}
+}
+
+html[hirqiz-dark-adjust='amoled']{
+	.hirqiz-dark-adjust.normal{display:inline-block}
+    .hirqiz-dark-adjust.amoled{display:none}
+}
+
+
 html[hirqiz-style='12']{
 	@color-accent:   @xf-theme_accent1;
 	{{ include('day_base.less') }}
@@ -2271,6 +2293,10 @@ a#halokafanasikacamreport:hover,a#halokafanasikacamapprove:hover {
 													<button class="theme-switch night-blue" hirqiz-style='23'></button>
 													<button class="theme-switch night-orange" hirqiz-style='24'></button>
 													<button class="theme-switch night-lime" hirqiz-style='25'></button>
+													<div class="hirqiz-amoled">
+														<a href="javascript:void(0)" class="hirqiz-dark-adjust normal hirqizfooterbuttons-animation" hirqiz-dark-adjust='normal'><i class="mdi mdi-toggle-switch" aria-hidden="true"></i></a>
+														<a href="javascript:void(0)" class="hirqiz-dark-adjust amoled hirqizfooterbuttons-animation" hirqiz-dark-adjust='amoled'><i class="mdi mdi-toggle-switch-off" aria-hidden="true"></i></a>
+													</div>
 												</div>
 											</xf:contentcheck>
 										</div>
@@ -5117,6 +5143,8 @@ span.p-navgroup-linkText {
 		if(sidebarCookie){ xfhtml.setAttribute('sidebar-state', '' + sidebarCookie + '');	} else { xfhtml.setAttribute('sidebar-state', "collapse"); }
 		var hirqizFlip = getCookie('hirqizFlip');
 		if(hirqizFlip){ xfhtml.setAttribute('hirqiz-flip', '' + hirqizFlip + '');	} else { xfhtml.setAttribute('hirqiz-flip', "flip"); }
+		var hirqizDarkAdjust = getCookie('hirqizDarkAdjust');
+		if(hirqizDarkAdjust){ xfhtml.setAttribute('hirqiz-dark-adjust', '' + hirqizDarkAdjust + '');	} else { xfhtml.setAttribute('hirqiz-dark-adjust', "normal"); }
 	</script>
 
 	<xf:if is="property('hirqiz_particles')">
@@ -5302,6 +5330,19 @@ span.p-navgroup-linkText {
 				var hirqizFlip = $(this).attr("hirqiz-flip");
 				html.attr('hirqiz-flip', '' + hirqizFlip + '');
 				setCookie('hirqizFlip', '' + hirqizFlip + '', 30);
+			});
+
+			$("a.hirqiz-dark-adjust.normal").on('click', function(){
+				var styleid = html.attr('style-id');
+				var hirqizDarkAdjust = $(this).attr("hirqiz-dark-adjust");
+				html.attr('hirqiz-dark-adjust', '' + hirqizDarkAdjust + '');
+				setCookie('hirqizDarkAdjust', '' + hirqizDarkAdjust + '', 30);
+			});
+			$("a.hirqiz-dark-adjust.amoled").on('click', function(){
+				var styleid = html.attr('style-id');
+				var hirqizDarkAdjust = $(this).attr("hirqiz-dark-adjust");
+				html.attr('hirqiz-dark-adjust', '' + hirqizDarkAdjust + '');
+				setCookie('hirqizDarkAdjust', '' + hirqizDarkAdjust + '', 30);
 			});
 		});
 	</script>
@@ -6065,7 +6106,14 @@ i.fa.fa-heart {
 		</xf:if>
 	</div>
 </xf:if>]]></template>
-    <template title="night_base.less" type="public" addon_id="" version_id="0" version_string=""><![CDATA[a.username {
+    <template title="night_base.less" type="public" addon_id="" version_id="0" version_string=""><![CDATA[&[hirqiz-dark-adjust='normal']{
+	@background-color1:#151515;
+    @background-color1-1:#121212;
+    @background-color2:#202020;
+    @background-color3:#282828;
+    @background-color4:#303030;
+
+a.username {
     color: @color-accent;
 	transition: 0.1s;
 }
@@ -6073,7 +6121,7 @@ i.fa.fa-heart {
 .tabs--standalone .tabs-tab {
 	&.is-active {
 		color: @color-accent;
-		background: #151515;
+		background: @background-color1;
 		border-color: @color-accent;
 	}
 
@@ -6123,14 +6171,14 @@ a.hirqiz-sidebar-toggle {
 }
 
 .p-pageWrapper {
-	background: #151515;
+	background: @background-color1;
 	transition: 0.1s;
 }
 
 .p-hirqiz--message {
 	color: rgba(255,255,255,.7);
-	background: #202020;
-	border: 1px solid #303030;
+	background: @background-color2;
+	border: 1px solid @background-color4;
 	transition: 0.1s;
 }
 
@@ -6152,19 +6200,19 @@ a.hirqiz-sidebar-toggle {
 }
 
 .overlay {
-	background: #202020;
+	background: @background-color2;
 	color: rgba(255,255,255,.7);
 	transition: 0.1s;
 }
 
 .menu-linkRow:hover {
 	color: rgba(136,196,81,.75);
-	background: #282828;
+	background: @background-color3;
 	transition: 0.1s;
 }
 
 .p-navSticky.is-sticky {
-	background: #282828;
+	background: @background-color3;
 	transition: 0.1s;
 }
 
@@ -6174,20 +6222,20 @@ a.hirqiz-sidebar-toggle {
 }
 
 .hirqizProxy-overlay {
-	background: #202020;
+	background: @background-color2;
 	background: linear-gradient(0deg,rgba(21,21,21,1) 100%,rgba(32,32,32,1) 100%);
 	transition: 0.1s;
 }
 
 .hirqizPosts {
-	background: #282828;
-	border: 1px solid #303030;
+	background: @background-color3;
+	border: 1px solid @background-color4;
 	transition: 0.1s;
 }
 
 .p-breadcrumbs {
-	background: #282828;
-	border: 1px solid #303030;
+	background: @background-color3;
+	border: 1px solid @background-color4;
 	border-radius: 4px;
 	transition: 0.1s;
 }
@@ -6199,8 +6247,8 @@ a.hirqiz-sidebar-toggle {
 
 .block-container {
 	color: rgba(255,255,255,.7);
-	background: #282828;
-	border: 1px solid #303030;
+	background: @background-color3;
+	border: 1px solid @background-color4;
 	transition: 0.1s;
 }
 
@@ -6210,14 +6258,14 @@ a.hirqiz-sidebar-toggle {
 }
 
 .block-header {
-	background: #202020;
+	background: @background-color2;
 	margin-top: 0px !important;
 	transition: 0.1s;
 }
 
 .block-row.block-row--alt {
     color: #f5f5f5;
-    background: #282828;
+    background: @background-color3;
 	transition: 0.1s;
 }
 
@@ -6256,14 +6304,14 @@ a.hirqiz-sidebar-toggle {
 }
 
 .node {
-	border: 2px solid #303030;
+	border: 2px solid @background-color4;
 
 	&+.node {
-		border: 2px solid #303030;
+		border: 2px solid @background-color4;
 	}
 
 	&-body {
-		background: #202020;
+		background: @background-color2;
 	}
 }
 </xf:if>
@@ -6275,7 +6323,7 @@ a.hirqiz-sidebar-toggle {
 
 .p-footer {
 	color: #edf6fd;
-	background: #282828;
+	background: @background-color3;
 	transition: 0.1s;
 }
 
@@ -6290,15 +6338,15 @@ a.u-concealed {
 }
 
 .memberHeader-main {
-	background: #202020;
-	border: 1px solid #303030;
+	background: @background-color2;
+	border: 1px solid @background-color4;
 	transition: 0.1s;
 }
 
 .block-tabHeader {
 	color: rgba(255,255,255,.7);
-	background: #202020;
-	border-bottom: 1px solid #303030;
+	background: @background-color2;
+	border-bottom: 1px solid @background-color4;
 	transition: 0.1s;
 }
 
@@ -6311,32 +6359,32 @@ a.u-concealed {
 
 .blockLink.is-selected {
 	color: @color-accent;
-	background: #202020;
+	background: @background-color2;
 	transition: 0.1s;
 }
 
 .blockLink:hover {
 	color: @color-accent;
-	background: #202020;
+	background: @background-color2;
 	transition: 0.1s;
 }
 
 .message-cell.message-cell--action,.message-cell.message-cell--user {
-	background: #282828;
-	border-right: 1px solid #303030;
+	background: @background-color3;
+	border-right: 1px solid @background-color4;
 	transition: 0.1s;
 }
 
 .button.button--link,a.button.button--link {
-	background: #202020;
+	background: @background-color2;
 	color: @color-accent;
-	border-color: #303030 #303030 #303030 #303030;
+	border-color: @background-color4 @background-color4 @background-color4 @background-color4;
 	transition: 0.1s;
 }
 
 .fr-toolbar {
 	color: rgba(255,255,255,1);
-	background: #282828 !important;
+	background: @background-color3 !important;
 	border-bottom: 2px solid #505050;
 	transition: 0.1s;
 
@@ -6348,8 +6396,8 @@ a.u-concealed {
 
 .formRow>dt {
 	border-right: 1px solid transparent;
-	background: #202020;
-	border-color: #303030;
+	background: @background-color2;
+	border-color: @background-color4;
 	transition: 0.1s;
 }
 
@@ -6361,15 +6409,15 @@ a.u-concealed {
 
 .menu-row.menu-row--highlighted {
 	color: rgba(255,255,255,.7);
-	background: #282828;
+	background: @background-color3;
 	transition: 0.1s;
 }
 
 .menu-content {
 	color: rgba(255,255,255,.7);
-	background: #202020;
+	background: @background-color2;
 	border-radius: 3px;
-	border-top: 3px solid #303030;
+	border-top: 3px solid @background-color4;
 	transition: 0.1s;
 }
 
@@ -6381,13 +6429,13 @@ a.u-concealed {
 
 .menu-footer {
 	color: rgba(255,255,255,.7);
-	background: #202020;
-	border-top: 1px solid #303030;
+	background: @background-color2;
+	border-top: 1px solid @background-color4;
 	transition: 0.1s;
 }
 
 .menu-tabHeader {
-	border-bottom: 1px solid #303030;
+	border-bottom: 1px solid @background-color4;
 
 	.tabs-tab {
 		color: @color-accent;
@@ -6403,57 +6451,57 @@ a.u-concealed {
 
 .input {
 	color: rgba(255,255,255,.7);
-	background: #202020;
-	border-bottom: 1px solid #303030;
+	background: @background-color2;
+	border-bottom: 1px solid @background-color4;
 	transition: 0.1s;
 }
 
 .p-body-sideNavContent .block .block-container .block-minorHeader {
-	border-top: 1px solid #303030;
+	border-top: 1px solid @background-color4;
 	color: rgba(255,255,255,.7);
 	transition: 0.1s;
 }
 
 .memberOverviewBlock-seeMore {
-	background: #202020;
-	border: 1px solid #303030;
+	background: @background-color2;
+	border: 1px solid @background-color4;
 	transition: 0.1s;
 }
 
 .tabs--standalone {
 	color: rgba(255,255,255,.7);
-	background: #282828;
+	background: @background-color3;
 	transition: 0.1s;
 }
 
 .block-filterBar {
-	background: #202020;
-	border-bottom: 1px solid #303030;
+	background: @background-color2;
+	border-bottom: 1px solid @background-color4;
 	color: rgba(255,255,255,.7);
 	transition: 0.1s;
 }
 
 .block-filterBar .filterBar-filterToggle,.block-filterBar .filterBar-menuTrigger {
-	background: #282828;
+	background: @background-color3;
 	color: #fff!important;
 	transition: 0.1s;
 }
 
 .block-filterBar .filterBar-filterToggle:hover,.block-filterBar .filterBar-menuTrigger:hover {
-	background: #282828;
+	background: @background-color3;
 	color: #fff!important;
 	transition: 0.1s;
 }
 
 .menu-header {
 	color: rgba(255,255,255,.7);
-	background: #202020;
-	border-bottom: 1px solid #303030;
+	background: @background-color2;
+	border-bottom: 1px solid @background-color4;
 	transition: 0.1s;
 }
 
 .offCanvasMenu--nav .offCanvasMenu-content {
-	background: #282828;
+	background: @background-color3;
 	transition: 0.1s;
 }
 
@@ -6465,15 +6513,15 @@ a.u-concealed {
 @media (max-width:650px) {
 	.has-js .p-header {
 		display: block!important;
-		background: #282828;
+		background: @background-color3;
 		transition: 0.1s;
 	}
 }
 
 .overlay-title {
 	color: rgba(255,255,255,.7);
-	background: #202020;
-	border-bottom: 1px solid #303030;
+	background: @background-color2;
+	border-bottom: 1px solid @background-color4;
 	transition: 0.1s;
 }
 
@@ -6499,74 +6547,74 @@ a.theme-switch.night::before {
 }
 
 .dataList-cell.dataList-cell--action,.dataList-cell.dataList-cell--alt {
-	background: #202020;
+	background: @background-color2;
 	transition: 0.1s;
 }
 
 .dataList-row.dataList-row--header .dataList-cell {
-	background: #202020;
-	border-bottom: 1px solid #303030;
+	background: @background-color2;
+	border-bottom: 1px solid @background-color4;
 	transition: 0.1s;
 }
 
 .blockMessage {
 	color: rgba(255,255,255,.7);
-	background: #202020;
-	border: 1px solid #303030;
+	background: @background-color2;
+	border: 1px solid @background-color4;
 	transition: 0.1s;
 }
 
 .menu-separator {
-	border-top: 2px solid #303030;
+	border-top: 2px solid @background-color4;
 	transition: 0.1s;
 }
 
 .menu-row.menu-row--alt {
 	color: white;
-	background: #202020;
+	background: @background-color2;
 	transition: 0.1s;
 }
 
 h4.menu-tabHeader.tabs {
-	background: #282828;
+	background: @background-color3;
 	transition: 0.1s;
 }
 
 .XGT-istatistik-genel--govde .XGT-istatistik-govde--kolon .XGT-istatistik-tab-header {
-	background-color: #202020;
+	background-color: @background-color2;
 	transition: 0.1s;
 }
 
 .XGT-istatistik-genel--govde .XGT-istatistik-govde--kolon .XGT-istatistik-Header--kullanici {
-	background-color: #202020;
+	background-color: @background-color2;
 	transition: 0.1s;
 }
 
 .XGT-istatistik-genel--govde .XGT-istatistik-govde--kolon .XGT-istatistik-blok .XGT-istatistik-altheader {
-	background-color: #282828;
+	background-color: @background-color3;
 	color: #fbfbfb;
 	transition: 0.1s;
 }
 
 .XGT-istatistik-genel--govde .XGT-istatistik-govde--kolon .XGT-istatistik-blok .XGT-istatistik-satir {
-	background-color: #202020;
-	border-bottom: solid 1px #303030;
+	background-color: @background-color2;
+	border-bottom: solid 1px @background-color4;
 	transition: 0.1s;
 }
 
 .XGT-istatistik-genel--govde .XGT-istatistik-govde--kolon .XGT-istatistik-kullanici--icerik .XGT-istatistik-kullanici-satir {
-	background-color: #202020;
-	border-bottom: solid 1px #303030;
+	background-color: @background-color2;
+	border-bottom: solid 1px @background-color4;
 	transition: 0.1s;
 }
 
 .XGT-istatistik-genel--govde .XGT-istatistik-footer {
-	background-color: #282828;
+	background-color: @background-color3;
 	transition: 0.1s;
 }
 
 .XGT-istatistik-genel--govde .XGT-istatistik-govde--kolon .XGT-istatistik-tab-header .tabs-tab.is-active {
-	background-color: #151515;
+	background-color: @background-color1;
 	border-color: @color-accent;
 }
 
@@ -6576,7 +6624,7 @@ h4.menu-tabHeader.tabs {
 }
 
 .XGT-istatistik-genel--govde .XGT-istatistik-govde--kolon .XGT-istatistik-blok {
-    background-color: #151515;
+    background-color: @background-color1;
     color: @color-accent;
     border-radius: 0px;
 	transition: 0.1s;
@@ -6585,14 +6633,14 @@ h4.menu-tabHeader.tabs {
 .message-responseRow {
     margin-top: -1px;
     background: #181818;
-    border: 2px solid #303030;
+    border: 2px solid @background-color4;
     padding: 6px;
 	transition: 0.1s;
 }
 
 .formSubmitRow-bar {
-    border-top: 2px solid #303030;
-    background: #151515;
+    border-top: 2px solid @background-color4;
+    background: @background-color1;
 	transition: 0.1s;
 }
 
@@ -6617,25 +6665,25 @@ input.input::placeholder {
 }
 
 .bbCodeBlock {
-    background: #282828;
-    border: 1px solid #303030;
+    background: @background-color3;
+    border: 1px solid @background-color4;
     border-left: 3px solid @color-accent;
 	transition: 0.1s;
 	
 	&-title {
 		color: @color-accent;
-		background: #202020;
+		background: @background-color2;
 		transition: 0.1s;
 	}
 }
 
 .fr-box.fr-basic {
-	background: #282828;
+	background: @background-color3;
 	border: solid 1px #505050 !important;
 	transition: 0.1s;
 
 	&.is-focused {
-		background: #282828;
+		background: @background-color3;
 	}
 
 	.fr-element {
@@ -6644,22 +6692,22 @@ input.input::placeholder {
 }
 
 .fr-command.fr-btn+.fr-dropdown-menu .fr-dropdown-wrapper .fr-dropdown-content ul.fr-dropdown-list li a {
-	background: #282828;
+	background: @background-color3;
 	transition: 0.1s;
 }
 
 .fr-popup {
-	background: #282828 !important;
+	background: @background-color3 !important;
 	transition: 0.1s;
 }
 
 .siropuChatDateTime {
-	background: #202020;
+	background: @background-color2;
 	transition: 0.1s;
 }
 
 #siropuChatEditor .fr-wrapper {
-	background: #202020;
+	background: @background-color2;
 	transition: 0.1s;
 }
 
@@ -6679,20 +6727,20 @@ input.input::placeholder {
 }
 
 .likesBar {
-	background: #151515;
-	border: 1px solid #282828;
+	background: @background-color1;
+	border: 1px solid @background-color3;
 	transition: 0.1s;
 }
 
 .tooltip--member .tooltip-content {
 	color: rgba(255,255,255,0.75);
-	background: #282828;
-	border: 1px solid #303030;
+	background: @background-color3;
+	border: 1px solid @background-color4;
 	transition: 0.1s;
 }
 
 .memberTooltip-header {
-	background: #202020 !important;
+	background: @background-color2 !important;
 	border-bottom: 1px solid #404040;
 	transition: 0.1s;
 }
@@ -6703,13 +6751,13 @@ a.subNodeLink.subNodeLink--forum {
 }
 
 option {
-    background: #303030;
+    background: @background-color4;
 	transition: 0.1s;
 }
 
 .menu-linkRow.menu-linkRow--alt {
     color: #f5f5f5;
-    background: #151515;
+    background: @background-color1;
     border-left: 3px solid @color-accent !important;
 	transition: 0.1s;
 }
@@ -6727,16 +6775,16 @@ option {
 
 .pageNav { 
 	&-jump {
-		background: #303030 !important;
+		background: @background-color4 !important;
 		transition: 0.1s;
 	}
 	&-page {
-		background: #303030 !important;
+		background: @background-color4 !important;
 		transition: 0.1s;
 	
 		&--current {
-			background: #202020 !important;
-			border: 2px solid #303030 !important;
+			background: @background-color2 !important;
+			border: 2px solid @background-color4 !important;
 			transition: 0.1s;
 		}
 	}
@@ -6745,13 +6793,13 @@ option {
 .tooltip--preview {
 	.tooltip-content {
 		color: #f5f5f5;
-		background: #151515;
-		border: 4px solid #303030;
+		background: @background-color1;
+		border: 4px solid @background-color4;
 		transition: 0.1s;
 
 		&-inner .tooltip-content-cover {
 			background: transparent;
-			background: linear-gradient(to bottom, rgba(254,254,254,0) 160px, #202020 200px);
+			background: linear-gradient(to bottom, rgba(254,254,254,0) 160px, @background-color2 200px);
 			transition: 0.1s;
 		}
 	}
@@ -6765,12 +6813,12 @@ option {
 
 .inlineModBar {
     color: #fff;
-    background: #303030;
+    background: @background-color4;
 	transition: 0.1s;
 }
 
 .ovalbody {
-    background: #151515;
+    background: @background-color1;
 	transition: 0.1s;
 }
 
@@ -6791,17 +6839,806 @@ a#halokafanasikacamreport,a#halokafanasikacamapprove {
 @media (min-width: 601px) {
 	[data-template="forum_list"] {
 		.p-pageWrapper {
-			background: #121212;
+			background: @background-color1-1;
 		}
 		.ovalbody {
-			background: #121212;
+			background: @background-color1-1;
 		}
 		.p-body-inner {
-			background: #151515;
+			background: @background-color1;
 		}
 	}
 }
 </xf:if>
+
+.alert.is-unread, .menu-row.menu-row--clickable:hover {
+    background: transparent !important;
+    color: rgba(255,255,255,.7) !important;
+}
+
+.message .reactionsBar {
+    background: transparent;
+    border-color: rgba(255,255,255,.2);
+}
+
+.fr-view blockquote {
+    background: rgba(100,100,100,.25);
+    border: 1px solid #505050;
+    border-left: 3px solid @color-accent;
+	
+	&:before {
+    	background: #252525 !important;
+		color: @color-accent;
+	}
+}
+}
+
+&[hirqiz-dark-adjust='amoled']{
+	@background-color1:#000000;
+    @background-color1-1:#000000;
+    @background-color2:#050505;
+    @background-color3:#080808;
+    @background-color4:#101010;
+
+a.username {
+    color: @color-accent;
+	transition: 0.1s;
+}
+
+.tabs--standalone .tabs-tab {
+	&.is-active {
+		color: @color-accent;
+		background: @background-color1;
+		border-color: @color-accent;
+	}
+
+	&:hover {
+		background: rgba(0,0,0,.2);
+	}
+}
+
+.block-tabHeader .tabs-tab.is-active {
+    border-color: @color-accent !important;
+    transition: 0.1s;
+}
+
+a.node-extra-title {
+	color: @color-accent;
+	transition: 0.1s;
+}
+
+a.subNodeLink {
+	color: @color-accent;
+	transition: 0.1s;
+}
+
+a.actionBar-action {
+	color: @color-accent;
+	transition: 0.1s;
+}
+
+a.bbCodeBlock-sourceJump {
+    color: @color-accent;
+	transition: 0.1s;
+}
+
+em > a {
+    color: @color-accent;
+	transition: 0.1s;
+}
+
+a.hirqiz-sidebar-toggle {
+	color: @color-accent;
+	transition: 0.1s;
+}
+
+.block-header--left a {
+	color: @color-accent;
+	transition: 0.1s;
+}
+
+.p-pageWrapper {
+	background: @background-color1;
+	transition: 0.1s;
+}
+
+.p-hirqiz--message {
+	color: rgba(255,255,255,.7);
+	background: @background-color2;
+	border: 1px solid @background-color4;
+	transition: 0.1s;
+}
+
+.p-hirqiz-message.button.button--cta,a.button.button--cta {
+	background: @color-accent;
+	border-color: @color-accent;
+	transition: 0.1s;
+}
+
+.p-hirqiz-message.button.button--cta:hover,a.button.button--cta:hover {
+	background: xf-diminish(@color-accent, 7%);
+	border-color: xf-diminish(@color-accent, 7%);;
+	transition: 0.1s;
+}
+
+.hirqizPosts_head {
+    color: @color-accent;
+	transition: 0.1s;
+}
+
+.overlay {
+	background: @background-color2;
+	color: rgba(255,255,255,.7);
+	transition: 0.1s;
+}
+
+.menu-linkRow:hover {
+	color: rgba(136,196,81,.75);
+	background: @background-color3;
+	transition: 0.1s;
+}
+
+.p-navSticky.is-sticky {
+	background: @background-color3;
+	transition: 0.1s;
+}
+
+.p-nav a {
+	color: rgba(255,255,255,.7);
+	transition: 0.1s;
+}
+
+.hirqizProxy-overlay {
+	background: @background-color2;
+	background: linear-gradient(0deg,rgba(21,21,21,1) 100%,rgba(32,32,32,1) 100%);
+	transition: 0.1s;
+}
+
+.hirqizPosts {
+	background: @background-color3;
+	border: 1px solid @background-color4;
+	transition: 0.1s;
+}
+
+.p-breadcrumbs {
+	background: @background-color3;
+	border: 1px solid @background-color4;
+	border-radius: 4px;
+	transition: 0.1s;
+}
+
+.p-breadcrumbs>li a {
+	color: rgba(255,255,255,.7);
+	transition: 0.1s;
+}
+
+.block-container {
+	color: rgba(255,255,255,.7);
+	background: @background-color3;
+	border: 1px solid @background-color4;
+	transition: 0.1s;
+}
+
+.block-minorHeader {
+	color: @color-accent;
+	transition: 0.1s;
+}
+
+.block-header {
+	background: @background-color2;
+	margin-top: 0px !important;
+	transition: 0.1s;
+}
+
+.block-row.block-row--alt {
+    color: #f5f5f5;
+    background: @background-color3;
+	transition: 0.1s;
+}
+
+.grid h3 {
+	color: @color-accent;
+	transition: 0.1s;
+}
+
+.grid .block,.grid .block-container {
+	border-radius: 0;
+	transition: 0.1s;
+}
+
+.node-title>a {
+	color: @color-accent;
+	transition: 0.1s;
+}
+
+.node-description {
+	color: rgba(255,255,255,.7);
+	transition: 0.1s;
+}
+
+.node+.node {
+	border-top: 1px solid #48494a;
+	transition: 0.1s;
+}
+
+<xf:if is="property('hirqiz_Nodegrid_onoff')">
+.block--category {
+	.block-container {
+		background: transparent;
+		box-shadow: none;
+		border: 0 !important;
+	}
+}
+
+.node {
+	border: 2px solid @background-color4;
+
+	&+.node {
+		border: 2px solid @background-color4;
+	}
+
+	&-body {
+		background: @background-color2;
+	}
+}
+</xf:if>
+
+.hirqiz-footer {
+	background: linear-gradient(180deg,rgba(21,21,21,1) 0,rgba(32,32,32,0.97) 100%);
+	transition: 0.1s;
+}
+
+.p-footer {
+	color: #edf6fd;
+	background: @background-color3;
+	transition: 0.1s;
+}
+
+.p-footer-copyright {
+	color: rgba(255,255,255,.7)!important;
+	transition: 0.1s;
+}
+
+a.u-concealed {
+	color: rgba(255,255,255,.7)!important;
+	transition: 0.1s;
+}
+
+.memberHeader-main {
+	background: @background-color2;
+	border: 1px solid @background-color4;
+	transition: 0.1s;
+}
+
+.block-tabHeader {
+	color: rgba(255,255,255,.7);
+	background: @background-color2;
+	border-bottom: 1px solid @background-color4;
+	transition: 0.1s;
+}
+
+.block--messages .block-row,.block--messages .message {
+	color: rgba(255,255,255,.7);
+	background: #171717;
+	border-radius: 4px;
+	transition: 0.1s;
+}
+
+.blockLink.is-selected {
+	color: @color-accent;
+	background: @background-color2;
+	transition: 0.1s;
+}
+
+.blockLink:hover {
+	color: @color-accent;
+	background: @background-color2;
+	transition: 0.1s;
+}
+
+.message-cell.message-cell--action,.message-cell.message-cell--user {
+	background: @background-color3;
+	border-right: 1px solid @background-color4;
+	transition: 0.1s;
+}
+
+.button.button--link,a.button.button--link {
+	background: @background-color2;
+	color: @color-accent;
+	border-color: @background-color4 @background-color4 @background-color4 @background-color4;
+	transition: 0.1s;
+}
+
+.fr-toolbar {
+	color: rgba(255,255,255,1);
+	background: @background-color3 !important;
+	border-bottom: 2px solid #505050;
+	transition: 0.1s;
+
+	.fr-btn-grp {
+		border-color: #505050 !important;
+		border-bottom: 0;
+	}
+}
+
+.formRow>dt {
+	border-right: 1px solid transparent;
+	background: @background-color2;
+	border-color: @background-color4;
+	transition: 0.1s;
+}
+
+.block-formSectionHeader {
+	color: rgba(255,255,255,.7);
+	font-weight: 500;
+	transition: 0.1s;
+}
+
+.menu-row.menu-row--highlighted {
+	color: rgba(255,255,255,.7);
+	background: @background-color3;
+	transition: 0.1s;
+}
+
+.menu-content {
+	color: rgba(255,255,255,.7);
+	background: @background-color2;
+	border-radius: 3px;
+	border-top: 3px solid @background-color4;
+	transition: 0.1s;
+}
+
+.menu-linkRow {
+	border-left: 3px solid transparent;
+	color: rgba(255,255,255,.7);
+	transition: 0.1s;
+}
+
+.menu-footer {
+	color: rgba(255,255,255,.7);
+	background: @background-color2;
+	border-top: 1px solid @background-color4;
+	transition: 0.1s;
+}
+
+.menu-tabHeader {
+	border-bottom: 1px solid @background-color4;
+
+	.tabs-tab {
+		color: @color-accent;
+		transition: 0.1s;
+
+		.is-active {
+			color: @color-accent;
+			border-color: @color-accent;
+			transition: 0.1s;
+		}
+	}
+}
+
+.input {
+	color: rgba(255,255,255,.7);
+	background: @background-color2;
+	border-bottom: 1px solid @background-color4;
+	transition: 0.1s;
+}
+
+.p-body-sideNavContent .block .block-container .block-minorHeader {
+	border-top: 1px solid @background-color4;
+	color: rgba(255,255,255,.7);
+	transition: 0.1s;
+}
+
+.memberOverviewBlock-seeMore {
+	background: @background-color2;
+	border: 1px solid @background-color4;
+	transition: 0.1s;
+}
+
+.tabs--standalone {
+	color: rgba(255,255,255,.7);
+	background: @background-color3;
+	transition: 0.1s;
+}
+
+.block-filterBar {
+	background: @background-color2;
+	border-bottom: 1px solid @background-color4;
+	color: rgba(255,255,255,.7);
+	transition: 0.1s;
+}
+
+.block-filterBar .filterBar-filterToggle,.block-filterBar .filterBar-menuTrigger {
+	background: @background-color3;
+	color: #fff!important;
+	transition: 0.1s;
+}
+
+.block-filterBar .filterBar-filterToggle:hover,.block-filterBar .filterBar-menuTrigger:hover {
+	background: @background-color3;
+	color: #fff!important;
+	transition: 0.1s;
+}
+
+.menu-header {
+	color: rgba(255,255,255,.7);
+	background: @background-color2;
+	border-bottom: 1px solid @background-color4;
+	transition: 0.1s;
+}
+
+.offCanvasMenu--nav .offCanvasMenu-content {
+	background: @background-color3;
+	transition: 0.1s;
+}
+
+.p-title-value {
+	color: rgba(255,255,255,.7);
+	transition: 0.1s;
+}
+
+@media (max-width:650px) {
+	.has-js .p-header {
+		display: block!important;
+		background: @background-color3;
+		transition: 0.1s;
+	}
+}
+
+.overlay-title {
+	color: rgba(255,255,255,.7);
+	background: @background-color2;
+	border-bottom: 1px solid @background-color4;
+	transition: 0.1s;
+}
+
+.block--category .collapseTrigger {
+	opacity: 1;
+	transition: opacity .3s;
+	color: rgba(255,255,255,.5);
+	transition: 0.1s;
+}
+
+a.theme-switch.day::before {
+	font: normal normal normal 20px/1 "Material Design Icons";
+	content: "\F599";
+	color: rgba(255,255,255,.7);
+	transition: 0.1s;
+}
+
+a.theme-switch.night::before {
+	font: normal normal normal 18px/1 "Material Design Icons";
+	content: "\F594";
+	color: rgba(255,255,255,.7);
+	transition: 0.1s;
+}
+
+.dataList-cell.dataList-cell--action,.dataList-cell.dataList-cell--alt {
+	background: @background-color2;
+	transition: 0.1s;
+}
+
+.dataList-row.dataList-row--header .dataList-cell {
+	background: @background-color2;
+	border-bottom: 1px solid @background-color4;
+	transition: 0.1s;
+}
+
+.blockMessage {
+	color: rgba(255,255,255,.7);
+	background: @background-color2;
+	border: 1px solid @background-color4;
+	transition: 0.1s;
+}
+
+.menu-separator {
+	border-top: 2px solid @background-color4;
+	transition: 0.1s;
+}
+
+.menu-row.menu-row--alt {
+	color: white;
+	background: @background-color2;
+	transition: 0.1s;
+}
+
+h4.menu-tabHeader.tabs {
+	background: @background-color3;
+	transition: 0.1s;
+}
+
+.XGT-istatistik-genel--govde .XGT-istatistik-govde--kolon .XGT-istatistik-tab-header {
+	background-color: @background-color2;
+	transition: 0.1s;
+}
+
+.XGT-istatistik-genel--govde .XGT-istatistik-govde--kolon .XGT-istatistik-Header--kullanici {
+	background-color: @background-color2;
+	transition: 0.1s;
+}
+
+.XGT-istatistik-genel--govde .XGT-istatistik-govde--kolon .XGT-istatistik-blok .XGT-istatistik-altheader {
+	background-color: @background-color3;
+	color: #fbfbfb;
+	transition: 0.1s;
+}
+
+.XGT-istatistik-genel--govde .XGT-istatistik-govde--kolon .XGT-istatistik-blok .XGT-istatistik-satir {
+	background-color: @background-color2;
+	border-bottom: solid 1px @background-color4;
+	transition: 0.1s;
+}
+
+.XGT-istatistik-genel--govde .XGT-istatistik-govde--kolon .XGT-istatistik-kullanici--icerik .XGT-istatistik-kullanici-satir {
+	background-color: @background-color2;
+	border-bottom: solid 1px @background-color4;
+	transition: 0.1s;
+}
+
+.XGT-istatistik-genel--govde .XGT-istatistik-footer {
+	background-color: @background-color3;
+	transition: 0.1s;
+}
+
+.XGT-istatistik-genel--govde .XGT-istatistik-govde--kolon .XGT-istatistik-tab-header .tabs-tab.is-active {
+	background-color: @background-color1;
+	border-color: @color-accent;
+}
+
+.XGT-istatistik-genel--govde .XGT-istatistik-govde--kolon .XGT-istatistik-blok .XGT-istatistik-satir .XGT-istatistik-hucre a {
+	color: rgba(255,255,255,0.75);
+	transition: 0.1s;
+}
+
+.XGT-istatistik-genel--govde .XGT-istatistik-govde--kolon .XGT-istatistik-blok {
+    background-color: @background-color1;
+    color: @color-accent;
+    border-radius: 0px;
+	transition: 0.1s;
+}
+
+.message-responseRow {
+    margin-top: -1px;
+    background: #181818;
+    border: 2px solid @background-color4;
+    padding: 6px;
+	transition: 0.1s;
+}
+
+.formSubmitRow-bar {
+    border-top: 2px solid @background-color4;
+    background: @background-color1;
+	transition: 0.1s;
+}
+
+a.menu-linkRow.menuTrigger.style-switch {
+    background: @color-accent;
+	transition: 0.1s;
+}
+
+.block-header .block-desc {
+    color: rgba(255,255,255,0.7);
+	transition: 0.1s;
+}
+
+textarea.input::placeholder {
+    color: rgba(255,255,255,0.7);
+	transition: 0.1s;
+}
+
+input.input::placeholder {
+    color: rgba(255,255,255,0.7) !important;
+	transition: 0.1s;
+}
+
+.bbCodeBlock {
+    background: @background-color3;
+    border: 1px solid @background-color4;
+    border-left: 3px solid @color-accent;
+	transition: 0.1s;
+	
+	&-title {
+		color: @color-accent;
+		background: @background-color2;
+		transition: 0.1s;
+	}
+}
+
+.fr-box.fr-basic {
+	background: @background-color3;
+	border: solid 1px #505050 !important;
+	transition: 0.1s;
+
+	&.is-focused {
+		background: @background-color3;
+	}
+
+	.fr-element {
+		color: rgba(255,255,255,0.75);
+	}
+}
+
+.fr-command.fr-btn+.fr-dropdown-menu .fr-dropdown-wrapper .fr-dropdown-content ul.fr-dropdown-list li a {
+	background: @background-color3;
+	transition: 0.1s;
+}
+
+.fr-popup {
+	background: @background-color3 !important;
+	transition: 0.1s;
+}
+
+.siropuChatDateTime {
+	background: @background-color2;
+	transition: 0.1s;
+}
+
+#siropuChatEditor .fr-wrapper {
+	background: @background-color2;
+	transition: 0.1s;
+}
+
+#siropuChatTabs a.siropuChatActiveTab {
+	color: #f5f5f5;
+	transition: 0.1s;
+}
+
+#siropuChatContent ul {
+    background: #181818;
+	transition: 0.1s;
+}
+
+.siropuChatMention {
+    background-color: #505050;
+	transition: 0.1s;
+}
+
+.likesBar {
+	background: @background-color1;
+	border: 1px solid @background-color3;
+	transition: 0.1s;
+}
+
+.tooltip--member .tooltip-content {
+	color: rgba(255,255,255,0.75);
+	background: @background-color3;
+	border: 1px solid @background-color4;
+	transition: 0.1s;
+}
+
+.memberTooltip-header {
+	background: @background-color2 !important;
+	border-bottom: 1px solid #404040;
+	transition: 0.1s;
+}
+
+a.subNodeLink.subNodeLink--forum {
+	color: rgba(255,255,255,0.75);
+	transition: 0.1s;
+}
+
+option {
+    background: @background-color4;
+	transition: 0.1s;
+}
+
+.menu-linkRow.menu-linkRow--alt {
+    color: #f5f5f5;
+    background: @background-color1;
+    border-left: 3px solid @color-accent !important;
+	transition: 0.1s;
+}
+
+.bbCodeBlock-expandLink {
+    background: transparent;
+    background: linear-gradient(to bottom, transparent 0%, rgba(48, 48, 48, .9) 80%);
+	transition: 0.1s;
+}
+
+.node--unread .node-icon i:before {
+    color: @color-accent;
+	transition: 0.1s;
+}
+
+.pageNav { 
+	&-jump {
+		background: @background-color4 !important;
+		transition: 0.1s;
+	}
+	&-page {
+		background: @background-color4 !important;
+		transition: 0.1s;
+	
+		&--current {
+			background: @background-color2 !important;
+			border: 2px solid @background-color4 !important;
+			transition: 0.1s;
+		}
+	}
+}
+
+.tooltip--preview {
+	.tooltip-content {
+		color: #f5f5f5;
+		background: @background-color1;
+		border: 4px solid @background-color4;
+		transition: 0.1s;
+
+		&-inner .tooltip-content-cover {
+			background: transparent;
+			background: linear-gradient(to bottom, rgba(254,254,254,0) 160px, @background-color2 200px);
+			transition: 0.1s;
+		}
+	}
+}
+
+.button.button--scroll, a.button.button--scroll {
+	background: @color-accent;
+	border-color: @color-accent;
+	transition: 0.1s;
+}
+
+.inlineModBar {
+    color: #fff;
+    background: @background-color4;
+	transition: 0.1s;
+}
+
+.ovalbody {
+    background: @background-color1;
+	transition: 0.1s;
+}
+
+a#halokafanasikacamreport,a#halokafanasikacamapprove {
+	background: @color-accent;
+}
+
+.category {
+    background: @color-accent !important;
+    transition: 0.1s;
+}
+
+.node:nth-child(2n) {
+    background-color: rgba(255,255,255,0.06);
+}
+
+<xf:if is="property('hirqizPosts_Options') === 'headeronly' OR property('hirqizPosts_Options') === 'completely'">
+@media (min-width: 601px) {
+	[data-template="forum_list"] {
+		.p-pageWrapper {
+			background: @background-color1-1;
+		}
+		.ovalbody {
+			background: @background-color1-1;
+		}
+		.p-body-inner {
+			background: @background-color1;
+		}
+	}
+}
+</xf:if>
+
+.alert.is-unread, .menu-row.menu-row--clickable:hover {
+    background: transparent !important;
+    color: rgba(255,255,255,.7) !important;
+}
+
+.message .reactionsBar {
+    background: transparent;
+    border-color: rgba(255,255,255,.2);
+}
+
+.fr-view blockquote {
+    background: rgba(100,100,100,.25);
+    border: 1px solid #505050;
+    border-left: 3px solid @color-accent;
+	
+	&:before {
+    	background: #252525 !important;
+		color: @color-accent;
+	}
+}
+}
 
 .xf-night_extra();]]></template>
     <template title="node_list_category" type="public" addon_id="XF" version_id="2020671" version_string="2.2.6"><![CDATA[<xf:macro name="depth1" arg-node="!" arg-extras="!" arg-children="!" arg-childExtras="!" arg-depth="1">
