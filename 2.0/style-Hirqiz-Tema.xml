@@ -6079,7 +6079,7 @@ a.hirqiz-sidebar-toggle {
 }
 
 .hirqiz-footer {
-	background: linear-gradient(180deg,rgba(21,21,21,1) 0,rgba(32,32,32,0.97) 100%);
+	background: linear-gradient(180deg,@background-color1 0,@background-color2 100%);
 	transition: 0.1s;
 }
 
@@ -6384,7 +6384,7 @@ h4.menu-tabHeader.tabs {
 
 .message-responseRow {
     margin-top: -1px;
-    background: #181818;
+    background: @background-color4;
     border: 2px solid @background-color4;
     padding: 6px;
 	transition: 0.1s;
@@ -6460,7 +6460,7 @@ input.input::placeholder {
 }
 
 #siropuChatContent ul {
-    background: #181818;
+    background: @background-color2;
 	transition: 0.1s;
 }
 
@@ -6588,6 +6588,79 @@ a#halokafanasikacamreport,a#halokafanasikacamapprove {
 	}
 }
 </xf:if>
+
+.alert.is-unread, .menu-row.menu-row--clickable:hover {
+    background: transparent !important;
+    color: rgba(255,255,255,.7) !important;
+}
+
+.message .reactionsBar {
+    background: transparent;
+    border-color: rgba(255,255,255,.2);
+}
+
+.fr-view blockquote {
+    background: rgba(100,100,100,.25);
+    border: 1px solid #505050;
+    border-left: 3px solid @color-accent;
+	
+	&:before {
+    	background: #252525 !important;
+		color: @color-accent;
+	}
+}
+
+.structItem.structItem--note {
+    background: rgba(100,100,100,0.1);
+}
+
+.fr-command.fr-btn+.fr-dropdown-menu {
+	background: rgba(100,100,100,.7);
+}
+
+.fr-command.fr-btn.fr-dropdown.fr-active {
+    background: rgba(100,100,100,.7);
+}
+
+.fr-popup .fr-buttons.fr-tabs {
+	background-color: rgb(50,50,50);
+}
+
+.fr-toolbar .fr-command.fr-btn.fr-active {
+    background: rgb(75,75,75) !important;
+}
+
+.fr-popup .fr-image-upload-layer {
+    color: rgba(255,255,255,.7);
+}
+
+.block-row.block-row--clickable:hover {
+    color: rgba(255,255,255,.7);
+    background: #303030;
+}
+
+.block-minorTabHeader {
+    background: #202020;
+}
+
+.pageNavSimple-el {
+    &.pageNavSimple-el--current, &.pageNavSimple-el.pageNavSimple-el--prev, &.pageNavSimple-el.pageNavSimple-el--next {
+    background: linear-gradient(0deg, @background-color3, @background-color4);
+    }
+}
+
+.messageNotice{
+    background: @background-color4;
+
+    &.messageNotice--highlighted {
+        color: white;
+        background: @background-color4;
+    }
+}
+
+.message-cell.message-cell--extra {
+    background: @background-color4;
+}
 }
 
 &[hirqiz-dark-adjust='amoled']{
@@ -6779,7 +6852,7 @@ a.hirqiz-sidebar-toggle {
 }
 
 .hirqiz-footer {
-	background: linear-gradient(180deg,rgba(21,21,21,1) 0,rgba(32,32,32,0.97) 100%);
+	background: linear-gradient(180deg,@background-color1 0,@background-color2 100%);
 	transition: 0.1s;
 }
 
@@ -7084,7 +7157,7 @@ h4.menu-tabHeader.tabs {
 
 .message-responseRow {
     margin-top: -1px;
-    background: #181818;
+    background: @background-color4;
     border: 2px solid @background-color4;
     padding: 6px;
 	transition: 0.1s;
@@ -7160,7 +7233,7 @@ input.input::placeholder {
 }
 
 #siropuChatContent ul {
-    background: #181818;
+    background: @background-color2;
 	transition: 0.1s;
 }
 
@@ -7288,6 +7361,79 @@ a#halokafanasikacamreport,a#halokafanasikacamapprove {
 	}
 }
 </xf:if>
+
+.alert.is-unread, .menu-row.menu-row--clickable:hover {
+    background: transparent !important;
+    color: rgba(255,255,255,.7) !important;
+}
+
+.message .reactionsBar {
+    background: transparent;
+    border-color: rgba(255,255,255,.2);
+}
+
+.fr-view blockquote {
+    background: rgba(100,100,100,.25);
+    border: 1px solid #505050;
+    border-left: 3px solid @color-accent;
+	
+	&:before {
+    	background: #252525 !important;
+		color: @color-accent;
+	}
+}
+
+.structItem.structItem--note {
+    background: rgba(100,100,100,0.1);
+}
+
+.fr-command.fr-btn+.fr-dropdown-menu {
+	background: rgba(100,100,100,.7);
+}
+
+.fr-command.fr-btn.fr-dropdown.fr-active {
+    background: rgba(100,100,100,.7);
+}
+
+.fr-popup .fr-buttons.fr-tabs {
+	background-color: rgb(50,50,50);
+}
+
+.fr-toolbar .fr-command.fr-btn.fr-active {
+    background: rgb(75,75,75) !important;
+}
+
+.fr-popup .fr-image-upload-layer {
+    color: rgba(255,255,255,.7);
+}
+
+.block-row.block-row--clickable:hover {
+    color: rgba(255,255,255,.7);
+    background: #303030;
+}
+
+.block-minorTabHeader {
+    background: #202020;
+}
+
+.pageNavSimple-el {
+    &.pageNavSimple-el--current, &.pageNavSimple-el.pageNavSimple-el--prev, &.pageNavSimple-el.pageNavSimple-el--next {
+    background: linear-gradient(0deg, @background-color3, @background-color4);
+    }
+}
+
+.messageNotice{
+    background: @background-color4;
+
+    &.messageNotice--highlighted {
+        color: white;
+        background: @background-color4;
+    }
+}
+
+.message-cell.message-cell--extra {
+    background: @background-color4;
+}
 }
 
 .xf-night_extra();]]></template>
